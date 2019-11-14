@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NgsFileAnnotation">
+
+	<resultMap id="NgsFileAnnotation" type="ngsFileAnnotation">
+		<result property="id" column="ANNOTATION_ID" />
+		<result property="geneCount" column="GENE_COUNT" />
+		<result property="cdsCount" column="CDS_COUNT" />
+		<result property="registDate" column="REGIST_DATE" />
+		
+		<association property="achive" column="{achiveId=ACHIVE_ID}" javaType="ngsDataAchive" select="NgsDataAchive.getBasic" />
+		<association property="registUser" column="{userId=REGIST_USER}" javaType="user" select="User.getBasicUser" />
+	</resultMap>
+	
+	<sql id="select">
+		SELECT F.ANNOTATION_ID,
+		       F.ACHIVE_ID,
+		       F.GENE_COUNT,
+		       F.CDS_COUNT,
+		       AES_DECRYPT(UNHEX(F.REGIST_USER),'raison') AS REGIST_USER,
+		       F.REGIST_DATE
+	  	  FROM T_NGS_FILE_ANNOTATION F, T_NGS_DATA_ACHIVE A
+		 WHERE F.ACHIVE_ID = A.ACHIVE_ID
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveId)">
+	  	   AND F.ACHIVE_ID = #{achiveId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isDataAchive(achive)">
+	  	   AND F.ACHIVE_ID = #{achive.id}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registId)">
+	  	   AND A.REGIST_ID = #{registId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(annotationId)">
+	  	   AND F.ANNOTATION_ID = #{annotationId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(id)">
+	  	   AND F.ANNOTATION_ID = #{id}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(ids)">
+	  	   AND F.ANNOTATION_ID IN 
+			<foreach collection="ids" item="annotationId" open="(" separator="," close=")">
+				#{annotationId}
+			</foreach>
+		</if>
+	</sql>
+	
+	<insert id="insert" parameterType="ngsFileAnnotation">
+		<selectKey resultType="int" keyProperty="id" order="BEFORE">
+		SELECT (CASE WHEN 0 &lt; #{id}
+		             THEN IFNULL(#{id}, IFNULL(MAX(ANNOTATION_ID), 0) + 1)
+		             ELSE IFNULL(MAX(ANNOTATION_ID), 0) + 1
+		             END) AS id
+		 FROM T_NGS_FILE_ANNOTATION
+   		</selectKey>
+   		 
+		INSERT INTO T_NGS_FILE_ANNOTATION(
+			ANNOTATION_ID,
+			ACHIVE_ID,
+			GENE_COUNT,
+			CDS_COUNT,
+			REGIST_USER,
+			REGIST_DATE
+		) VALUES (
+			#{id},
+			#{achive.id},
+			#{geneCount},
+			#{cdsCount},
+			HEX(AES_ENCRYPT(#{registUser.userId},'raison')),
+			NOW()
+		)
+	</insert>
+	
+	<select id="get" resultMap="NgsFileAnnotation">
+		<include refid="select" />
+	  	 LIMIT 0, 1
+	</select>
+	
+	<select id="select" resultMap="NgsFileAnnotation">
+		<include refid="select" />
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+	  	 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(*) FROM (<include refid="select" />) T
+	</select>
+	
+	<update id="update" parameterType="ngsFileAnnotation">
+		UPDATE T_NGS_FILE_ANNOTATION 
+		   SET GENE_COUNT     = #{geneCount},
+		       CDS_COUNT      = #{cdsCount}
+		 WHERE ANNOTATION_ID  = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM T_NGS_FILE_ANNOTATION
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveId)">
+	  	   AND ACHIVE_ID = #{achiveId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registId)">
+	  	   AND ACHIVE_ID IN (SELECT DISTINCT(ACHIVE_ID) FROM T_NGS_DATA_ACHIVE WHERE REGIST_ID=#{registId})
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(annotationId)">
+	  	   AND ANNOTATION_ID = #{annotationId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(id)">
+	  	   AND ANNOTATION_ID = #{id}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(ids)">
+	  	   AND ANNOTATION_ID IN 
+				<foreach collection="ids" item="annotationId" open="(" separator="," close=")">
+					#{annotationId}
+				</foreach>
+			</if>
+		</trim>
+	</delete>
+</mapper>

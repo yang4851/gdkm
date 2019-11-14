@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+		<title>GDKM(Genome Database of Kimchi-associated Microbes)</title>
+		 
+		<!-- Global Styles -->
+		<link rel="stylesheet" type="text/css" href="./vendors/NanumGothic/NanumGothic.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/angular-ivh-treeview-master/dist/ivh-treeview.css">
+	 	<link rel="stylesheet" type="text/css" href="./vendors/angular-ivh-treeview-master/dist/ivh-treeview-theme-basic.css">
+		<link rel="stylesheet" type="text/css" href="./vendors/font-awesome-5/web-fonts-with-css/css/fontawesome-all.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/bootstrap-select/dist/css/bootstrap-select.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/pnotify/dist/pnotify.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/pnotify/dist/pnotify.buttons.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/blueimp-file-upload/css/jquery.fileupload.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/angular-moment-picker/dist/angular-moment-picker.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/iCheck/skins/all.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/parsleyjs/src/parsley.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/mocha/mocha.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/angular-bootstrap-grid-tree/src/treeGrid.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/angular-material/angular-material.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/angular-ui-grid/ui-grid.min.css" />
+		
+		
+		<!-- Custom Style -->
+		<link rel="stylesheet" type="text/css" href="./lib/css/vendors.min.css" />
+		<link rel="stylesheet" type="text/css" href="./lib/jstree/dist/themes/default/style.min.css" />
+		<link rel="stylesheet" type="text/css" href="./css/custom.css" />
+		<link rel="stylesheet" type="text/css" href="./css/home.css" />
+		
+		<script type="text/javascript" src="./vendors/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="./lib/jstree/dist/jstree.min.js"></script>
+		
+		<script type="text/javascript" src="./vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="./vendors/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+		<script type="text/javascript" src="./vendors/bootstrap-waitingfor/build/bootstrap-waitingfor.min.js"></script>
+		<script type="text/javascript" src="./vendors/pnotify/dist/pnotify.js"></script>
+		<script type="text/javascript" src="./vendors/pnotify/dist/pnotify.confirm.js"></script>
+		<script type="text/javascript" src="./vendors/pnotify/dist/pnotify.buttons.js"></script>
+		<script type="text/javascript" src="./vendors/parsleyjs/dist/parsley.min.js"></script>
+		<script type="text/javascript" src="./vendors/mocha/mocha.js"></script>
+		<script type="text/javascript" src="./vendors/moment/min/moment-with-locales.js"></script>
+		
+		<!-- angularjs Plugins-->
+		<script type="text/javascript" src="./vendors/angular/angular.js"></script>
+		<script type="text/javascript" src="./vendors/angular-touch/angular-touch.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-cookies/angular-cookies.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-animate/angular-animate.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-route/angular-route.js"></script>
+		<script type="text/javascript" src="./vendors/angular-aria/angular-aria.js"></script>
+		<script type="text/javascript" src="./vendors/angular-sanitize/angular-sanitize.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-messages/angular-messages.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-material/angular-material.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-resource/angular-resource.js"></script>
+		<script type="text/javascript" src="./vendors/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+		<script type="text/javascript" src="./vendors/angular-moment-picker/dist/angular-moment-picker.js"></script>
+		<script type="text/javascript" src="./vendors/angular-bootstrap-select/build/angular-bootstrap-select.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-google-chart/ng-google-chart.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-pnotify/src/angular-pnotify.js"></script>
+		<script type="text/javascript" src="./vendors/angular-ui-grid/ui-grid.js"></script>
+		<script type="text/javascript" src="./vendors/angular-ui-grid/ui-grid.auto-resize.js"></script>
+		<script type="text/javascript" src="./vendors/angular-ui-grid/ui-grid.edit.js"></script>
+		<script type="text/javascript" src="./vendors/angular-ui-grid/ui-grid.resize-columns.js"></script>
+		<script type="text/javascript" src="./vendors/angular-ui-grid/ui-grid.pinning.js"></script>
+		<script type="text/javascript" src="./vendors/angular-ui-grid/ui-grid.cellnav.js"></script>
+		
+		<script type="text/javascript" src="./vendors/ng-file-upload/ng-file-upload.js"></script>
+		<script type="text/javascript" src="./vendors/ng-file-upload/ng-file-upload-shim.js"></script>
+		<script type="text/javascript" src="./vendors/checklist-model/checklist-model.js"></script>		
+		<script type="text/javascript" src="./vendors/iCheck/icheck.js"></script>		
+		
+		<!-- Page Level Plugins -->		
+		<script type="text/javascript" src="./vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+		
+		<!-- Google chart -->
+		<script type="text/javascript" src="./js/www.gstatic.com_chart_loader.js"></script>
+		
+		<!-- tree -->
+		<script type="text/javascript" src="./vendors/angular-ivh-treeview-master/dist/ivh-treeview.js"></script>
+	</head>
+	<body>
+		
+		<div class="wrap" ng-cloak ng-controller="my">
+			<div><button ng-click="load()">Load</button></div>
+			<div class="grid" ui-grid="gridOptions" ui-grid-resize ui-grid-resize-columns ui-grid-pinning></div> 
+			
+		</div>
+		
+		<!-- Page Level Scripts -->
+		
+		<script type="text/javascript" src="./js/app-common.js"></script>
+		<script type="text/javascript" src="./js/app-object.js"></script>
+		
+		<script type="text/javascript">
+		<!--
+		
+		/**
+		 * 참고 URL : https://gist.github.com/jonrimmer/d9c9091a9c300286a8ef, 
+		 *          https://github.com/angular-ui/ui-grid/issues/2531
+		 */
+		
+		var grid = null; 
+		var demo = angular.module('demo', ['ngAnimate', 'ngTouch', 
+			'ui.grid', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.pinning', 'ui.grid.autoResize']); 
+		
+		demo.directive('uiGridResize', function(gridUtil, uiGridConstants) {
+			return {
+				restrict: 'A',
+				require: 'uiGrid',
+				link: function($scope, $elm, $attrs, uiGridCtrl) {
+					$scope.$watch($attrs.uiGrid + '.minRowsToShow', val => {
+						var grid = uiGridCtrl.grid;
+						uiGridCtrl.scrollbars = [];
+						
+						var contentHeight = grid.options.minRowsToShow * grid.options.rowHeight;
+						var headerHeight = grid.options.hideHeader? 0 : grid.options.headerRowHeight;
+						var footerHeight = grid.options.showFooter? grid.options.footerRowHeight : 0; 
+						var scrollbarHeight = grid.optionsenableScrollbars? gridUtil.getScrollbarWidth() : 0; 
+						
+						var maxNumberOfFilters = 0; 
+						
+						angular.forEach(grid.options.columnDefs, function(col) {
+							if(col.hasOwnProperty('filter')) {
+								maxNumberOfFilter = Math.max(1, maxNumberOfFilters);
+							} else if (col.hasOwnProperty('filters')) {
+								maxNumberOfFilters = Math.max(maxNumberOfFilters, col.filters.length);
+							}
+						});
+						
+						var filterHeight = maxNumberOfFilters * headerHeight;
+						var newHeight = headerHeight + contentHeight + footerHeight + scrollbarHeight + filterHeight + 19;
+						
+						$elm.css('height', newHeight + "px");
+						grid.gridHeight = $scope.gridHeight = gridUtil.elementHeight($elm);
+						
+						grid.refreshCanvas();
+					});
+				}
+			};
+		});
+		
+		demo.controller('my', function($scope, uiGridConstants) {
+			
+			$scope.gridOptions = {
+					rowHeight: 42,
+					headerRowHeight: 42,
+					enableSorting: false,
+					enableColumnMenus: false,
+					enableColumnResizing: true,
+					enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
+					columnDefs: [ 
+						{ 
+							field: 'col-0', 
+							width: 200, 
+							enableColumnResizing: true, 
+							displayName: '',
+							cellTemplate: '<div class="ui-grid-cell-contents text-center" style="padding-top: 12px; font-weight: bold;"><a role="button" ng-click="grid.appScope.onClickCell(row, col)">{{ COL_FIELD }}</a></div>',
+							pinnedLeft : true
+						}
+					], 
+					data: []
+			};
+			
+			$scope.gridOptions.onRegisterApi = function(gridApi){
+				$scope.gridApi = gridApi;
+			};
+			
+			$scope.load = function() {
+				
+				for(let i=0; i < labels.length ; i++) {
+					
+					var columnDef = { 
+							field : 'col-' + (i+1),
+							width : 200,
+							enableColumnResizing : true,
+							displayName : labels[i],
+							headerCellTemplate: '<div class="ui-grid-cell-contents text-center"><a role="button" ng-click="grid.appScope.onClickCell(row, col)">{{ col.displayName CUSTOM_FILTERS }}</a></div>',
+							cellTemplate : '<div class="ui-grid-cell-contents text-center" style="padding-top: 12px;">{{ COL_FIELD }}</div>'
+						};
+					
+					$scope.gridOptions.columnDefs.push(columnDef);
+				}
+				
+				for(let i=0; i < coverages.length ; i++) {
+					var record = { 'col-0' : labels[i] }
+					var cols = coverages[i];
+					for(let j=0; j < cols.length ; j++) {
+						var field = 'col-' + (j+1);
+						record[field] = cols[j];
+					}
+					
+					$scope.gridOptions.data.push(record);
+				}
+				
+				$scope.gridOptions.minRowsToShow = Math.max(10, $scope.gridOptions.data.length);
+				$scope.gridApi.grid.handleWindowResize();  
+			    $scope.gridApi.core.refresh();
+			};
+			
+			$scope.onClickCell = function(row, col) {
+				console.log(row + ", " + col);
+				console.info(row);
+				console.info(col);
+			};
+		});
+		
+
+		const labels = [ 'GDKM-BA-A-0011-001', 'GDKM-BA-A-0005-001',
+			'GDKM-BA-A-0008-001', 'GDKM-BA-A-0003-005',
+			'GDKM-BA-A-0006-001', 'GDKM-BA-A-0004-001',
+			'GDKM-BA-A-0002-001', 'GDKM-BA-A-0009-001',
+			'GDKM-BA-A-0007-003', 'GDKM-BA-A-0010-001' ];
+	
+		const coverages = [
+			['1.0', '6.301930155167924e-05', '0.003157807173181002', '0.0', '0.0', '0.0', '0.0', '0.0031246770260795476', '0.0', '0.0011984470603656487'],
+			['9.019828159388095e-05', '1.0', '0.0003669781513991042', '0.00030667415741919524', '0.0', '0.00010978419416855224', '0.0013395733363571233', '0.00043552884541045374', '0.0', '0.001274115154857564'],
+			['0.0021356785449426503', '0.00017340667396500937', '1.0', '0.0', '0.0', '1.0', '1.0', '0.9025227992026216', '0.0', '0.0011010836699379316'],
+			['1.0', '0.0002801186384821807', '1.0', '1.0', '0.0', '0.801291841250412', '0.8563659903017748', '1.0', '1.0', '0.0'],
+			['1.0', '1.0', '1.0', '1.0', '1.0', '1.0', '1.0', '1.0', '0.8578665698413953', '0.0'],
+			['1.0', '0.0001039616210789264', '0.0', '0.8307285171607447', '0.0', '1.0', '0.8231510328074567', '1.0', '0.0', '8.346214649998316e-05'],
+			['1.0', '0.0013100346435864', '0.0', '0.9168765628804028', '0.0', '0.8500854622446403', '1.0', '1.0', '0.0', '0.0005211911587027078'],
+			['0.0021656566342296546', '0.000210900064068694', '0.9248948681899558', '0.0', '0.0', '0.0', '0.0', '1.0', '0.0', '0.00112862732511081'],
+			['1.0', '1.0', '1.0', '0.0', '0.8000318404791992', '1.0', '1.0', '1.0', '1.0', '0.0'],
+			['0.0013927774778507368', '0.0010345390400381676', '0.0018920513754096097', '1.0', '1.0', '7.156398699293148e-05', '0.00043273194474088394', '0.0018924698782575215', '1.0', '1.0']
+		];
+		
+		-->
+		</script>
+	</body>
+</html>

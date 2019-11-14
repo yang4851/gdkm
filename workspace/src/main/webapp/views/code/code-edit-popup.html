@@ -1,0 +1,77 @@
+<script>
+	$("#searchCodeEditForm").parsley();
+</script>
+<!--========== 1. MODAL - modal-search ==========-->
+<div class="modal fade" id="code-edit-popup">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <!-- Modal-header -->
+            <div class="modal-header">
+                <h4 class="modal-title">그룹정보</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <!-- Modal-body -->
+             <form class="form-horizontal" id="searchCodeEditForm"
+            ng-submit="modelForm.update()"  data-validate="parsley">
+	            <div class="modal-body">
+	            	<table class="data_tbl">
+						<colgroup>
+							<col style="width: 30%;">
+							<col style="width: 70%;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">권한그룹ID</th>
+								<td>
+									<input type="text" class="form-control" style="width:80%; float:left;" 
+										ng-model="modelForm.model.group" disabled required/>
+										<button type="button" class="btn btn_secondary" style="width:20%;" data-toggle="modal" data-target="#code-group-list-popup">
+										Search</button>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">코드</th>
+								<td>
+									<input type="text" class="form-control"
+									ng-model="modelForm.model.code"
+									data-parsley-minlength="1"
+									data-parsley-maxlength="10"
+									required
+									disabled/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">코드명</th>
+								<td>
+									<input type="text" class="form-control"
+									ng-model="modelForm.model.name"
+									data-parsley-minlength="1"
+									data-parsley-maxlength="50"
+									required/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">사용유무</th>
+								<td>
+									<select class="form-control picker"
+									ng-model="modelForm.model.useYn"
+									required>
+										<option ng-repeat="x in selectUseYn" value="{{x.value}}">{{x.value}}</option>									
+									</select>
+								</td>
+							</tr>
+							</tr>
+						</tbody>
+					</table>
+	            </div>
+	            <!-- Modal-footer -->
+	            <div class="modal-footer">
+	                <button type="submit" class="btn btn_brand">Code information modify</button>
+	                <button type="button" class="btn btn-default" ng-click="modelForm.reset()">Initialization</button>
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--========== /MODAL ==========-->

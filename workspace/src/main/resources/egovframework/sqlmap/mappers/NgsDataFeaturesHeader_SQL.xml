@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="NgsDataFeaturesHeader">
+
+	<sql id="selectSql">
+		SELECT 
+		    H.HEADER_ID,
+			H.ACCESSION, 
+			H.LOCUS, 
+			H.ORGANISM, 
+			H.STRAIN, 
+			H.DATE, 
+			H.START, 
+			H.END
+		FROM T_NGS_DATA_FEATURES_HEADER H, T_ACHIVE_HEADER_XREF X
+		WHERE H.HEADER_ID = X.HEADER_ID
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(headerId)">
+		AND H.HEADER_ID = #{headerId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(accession)">
+		AND H.ACCESSION = #{accession}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(locus)">
+		AND UPPER(H.LOCUS) = UPPER(#{locus})
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(organism)">
+		AND UPPER(H.ORGANISM) LIKE CONCAT('%',UPPER(#{organism}),'%')
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(strain)">
+		AND UPPER(H.STRAIN) = UPPER(#{strain})
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(start)">
+		AND H.START = #{start}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(end)">
+		AND H.END = #{end}
+		</if>
+	</sql>
+
+	<select id="selectOne" parameterType="Integer" resultType="ngsDataFeaturesHeader">
+		SELECT 
+		    HEADER_ID,
+			ACCESSION, 
+			LOCUS, 
+			ORGANISM, 
+			STRAIN, 
+			DATE, 
+			START, 
+			END
+		FROM T_NGS_DATA_FEATURES_HEADER
+		WHERE HEADER_ID = #{headerId}
+	</select>
+	
+	<select id="selectOneOfAchive" parameterType="Integer" resultType="ngsDataFeaturesHeader">
+		SELECT 
+		    H.HEADER_ID,
+			H.ACCESSION, 
+			H.LOCUS, 
+			H.ORGANISM, 
+			H.STRAIN, 
+			H.DATE, 
+			H.START, 
+			H.END
+		FROM T_NGS_DATA_FEATURES_HEADER H, T_ACHIVE_HEADER_XREF X
+		WHERE H.HEADER_ID = X.HEADER_ID
+		  AND X.ACHIVE_ID = #{achiveId}
+	</select>
+	
+	<select id="selectList" resultType="ngsDataFeaturesHeader">
+		SELECT 
+		    HEADER_ID,
+			ACCESSION, 
+			LOCUS, 
+			ORGANISM, 
+			STRAIN, 
+			DATE, 
+			START, 
+			END
+		FROM T_NGS_DATA_FEATURES_HEADER
+	</select>
+
+	<insert id="insert" parameterType="ngsDataFeaturesHeader" useGeneratedKeys="true" keyProperty="headerId">
+		INSERT INTO T_NGS_DATA_FEATURES_HEADER (
+			ACCESSION, 
+			LOCUS, 
+			ORGANISM, 
+			STRAIN, 
+			DATE, 
+			START, 
+			END
+		) VALUES (
+			#{accession}, 
+			#{locus}, 
+			#{organism}, 
+			#{strain}, 
+			DATE(#{date}), 
+			#{start}, 
+			#{end} 
+		)
+	</insert>
+	
+	<update id="update" parameterType="ngsDataFeaturesHeader">
+		UPDATE T_NGS_DATA_FEATURES_HEADER
+		SET 
+			ACCESSION = #{accession},
+			LOCUS = #{locus},
+			ORGANISM = #{organism},
+			STRAIN = #{strain},
+			DATE = #{date},
+			START = #{start},
+			END = #{end}
+		WHERE HEADER_ID = #{headerId}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM T_NGS_DATA_FEATURES_HEADER
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(headerId)">
+    	   AND HEADER_ID = #{headerId}
+    		</if>
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(headerIdList)">
+    	   AND HEADER_ID IN 
+    			<foreach collection="headerIdList" item="headerId" open="(" separator="," close=")">
+					#{headerId}
+				</foreach>
+    		</if>
+    	</trim>
+	</delete>
+</mapper>

@@ -1,0 +1,1 @@
+{"provides":{"Heap::Simple::XS::Package":{"file":"lib/Heap/Simple/XS/Package.pm","version":"0.10"},"Heap::Simple::XS":{"file":"lib/Heap/Simple/XS.pm","version":"0.10"}},"version":"0.10","target":"Heap::Simple::XS","pathname":"T/TH/THOSPEL/Heap-Simple-XS-0.10.tar.gz","name":"Heap::Simple::XS","dist":"Heap-Simple-XS-0.10"}

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NgsRawData">
+
+	<resultMap id="NgsRawData" type="ngsRawData">
+		<result property="registId" column="REGIST_ID"/>
+		<result property="cultureCondition" column="CULTURE_CONDITION"/>
+		<result property="treatment" column="TREATMENT"/>
+		<result property="sampleName" column="SAMPLE_NAME"/>
+		<result property="organismType" column="ORGANISM_TYPE"/>
+		<result property="sampleType" column="SAMPLE_TYPE"/>
+		<result property="geographLocation" column="GEOGRAPH_LOCATION"/>		
+		<result property="sampleComment" column="SAMPLE_COMMENT"/>
+		<result property="construction" column="CONSTRUCTION"/>
+		<result property="selection" column="SELECTION"/>
+		<result property="sequencer" column="SEQUENCER"/>
+		<result property="strategy" column="STRATEGY"/>
+		<result property="readLength" column="READ_LENGTH"/>
+		<result property="insertSize" column="INSERT_SIZE"/>
+		<result property="adapterSeq" column="ADAPTER_SEQ"/>
+		<result property="qualityScoreVersion" column="QUALITY_SCORE_VERSION"/>
+		<result property="baseCallingProgram" column="BASE_CALLING_PROGRAM "/>
+		<result property="libraryComment" column="LIBRARY_COMMENT"/>
+		
+		<association property="exprType" column="{code=EXPR_TYPE_CD}" select="Code.getBasic" javaType="code" />
+		<association property="domain" column="{code=DOMAIN_CD}" select="Code.getBasic" javaType="code" />
+		<association property="replicate" column="{code=REPLICATE_CD}" select="Code.getBasic" javaType="code" />
+		<association property="sampleSource" column="{code=SAMPLE_SOURCE_CD}" select="Code.getBasic" javaType="code" />
+		<association property="platform" column="{code=PLATFORM_CD}" select="Code.getBasic" javaType="code" />
+		<association property="readType" column="{code=READ_TYPE_CD}" select="Code.getBasic" javaType="code" />
+	</resultMap>
+	
+	<sql id="select">
+		SELECT REGIST_ID,
+		       EXPR_TYPE_CD,
+		       DOMAIN_CD,
+		       CULTURE_CONDITION,
+		       TREATMENT,
+		       REPLICATE_CD,
+		       SAMPLE_NAME,
+		       ORGANISM_TYPE,
+		       SAMPLE_TYPE,
+		       SAMPLE_SOURCE_CD,
+		       GEOGRAPH_LOCATION,
+		       SAMPLE_COMMENT,
+		       PLATFORM_CD,
+		       CONSTRUCTION,
+		       SELECTION,
+		       SEQUENCER,
+		       STRATEGY,
+		       READ_LENGTH,
+		       INSERT_SIZE,
+		       READ_TYPE_CD,
+		       ADAPTER_SEQ,
+		       QUALITY_SCORE_VERSION,
+		       BASE_CALLING_PROGRAM,
+		       LIBRARY_COMMENT
+		  FROM T_NGS_RAW_DATA
+    	<trim prefix="WHERE" prefixOverrides="AND|OR">
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isDataRegist(dataRegist)">
+    	   AND REGIST_ID = #{dataRegist.id}
+    		</if>
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registId)">
+    	   AND REGIST_ID = #{registId}
+    		</if>
+    	</trim>
+	</sql>
+	
+	<insert id="insert" parameterType="ngsRawData">
+		INSERT INTO T_NGS_RAW_DATA(
+			REGIST_ID,
+			EXPR_TYPE_CD,
+			DOMAIN_CD,
+			CULTURE_CONDITION,
+			TREATMENT,
+			REPLICATE_CD,
+			SAMPLE_NAME,
+			ORGANISM_TYPE,
+			SAMPLE_TYPE,
+			SAMPLE_SOURCE_CD,
+			GEOGRAPH_LOCATION,
+			SAMPLE_COMMENT,
+			PLATFORM_CD,
+			CONSTRUCTION,
+			SELECTION,
+			SEQUENCER,
+			STRATEGY,
+			READ_TYPE_CD,
+			READ_LENGTH,
+			INSERT_SIZE,
+			ADAPTER_SEQ,
+			QUALITY_SCORE_VERSION,
+			BASE_CALLING_PROGRAM,
+			LIBRARY_COMMENT
+		) VALUES (
+			#{registId},
+			#{exprType.code},
+			#{domain.code},
+			#{cultureCondition},
+			#{treatment},
+			#{replicate.code},
+			#{sampleName},
+			#{organismType},
+			#{sampleType},
+			#{sampleSource.code},
+			#{geographLocation},
+			#{sampleComment},
+			#{platform.code},
+			#{construction},
+			#{selection},
+			#{sequencer},
+			#{strategy},
+			#{readType.code},
+			#{readLength},
+			#{insertSize},
+			#{adapterSeq},
+			#{qualityScoreVersion},
+			#{baseCallingProgram},
+			#{libraryComment}
+		)
+	</insert>
+	
+	<select id="get" resultMap="NgsRawData">
+		<include refid="select" />
+		 LIMIT 0, 1
+	</select>
+	
+	<select id="select" resultMap="NgsRawData">
+		<include refid="select" />
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+	  	 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(*) FROM (<include refid="select" />)
+	</select>
+	
+	<update id="update" parameterType="ngsRawData">
+		UPDATE T_NGS_RAW_DATA 
+		   SET EXPR_TYPE_CD          =   #{exprType.code},
+		       DOMAIN_CD             =   #{domain.code},
+		       CULTURE_CONDITION     =   #{cultureCondition},
+		       TREATMENT             =   #{treatment},
+		       REPLICATE_CD          =   #{replicate.code},
+		       SAMPLE_NAME           =   #{sampleName},
+		       ORGANISM_TYPE         =   #{organismType},
+		       SAMPLE_TYPE           =   #{sampleType},
+		       SAMPLE_SOURCE_CD      =   #{sampleSource.code},
+		       GEOGRAPH_LOCATION     =   #{geographLocation},
+		       SAMPLE_COMMENT        =   #{sampleComment},
+		       PLATFORM_CD           =   #{platform.code},
+		       CONSTRUCTION          =   #{construction},
+		       SELECTION             =   #{selection},
+		       SEQUENCER     	     =   #{sequencer},
+		       STRATEGY              =   #{strategy},
+		       READ_LENGTH           =   #{readLength},
+		       INSERT_SIZE           =   #{insertSize},
+		       READ_TYPE_CD          =   #{readType.code},
+		       ADAPTER_SEQ           =   #{adapterSeq},
+		       QUALITY_SCORE_VERSION =   #{qualityScoreVersion},
+		       BASE_CALLING_PROGRAM  =   #{baseCallingProgram},
+		       LIBRARY_COMMENT = #{libraryComment}
+		 WHERE REGIST_ID = #{registId}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM T_NGS_RAW_DATA
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			REGIST_ID = #{id}
+		</trim>
+	</delete>
+
+</mapper>

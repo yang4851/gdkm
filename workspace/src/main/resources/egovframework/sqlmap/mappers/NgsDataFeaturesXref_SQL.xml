@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NgsDataFeaturesXref">
+	<select id="selectOne" parameterType="int" resultType="ngsDataFeaturesXref">
+		SELECT 
+		    XREF_ID,
+		    TYPE,
+		    VALUE,
+		    FEATURES_ID
+		FROM T_NGS_DATA_FEATURES_XREF
+		WHERE XREF_ID = #{xrefId}
+	</select>
+	
+	<select id="selectList" resultType="ngsDataFeaturesXref">
+		SELECT 
+		    XREF_ID,
+		    TYPE,
+		    VALUE,
+		    FEATURES_ID
+		FROM T_NGS_DATA_FEATURES_XREF
+	</select>
+
+	<insert id="insert" parameterType="ngsDataFeaturesXref" useGeneratedKeys="true" keyProperty="xrefId">
+		INSERT INTO T_NGS_DATA_FEATURES_XREF (
+		    TYPE,
+		    VALUE,
+		    FEATURES_ID
+		) VALUES (
+			#{type},
+			#{value},
+			#{featuresId}
+		)
+	</insert>
+	
+	<update id="update" parameterType="ngsDataFeaturesXref">
+		UPDATE T_NGS_DATA_FEATURES_XREF
+		SET 
+			TYPE = #{type},
+		    VALUE = #{value},
+		    FEATURES_ID = #{featuresId}
+		WHERE XREF_ID = #{xrefId}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM T_NGS_DATA_FEATURES_XREF
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(xrefId)">
+    	   AND XREF_ID = #{xrefId}
+    		</if>
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(featuresId)">
+    	   AND FEATURES_ID = #{featuresId}
+    		</if>
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(featureIdList)">
+    	   AND FEATURES_ID IN 
+    			<foreach collection="featureIdList" item="featuresId" open="(" separator="," close=")">
+					#{featuresId}
+				</foreach>
+    		</if>
+    	</trim>
+	</delete>
+</mapper>

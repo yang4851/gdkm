@@ -1,0 +1,80 @@
+<!-- search form -->
+<div class="search_form_tbl">	
+	<div class="form-horizontal col_tbl">
+		<!-- search-form -->
+		<div class="form-group">
+			<label class="col-xs-3 control-label">Accept status & Date</label>
+			<div class="col-xs-3" style="float: left;">
+				<select class="form-control picker" ng-model="params.registStatus"
+				 ng-options="code.id as code.name for code in veviewSttsCodeList"></select>
+			</div>
+			<div class="col-xs-6 input-daterange">
+				<div class="input-group" moment-picker="params.registFrom" format="YYYY-MM-DD" start-view="month">
+					<input class="form-control" placeholder="Select a date"
+					 ng-model="params.registFrom" ng-model-options="{ updateOn: 'blur' }" />
+					<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+				</div>
+				<div class="dash">-</div>
+				<div class="input-group" moment-picker="params.registTo" format="YYYY-MM-DD" start-view="month">
+					<input class="form-control" placeholder="Select a date"
+					 ng-model="params.registTo" ng-model-options="{ updateOn: 'blur' }" />
+					<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<div class="col-xs-offset-3 col-xs-3" style="float: left; margin-left: 25%;">
+				<select class="form-control picker" ng-model="params.fields"
+				 ng-options="code.id as code.name for code in rawFieldCodeList"></select>
+			</div>
+			<div class="col-xs-6">
+				<input type="text" class="form-control" ng-model="params.keyword" ng-enter="search()" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="col_tbl">
+		<button type="submit" class="btn btn_brand" ng-click="search()">Search</button>
+	</div>
+</div>
+<!--/ search form -->
+
+<!-- action button -->
+<div class="row toolbar">
+	<div class="col-xs-3">
+		<p class="form-control-static">
+			All <strong class="num">{{ pageHandler.getTotal() | number }}</strong>
+		</p>
+	</div>
+	<div class="col-xs-9 form-inline">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default"
+				ng-disabled="disabledConfirmBtn()"
+				ng-click="changeConfirmStatus('accept')">Accept</button>
+			<button type="button" class="btn btn-default"
+				ng-disabled="disabledConfirmBtn()"
+				ng-click="changeConfirmStatus('reject')">Reject</button>
+		</div>
+		<button type="button" class="btn btn-default"
+			ng-disabled="disabledDownloadExcelBtn()"
+			ng-click="downloadExcel()">
+			<i class="far fa-file-excel"><span> Download</span></i></button>
+		<div class="form-group">
+			<select class="form-control picker"  
+				ng-options="code.id as code.name for code in openYnCodeList"
+				ng-model="params.openYn" ng-change="search()"></select>
+		</div>
+		<div class="form-group">
+			<select class="form-control picker"  
+				ng-options="code.id as code.name for code in rowSizeCodeList"
+				ng-model="pageHandler.numberOfRows" ng-change="search()"></select>
+		</div>
+		<button type="button" class="btn btn-default" ng-click="search()">
+			<i class="fa fa-undo"></i><span class="sr-only">Refresh</span>
+		</button>
+	</div>
+</div>
+<!--/ action button -->
+
+<div ng-include="'./views/registration/raw-data-list.html'"></div>

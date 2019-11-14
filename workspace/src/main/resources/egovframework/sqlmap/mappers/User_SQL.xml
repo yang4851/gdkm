@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="User">
+
+	<resultMap id="User" type="user">
+		<result column="USER_ID" property="userId"></result>
+		<result column="PASSWORD" property="password"></result>
+		<result column="NAME" property="name"></result>
+		<result column="EMAIL" property="email"></result>
+		<result column="INSTITUTE" property="institute"></result>
+		<result column="DEPARTMENT" property="department"></result>
+		<result column="PHONE" property="phone"></result>
+		<result column="AUTHORITY" property="authority"></result>
+		<result column="REGIST_DATE" property="registDate"></result>
+		<result column="UPDATE_USER" property="updateUser"></result>
+		<result column="UPDATE_DATE" property="updateDate"></result>
+	</resultMap>
+	
+	<resultMap id="BasicUser" type="user">
+		<result property="userId" column="USER_ID" />
+		<result property="name" column="NAME" />
+		<result property="authority" column="AUTHORITY" />
+	</resultMap>
+	
+	<sql id="select">
+		SELECT  
+			AES_DECRYPT(UNHEX(USER_ID),'raison') AS USER_ID
+			,PASSWORD
+			,NAME
+			,EMAIL       
+			,INSTITUTE
+			,DEPARTMENT 
+			,PHONE
+			,AUTHORITY
+			,REGIST_DATE
+			,UPDATE_USER
+			,UPDATE_DATE
+	  	FROM T_COM_USER
+	</sql>
+
+	<insert id="insert" parameterType="user">
+		INSERT INTO T_COM_USER VALUES
+		(
+			HEX(AES_ENCRYPT(#{userId},'raison'))
+			,#{password}
+			,#{name}
+			,#{email}
+			,#{institute}
+			,#{department}
+			,#{phone}
+			,#{authority}
+			,NOW()
+			,#{updateUser}
+			,NOW()
+		)
+	</insert>
+	
+	<select id="select" resultMap="User">
+		<include refid="select"/>
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(searchId)">
+				AND AES_DECRYPT(UNHEX(USER_ID),'raison') = #{searchId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(userId)">
+				AND AES_DECRYPT(UNHEX(USER_ID),'raison') LIKE CONCAT('%',CONCAT(#{userId},'%'))
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(encryptId)">
+				AND USER_ID LIKE CONCAT('%',CONCAT(#{encryptId},'%'))
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(name)">
+				AND NAME LIKE CONCAT('%',CONCAT(#{name},'%'))
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(institute)">
+				AND INSTITUTE LIKE CONCAT('%',CONCAT(#{institute},'%'))
+			</if>
+		</trim>
+		ORDER BY REGIST_DATE DESC
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+			LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	<select id="selectBasic" resultMap="User">
+		<include refid="select"/>
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(searchId)">
+				AND AES_DECRYPT(UNHEX(USER_ID),'raison') = #{searchId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(userId)">
+				AND AES_DECRYPT(UNHEX(USER_ID),'raison') LIKE CONCAT('%',CONCAT(#{userId},'%'))
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(encryptId)">
+				AND USER_ID LIKE CONCAT('%',CONCAT(#{encryptId},'%'))
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(name)">
+				AND NAME LIKE CONCAT('%',CONCAT(#{name},'%'))
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(institute)">
+				AND INSTITUTE LIKE CONCAT('%',CONCAT(#{institute},'%'))
+			</if>
+		</trim>
+		ORDER BY REGIST_DATE DESC
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+			LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(USER_ID)
+	  	FROM T_COM_USER
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(userId)">
+				AND AES_DECRYPT(UNHEX(USER_ID),'raison') LIKE CONCAT('%',CONCAT(#{userId},'%'))
+<!-- 				AND USER_ID LIKE CONCAT('%',CONCAT(HEX(AES_ENCRYPT(#{userId},'raison')),'%')) -->
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(name)">
+				AND NAME LIKE CONCAT('%',CONCAT(#{name},'%'))
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(institute)">
+				AND INSTITUTE LIKE CONCAT('%',CONCAT(#{institute},'%'))
+			</if>
+		</trim>
+	</select>
+	
+	<select id="get" resultType="user">
+		<include refid="select" />
+		WHERE USER_ID = HEX(AES_ENCRYPT(#{userId},'raison'))
+		ORDER BY REGIST_DATE DESC
+	</select>
+	
+	<select id="getBasicUser" resultMap="BasicUser">
+		<include refid="select" />
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(userId)">
+				AND USER_ID = HEX(AES_ENCRYPT(#{userId},'raison'))
+			</if>
+		</trim>
+		LIMIT 0, 1
+	</select>
+	
+	<select id="getAsObject" resultType="user">
+		<include refid="select" />
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(userId)">
+				AND USER_ID = HEX(AES_ENCRYPT(#{userId},'raison'))
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(authPw)">
+				AND PASSWORD = #{authPw}
+			</if>
+		</trim>
+	</select>
+	
+	<update id="update" parameterType="user">
+		UPDATE T_COM_USER SET 
+			NAME           	= #{name}
+			,EMAIL          = #{email}
+			,INSTITUTE    = #{institute}
+			,DEPARTMENT     = #{department}
+			,PHONE       	= #{phone}
+			,AUTHORITY		= #{authority}
+			,UPDATE_USER 	= #{updateUser} 
+			,UPDATE_DATE	= NOW()
+		WHERE USER_ID = HEX(AES_ENCRYPT(#{userId},'raison'))
+	</update>
+	
+	<update id="updatePw" parameterType="user">
+		UPDATE T_COM_USER SET
+			PASSWORD = #{password}
+		WHERE USER_ID = HEX(AES_ENCRYPT(#{userId},'raison'))
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		DELETE FROM T_COM_USER
+		WHERE USER_ID IN
+		<foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+			HEX(AES_ENCRYPT(#{item},'raison'))
+		</foreach>
+	</delete>
+	
+</mapper>

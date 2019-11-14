@@ -1,0 +1,39 @@
+ <div class="container">
+
+        <div class="col-left col-xs-3">
+          <div ng-include="'./views/admin/left.html'"></div>
+        </div>
+        <!-- col-left -->
+        <div class="col-right col-xs-9">
+            <!-- page-title -->
+            <div class="content_top">
+                <h1 class="title_page">
+                    <a href="#" class="active">NCBI 분류정보</a>
+                    <!-- <a href="#">Annotation</a> -->
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#!/home">Home</a></li>
+                    <li><a href="#!/user">NCBI 분류정보</a></li>
+                    <li class="active">그룹 관리</li>
+                </ol>
+            </div>
+            <!-- /page-title -->
+            <div>
+        	<!-- Tab panel -->
+	         	<div role="tabpanel">
+	             <!-- Nav tabs -->
+		             <ul class="nav nav-tabs">
+		                 <li class="active"><a data-target="#tabNcbiManage" data-toggle="tab">NCBI Taxonomy</a></li>
+		             </ul>
+		             <!-- Tab panes -->
+		             <div class="tab-content">
+	                 <!-- tab1 -  개인정보 -->
+	                   <div class="tab-pane active" id="tabNcbiManage">
+	                   		<div ng-include="'./views/microbes-taxonomy/detail.html'"></div>
+	                   </div>
+	               </div>
+	           	</div>
+	    	</div>
+        </div>
+        <!-- /col-right -->
+    </div>

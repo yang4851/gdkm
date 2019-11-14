@@ -1,0 +1,97 @@
+
+FeatureFilter
+{
+	set1 : feature-filter(and(strand("positive"),type("CDS")));
+	set0 : feature-filter(and(strand("negative"),type("CDS")));
+}
+
+background
+{
+	color : color("white");
+}
+
+slot
+{
+	spacing : 2.0;
+}
+
+slot#-1
+{
+	color : color("red");
+	thickness : 15.0;
+	feature-shape : shape("block");
+	feature-effect : shape-effect("standard");
+}
+
+slot#-1 labels
+{
+	text-color : color("red");
+	background-color : color(255,255,255,200);
+	font : font("SansSerif","plain",14);
+	label-extractor : text-extractor(annotation("product"));
+	show-labels : "true";
+}
+
+slot#-1 FeatureSet#set0
+{
+	color : color("red");
+	thickness-proportion : 1.0;
+	feature-effect : shape-effect("standard");
+	feature-shape : shape("counterclockwise-arrow");
+	tooltip-text : text-extractor(annotation("product"));
+}
+
+slot#1
+{
+	color : color("blue");
+	thickness : 15.0;
+	feature-shape : shape("block");
+	feature-effect : shape-effect("standard");
+}
+
+slot#1 labels
+{
+	text-color : color("blue");
+	background-color : color(255,255,255,200);
+	font : font("SansSerif","plain",14);
+	label-extractor : text-extractor(annotation("product"));
+	show-labels : "true";
+}
+
+slot#1 FeatureSet#set1
+{
+	color : color("blue");
+	thickness-proportion : 1.0;
+	feature-effect : shape-effect("standard");
+	feature-shape : shape("clockwise-arrow");
+	tooltip-text : text-extractor(annotation("product"));
+}
+
+tooltip
+{
+	text-color : color("black");
+	outline-color : color(0,0,0,128);
+	background-color : color(134,134,255,255);
+	font : font("SansSerif","plain",12);
+}
+
+ruler
+{
+	major-tick-color : color("dark_green");
+	minor-tick-color : color("dark_green");
+	label-color : color("black");
+	label-background-color : color(255,255,255,200);
+	major-tick-length : 5.0;
+	minor-tick-length : 3.0;
+	tick-density : 1.0;
+	tick-thickness : 1.0;
+	tick-padding : 10.0;
+	label-font : font("SansSerif","plain",10);
+}
+
+backbone
+{
+	color : color("gray");
+	thickness : 5.0;
+	backbone-effect : shape-effect("basic");
+}

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NgsFileQcSummary">
+
+	<resultMap id="NgsFileQcSummary" type="ngsFileQcSummary">
+		<result property="id" column="SUMMARY_ID" />
+		<result property="summary" column="SUMMARY" />
+		<result property="status" column="QC_STATUS" />
+		<result property="registDate" column="REGIST_DATE" />
+		
+		<association property="achive" column="{achiveId=ACHIVE_ID}" javaType="ngsDataAchive" select="NgsDataAchive.getTiny" />
+		<association property="registUser" column="{userId=REGIST_USER}" javaType="user" select="User.getBasicUser" />
+	</resultMap>
+	
+	<sql id="select">
+		SELECT S.SUMMARY_ID,
+		       S.ACHIVE_ID,
+		       S.SUMMARY,
+		       S.QC_STATUS,
+		       AES_DECRYPT(UNHEX(S.REGIST_USER),'raison') AS REGIST_USER,
+		       S.REGIST_DATE
+	  	  FROM T_NGS_FILE_QC_SUMMARY S, T_NGS_DATA_ACHIVE A
+		 WHERE S.ACHIVE_ID = A.ACHIVE_ID
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(status)">
+	  	   AND UPPER(S.QC_STATUS) = UPPER(#{status})
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveId)">
+	  	   AND S.ACHIVE_ID = #{achiveId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isDataAchive(achive)">
+	  	   AND S.ACHIVE_ID = #{achive.id}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registId)">
+	  	   AND A.REGIST_ID = #{registId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isDataRegist(regist)">
+	  	   AND A.REGIST_ID = #{regist.id}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(summaryId)">
+	  	   AND S.SUMMARY_ID = #{summaryId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(id)">
+	  	   AND S.SUMMARY_ID = #{id}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(ids)">
+	  	   AND S.SUMMARY_ID IN 
+			<foreach collection="ids" item="summaryId" open="(" separator="," close=")">
+				#{summaryId}
+			</foreach>
+		</if>
+	</sql>
+	
+	<insert id="insert" parameterType="ngsFileQcSummary">
+		<selectKey resultType="int" keyProperty="id" order="BEFORE">
+		SELECT (CASE WHEN 0 &lt; #{id}
+		             THEN IFNULL(#{id}, IFNULL(MAX(SUMMARY_ID), 0) + 1)
+		             ELSE IFNULL(MAX(SUMMARY_ID), 0) + 1
+		             END) AS id
+		 FROM T_NGS_FILE_QC_SUMMARY
+   		</selectKey>
+   		 
+		INSERT INTO T_NGS_FILE_QC_SUMMARY(
+			SUMMARY_ID,
+			ACHIVE_ID,
+			SUMMARY,
+			QC_STATUS,
+			REGIST_USER,
+			REGIST_DATE
+		) VALUES (
+			#{id},
+			#{achive.id},
+			#{summary},
+			#{status},
+			HEX(AES_ENCRYPT(#{registUser.userId},'raison')),
+			NOW()
+		)
+	</insert>
+	
+	<select id="get" resultMap="NgsFileQcSummary">
+		<include refid="select" />
+	  	 LIMIT 0, 1
+	</select>
+	
+	<select id="select" resultMap="NgsFileQcSummary">
+		<include refid="select" />
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+	  	 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(*) FROM (<include refid="select" />) T
+	</select>
+	
+	<update id="update" parameterType="ngsFileQcSummary">
+		UPDATE T_NGS_FILE_QC_SUMMARY 
+		   SET SUMMARY  = #{summary},
+		       QC_STATUS   = #{status}
+		 WHERE SUMMARY_ID       = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM T_NGS_FILE_QC_SUMMARY
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveId)">
+	  	   AND ACHIVE_ID = #{achiveId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registId)">
+	  	   AND ACHIVE_ID IN (SELECT DISTINCT(ACHIVE_ID) FROM T_NGS_DATA_ACHIVE WHERE REGIST_ID=#{registId})
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(summaryId)">
+	  	   AND SUMMARY_ID = #{summaryId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(id)">
+	  	   AND SUMMARY_ID = #{id}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(ids)">
+	  	   AND SUMMARY_ID IN 
+				<foreach collection="ids" item="summaryId" open="(" separator="," close=")">
+					#{summaryId}
+				</foreach>
+			</if>
+		</trim>
+	</delete>
+</mapper>

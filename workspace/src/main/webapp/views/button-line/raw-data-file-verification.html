@@ -1,0 +1,29 @@
+<!-- list-toolbar -->
+	<div class="row toolbar" style="padding-bottom: 10px;">
+		<div class="col-xs-3">
+			<p class="form-control-static">
+				All<strong class="num">17</strong>
+			</p>
+		</div>
+		<div class="col-xs-9 form-inline text-right">
+			<button type="button" class="btn btn-default" data-toggle="modal"
+					data-target="#raw-data-create-popup">New</button>
+			<button type="button" class="btn btn-default">File verification</button>
+			<button type="button" class="btn btn-default">Submission</button>
+			<button type="button" class="btn btn-default" ng-click="openYnChangeCommand.execute">Open</button>
+			<button type="button" class="btn btn-default" >Download</button>
+			<div class="form-group">
+				<select class="form-control picker" ng-change="searchHandler.search()" ng-model="searchHandler.ngsDataRegist.openYn">
+					<option ng-selected="" ng-repeat="item in selectObjectHandler.openYn" ng-value="item.value">{{item.label}}</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<select class="form-control picker" ng-model="pageHandler.rowSize"
+					 ng-options="volume.value as volume.label for volume in pageHandler.volumes"
+					 ng-change="searchHandler.search()"></select>
+			</div>
+			<button type="button" class="btn btn-default">
+				<i class="fa fa-undo"></i><span class="sr-only">reset</span>
+			</button>
+		</div>
+	</div>

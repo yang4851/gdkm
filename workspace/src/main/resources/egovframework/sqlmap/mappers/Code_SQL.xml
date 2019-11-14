@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Code">
+
+	<resultMap id="Code" type="code">
+		<result property="code" column="CODE" />
+		<result property="group" column="CODE_GROUP" />
+		<result property="name" column="NAME" />
+		<result property="useYn" column="USE_YN" />
+		<result property="registDate" column="REGIST_DATE" />
+	</resultMap>
+	
+	<resultMap id="BasicCode" type="code">
+		<result property="code" column="CODE" />
+		<result property="group" column="CODE_GROUP" />
+		<result property="name" column="NAME" />
+	</resultMap>
+	
+	<sql id="select">
+		SELECT CODE,
+		       CODE_GROUP,
+		       NAME,
+		       USE_YN,
+		       REGIST_DATE
+		  FROM T_COM_CODE
+    	<trim prefix="WHERE" prefixOverrides="AND|OR">
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(code)">
+    	   AND CODE LIKE CONCAT('%', #{code}, '%')
+    		</if>
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(group)">
+    	   AND CODE_GROUP = #{group}
+    		</if>
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(name)">
+    	   AND UPPER(NAME) LIKE CONCAT('%', #{name}, '%')
+    		</if>
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(useYn)">
+    	   AND USE_YN = #{useYn}
+    		</if>
+    	</trim>
+	</sql>
+
+	<insert id="insert" parameterType="code">
+		INSERT INTO T_COM_CODE (
+			CODE,
+			CODE_GROUP,
+			NAME,
+			USE_YN,
+			REGIST_DATE
+		) VALUES (
+			#{code},
+			#{group},
+			#{name},
+			#{useYn},
+			NOW()
+		)
+	</insert>
+	
+	<select id="get" resultMap="Code">
+		<include refid="select" />
+		 LIMIT 0, 1
+	</select>
+	
+	<select id="getBasic" resultMap="BasicCode">
+		<include refid="select" />
+		 LIMIT 0, 1
+	</select>
+
+	<update id="update" parameterType="code">
+		UPDATE T_COM_CODE 
+		   SET CODE_GROUP = #{group},
+		       NAME = #{name},
+		       USE_YN = #{useYn}
+		 WHERE CODE = #{code}
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		DELETE FROM T_COM_CODE
+		WHERE CODE IN
+		<foreach collection="array" item="code" open="(" separator="," close=")">
+			#{code}
+		</foreach>
+	</delete>
+
+	<select id="select" resultMap="Code">
+		<include refid="select" />
+		 ORDER BY CODE_GROUP, CODE ASC
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+		 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="selectBasic" resultMap="BasicCode">
+		<include refid="select" />
+		 ORDER BY CODE_GROUP, CODE ASC
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+		 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		SELECT COUNT(*) FROM (<include refid="select" />) T
+	</select>
+	
+</mapper>

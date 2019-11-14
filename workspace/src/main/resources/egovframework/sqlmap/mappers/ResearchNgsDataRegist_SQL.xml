@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ResearchNgsDataRegist">
+
+	<resultMap id="NgsDataRegist" type="ngsDataRegist">
+		<result property="id"  column="REGIST_ID" />
+		<result property="registNo" column="REGIST_NO" />
+		<result property="dataType" column="DATA_TYPE" />
+		<result property="strain" column="STRAIN" />
+		
+		<association property="taxonomy" column="{taxonId=TAXON_ID}" javaType="taxonomy" select="Taxonomy.get" />
+		<association property="rawData" column="{registId=REGIST_ID}" javaType="ngsRawData" select="NgsRawData.get" />
+		<association property="processedData" column="{registId=REGIST_ID}" javaType="ngsProcessedData" select="NgsProcessedData.get" />
+	</resultMap>
+
+	<sql id="searchByKeyword">
+		<trim prefix="AND (" prefixOverrides="OR|AND" suffix=")">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(keyword)">
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'registNo')"> 
+		   OR UPPER(D.REGIST_NO) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'strain')">
+		   OR UPPER(P.STRAIN) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isEmpty(fields)">
+		   OR UPPER(D.REGIST_NO) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+		   OR UPPER(P.STRAIN) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="whereSQL">
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(keyword)">
+			<include refid="searchByKeyword" />
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(data)">
+  	   AND R.REGIST_ID = #{data.id}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(dataId)">
+  	   AND R.REGIST_ID = #{dataId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(research)">
+  	   AND R.RESEARCH_ID = #{research.id}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(researchId)">
+  	   AND R.RESEARCH_ID = #{researchId}
+		</if>
+	</sql>
+
+	<insert id="insert">
+		INSERT INTO T_RESEARCH_NGS_DATA_REGIST(
+			RESEARCH_ID,
+			REGIST_ID
+		) VALUES (
+			#{research.id},
+			#{data.id}
+		)
+	</insert>
+	
+	<select id="select" resultMap="NgsDataRegist">
+		SELECT D.REGIST_ID,
+		       D.REGIST_NO,
+		       D.DATA_TYPE,
+		       D.TAXON_ID,
+		       D.STRAIN
+	  	  FROM T_NGS_DATA_REGIST D, T_RESEARCH_NGS_DATA_REGIST R
+	  	 WHERE D.REGIST_ID = R.REGIST_ID  
+		<include refid="whereSQL" />
+	  	 ORDER BY D.REGIST_NO DESC
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+	  	 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(*)
+	  	  FROM T_NGS_DATA_REGIST D, T_RESEARCH_NGS_DATA_REGIST R
+	  	 WHERE D.REGIST_ID = R.REGIST_ID  
+		<include refid="whereSQL" />
+	</select>
+	
+	<delete id="delete">
+		DELETE FROM T_RESEARCH_NGS_DATA_REGIST
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(research)">
+	  	   AND RESEARCH_ID = #{research.id}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(researchId)">
+	  	   AND RESEARCH_ID = #{researchId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(data)">
+	  	   AND REGIST_ID = #{data.id}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(dataId)">
+	  	   AND REGIST_ID = #{dataId}
+			</if>
+		</trim>
+	</delete>
+
+</mapper>

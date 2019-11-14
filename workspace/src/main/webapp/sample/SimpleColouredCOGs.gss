@@ -1,0 +1,421 @@
+/* This is a commment */
+ 
+/* Defines the set of FeatureFilters used to filter out features on the geneome this style is applied to. */
+FeatureFilter
+{
+	/* Create 2 feature-filters for each CDS feature found.  This should 
+	 * create a filter that will contain all genes found 
+	 * Create a separate set for genes on the positive and negative strand.
+	 */
+	set1 : feature-filter( and( strand( "positive" ),type( "CDS" ) ) );
+	set2 : feature-filter( and( strand( "negative" ),type( "CDS" ) ) );
+
+	/* Similarly, create 2 feature-filters to extract only COGs found and the strand they are on.
+	 */
+	positiveCog : feature-filter( and( type( "CDS" ), strand( "positive" ), hasAnnotation("COG") ) );
+	negativeCog : feature-filter( and( type( "CDS" ), strand( "negative" ), hasAnnotation("COG") ) );
+}
+ 
+/* Information on the style for the background */
+background
+{
+	/* Defines the background color. */
+	color : color("white");
+}
+
+/* Information specific to the tooltip item that is displayed */
+tooltip
+{
+	text-color : color("black");
+	outline-color : color(0,0,0,128);
+	background-color : color(255,255,255,255);
+	font : font("SansSerif","plain",14);
+}
+ 
+/* Style information for the ruler on the map */
+ruler
+{
+	major-tick-color : color("dark_green");
+	minor-tick-color : color("dark_green");
+	label-color : color("black");
+	label-background-color : color(255,255,255,200);
+	major-tick-length : 5.0;
+	minor-tick-length : 1.5;
+	tick-density : 0.5;
+	tick-thickness : 2.0;
+	tick-padding : 10.0;
+	label-font : font("SansSerif","bold",10);
+}
+ 
+/* Style information for the backbone (the center circular/linear arc) for the map */
+backbone
+{
+	color : color("gray");
+	thickness : 5.0;
+	backbone-effect : shape-effect("basic");
+}
+ 
+/* Global style information for all slots */
+slot
+{
+	spacing : 5.0;
+}
+
+/* Default style information for slot number 1 (one above the backbone) */
+slot#1
+{
+	color : color(0,0,153,255);
+	thickness : 15.0; /* Thickness of the slot */
+	feature-shape : shape("block");
+	feature-effect : shape-effect("standard");
+}
+ 
+/* Style information for labels within slot 1 */
+slot#1 labels
+{
+	background-color : color(255,255,255,200);
+	text-color : color(0,0,153,255);
+	font : font("SansSerif","plain",12);
+	label-extractor : text-extractor(annotation("product")); /* Defines how to extract text for the labels from the features (in this case, extract the "product" annotation). */
+	show-labels : "true";
+}
+
+
+/* Default style information for slot number -1 (one below the backbone) */
+slot#-1
+{
+	color : color(0,0,153,255);
+	thickness : 15.0; /* Thickness of the slot */
+	feature-shape : shape("block");
+	feature-effect : shape-effect("standard");
+}
+ 
+/* Style information for labels within slot -1 */
+slot#-1 labels
+{
+	text-color : color(0,0,153,255);
+	background-color : color(255,255,255,200);
+	font : font("SansSerif","plain",12);
+	label-extractor : text-extractor(annotation("product")); 
+	show-labels : "true";
+}
+
+ 
+/* Style information for all features belonging to set 0 within slot 1 */
+slot#1 FeatureSet#set1
+{
+	thickness-proportion : 1.0; /* thickness as a proportion of slot thickness (from 0 to 1) */
+	feature-shape : shape("clockwise-arrow");
+	tooltip-text : text-extractor(stringbuilder("Product: %s \A Location: %s", annotation("product"), "location"));
+}
+
+slot#-1 FeatureSet#set2
+{
+	thickness-proportion : 1.0; /* thickness as a proportion of slot thickness (from 0 to 1) */
+	feature-shape : shape("counterclockwise-arrow");
+	tooltip-text : text-extractor(stringbuilder("Product: %s \A Location: %s", annotation("product"), "location"));
+}
+
+/* Define slots 2 and 3 to be used for COGs. 
+ * Style information constant for all COGS on these strands is set here.
+ */
+slot#2
+{
+	feature-effect : shape-effect("shaded");
+	tooltip-text : text-extractor(stringbuilder("COG: %s \A Location: %s", annotation("COG_functions"), "location"));
+	thickness : 20.0;
+
+        /* Define a property-mapper which will map each COG category to a specific color. */
+        property-mapper : discrete-map(
+                               cog('A','B','C','D','E','F','G','H','I','J','K','L','M',
+                                   'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
+                                  ),      
+
+                               colors(color(255,0,0,255), color(255,98,71,255),
+                                      color(0,255,255,255), color(240,230,140,255),
+                                      color(70,130,180,255), color(0,191,255,255),
+                                      color(0,206,209,255), color(0,0,255,255),
+                                      color(105,90,205,255), color(240,128,128,255),
+                                      color(255,136,0,255), color(255,20,147,255),
+                                      color(108,142,35,255), color(33,139,33,255),
+                                      color(189,182,107,255), color(154,205,50,255),
+                                      color(0,0,128,255), color(190,190,190,255),
+                                      color(105,105,105,255), color(50,205,50,255),
+                                      color(175,255,47,255), color(0,250,150,255),
+                                      color(143,188,143,255), color(255,0,0,255),
+                                      color(59,179,111,255), color(255,255,0,255)
+                                     )       
+                              );
+}
+
+slot#-2
+{
+	feature-effect : shape-effect("shaded");
+	tooltip-text : text-extractor(stringbuilder("COG: %s \A Location: %s", annotation("COG_functions"), "location"));
+	thickness : 20.0;
+
+        property-mapper : discrete-map(
+                               cog('A','B','C','D','E','F','G','H','I','J','K','L','M',
+                                   'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
+                                  ),      
+
+                               colors(color(255,0,0,255), color(255,98,71,255),
+                                      color(0,255,255,255), color(240,230,140,255),
+                                      color(70,130,180,255), color(0,191,255,255),
+                                      color(0,206,209,255), color(0,0,255,255),
+                                      color(105,90,205,255), color(240,128,128,255),
+                                      color(255,136,0,255), color(255,20,147,255),
+                                      color(108,142,35,255), color(33,139,33,255),
+                                      color(189,182,107,255), color(154,205,50,255),
+                                      color(0,0,128,255), color(190,190,190,255),
+                                      color(105,105,105,255), color(50,205,50,255),
+                                      color(175,255,47,255), color(0,250,150,255),
+                                      color(143,188,143,255), color(255,0,0,255),
+                                      color(59,179,111,255), color(255,255,0,255)
+                                     )       
+                              );
+}
+
+
+/* Define slot 2 parent FeatureSet and style, which is all positive strand COG features 
+ * The shape style is set while filtering for forward or negative strand features.
+ */
+
+slot#2 FeatureSet#positiveCog
+{
+	feature-shape : shape("clockwise-arrow");
+}
+
+/* Define slot 3 parent style, which is all negative strand COG features */
+slot#-2 FeatureSet#negativeCog
+{
+	feature-shape : shape("counterclockwise-arrow");
+}
+
+/* Now define the legend items */
+legend#0
+{
+	background-color : color(255,255,255,200);
+	text-color : color("black");
+	text-font : font("SansSerif", "plain", 14);
+}
+
+legend#0 legenditem#A
+{
+	show-swatch : "true";
+        legend-text : "A COG";
+        swatch-color : color(255,0,0,255);
+}
+
+legend#0 legenditem#B
+{
+	show-swatch : "true";
+        legend-text : "B COG";
+        swatch-color : color(255,98,71,255);
+}
+
+legend#0 legenditem#C
+{
+	show-swatch : "true";
+        legend-text : "C COG";
+        swatch-color : color(0,255,255,255);
+}
+
+legend#0 legenditem#D
+{
+	show-swatch : "true";
+        legend-text : "D COG";
+        swatch-color : color(240,230,140,255);
+}
+
+legend#0 legenditem#E
+{
+	show-swatch : "true";
+        legend-text : "E COG";
+        swatch-color : color(70,130,180,255);
+}
+
+legend#0 legenditem#F
+{
+	show-swatch : "true";
+        legend-text : "F COG";
+        swatch-color : color(0,191,255,255);
+}
+
+legend#0 legenditem#G
+{
+	show-swatch : "true";
+        legend-text : "G COG";
+        swatch-color : color(0,206,209,255);
+}
+
+legend#0 legenditem#H
+{
+	show-swatch : "true";
+        legend-text : "H COG";
+        swatch-color : color(0,0,255,255);
+}
+
+legend#0 legenditem#I
+{
+	show-swatch : "true";
+        legend-text : "I COG";
+        swatch-color : color(105,90,205,255);
+}
+
+legend#0 legenditem#J
+{
+	show-swatch : "true";
+        legend-text : "J COG";
+        swatch-color : color(240,128,128,255);
+}
+
+legend#0 legenditem#K
+{
+	show-swatch : "true";
+        legend-text : "K COG";
+        swatch-color : color(255,136,0,255);
+}
+
+legend#0 legenditem#L
+{
+	show-swatch : "true";
+        legend-text : "L COG";
+        swatch-color : color(255,20,147,255);
+}
+
+legend#0 legenditem#M
+{
+	show-swatch : "true";
+        legend-text : "M COG";
+        swatch-color : color(108,142,35,255);
+}
+
+legend#0 legenditem#N
+{
+	show-swatch : "true";
+        legend-text : "N COG";
+        swatch-color : color(33,139,33,255);
+}
+
+legend#0 legenditem#O
+{
+	show-swatch : "true";
+        legend-text : "O COG";
+        swatch-color : color(189,182,107,255);
+}
+
+legend#0 legenditem#P
+{
+	show-swatch : "true";
+        legend-text : "P COG";
+        swatch-color : color(154,205,50,255);
+}
+
+legend#0 legenditem#Q
+{
+	show-swatch : "true";
+        legend-text : "Q COG";
+        swatch-color : color(0,0,128,255);
+}
+
+legend#0 legenditem#R
+{
+	show-swatch : "true";
+        legend-text : "R COG";
+        swatch-color : color(190,190,190,255);
+}
+
+legend#0 legenditem#S
+{
+	show-swatch : "true";
+        legend-text : "S COG";
+        swatch-color : color(105,105,105,255);
+}
+
+legend#0 legenditem#T
+{
+	show-swatch : "true";
+        legend-text : "T COG";
+        swatch-color : color(50,205,50,255);
+}
+
+legend#0 legenditem#U
+{
+	show-swatch : "true";
+        legend-text : "U COG";
+        swatch-color : color(175,255,47,255);
+}
+
+legend#0 legenditem#V
+{
+	show-swatch : "true";
+        legend-text : "V COG";
+        swatch-color : color(0,250,150,255);
+}
+
+legend#0 legenditem#W
+{
+	show-swatch : "true";
+        legend-text : "W COG";
+        swatch-color : color(143,188,143,255);
+}
+
+legend#0 legenditem#X
+{
+	show-swatch : "true";
+        legend-text : "X COG";
+        swatch-color : color(255,0,0,255);
+}
+
+legend#0 legenditem#Y
+{
+	show-swatch : "true";
+        legend-text : "Y COG";
+        swatch-color : color(59,179,111,255);
+}
+
+legend#0 legenditem#Z
+{
+	show-swatch : "true";
+        legend-text : "Z COG";
+        swatch-color : color(255,255,0,255);
+}
+
+legend#0 legenditem#CDS
+{
+	show-swatch : "true";
+	legend-text : "CDS";
+	swatch-color : color(0,0,153,255);
+}
+
+legend#name
+{
+	background-color : color(255,255,255,200);
+	text-color : color("black");
+	alignment : lower-center;
+}
+
+legend#name legenditem#1
+{
+	text-font : font("SansSerif", "bold", 18);
+	legend-text : "Roseobacter denitrificans";
+}
+
+legend#info
+{
+	background-color : color(255,255,255,200);
+        text-font : font("SansSerif", "bold", 18);
+	text-color : color("black");
+	alignment : upper-left;
+}
+
+legend#info legenditem#0
+{
+	legend-text : "Accession: NC_008209";
+}
+
+legend#info legenditem#1
+{
+	legend-text : "Length: 4,133,097 bp";
+}

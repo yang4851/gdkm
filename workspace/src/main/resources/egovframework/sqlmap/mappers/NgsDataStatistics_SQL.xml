@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Statistics">
+	
+	<resultMap id="TaxonStatistics" type="statistics">
+		<result property="fileCount" column="FILE_COUNT" />
+		<result property="fileSize" column="FILE_SIZE" />
+		
+		<association property="taxonomy" column="{taxonId=TAXON_ID}" javaType="taxonomy" select="Taxonomy.get" />
+	</resultMap>
+	
+	<resultMap id="NgsStatistics" type="statistics">
+		<result property="period" column="PERIOD" />
+		<result property="rawCount" column="RAW_COUNT" />
+		<result property="rawSize" column="RAW_SIZE" />
+		<result property="processedCount" column="PROCESSED_COUNT" />
+		<result property="processedSize" column="PROCESSED_SIZE" />
+		<result property="fileCount" column="FILE_COUNT" />
+		<result property="fileSize" column="FILE_SIZE" />
+	</resultMap>
+	
+	<sql id="rawStatsSql">
+		<choose>
+			<when test="period == 'monthly'">
+		SELECT DATE_FORMAT(R.REGIST_DATE, '%Y-%m') PERIOD,	
+			</when>
+			<otherwise>
+		SELECT DATE_FORMAT(R.REGIST_DATE, '%Y') PERIOD,
+			</otherwise>
+		</choose>
+		       COUNT(A.ACHIVE_ID) AS RAW_COUNT, 
+		       SUM(A.FILE_SIZE) AS RAW_SIZE, 
+		       0 AS PROCESSED_COUNT, 
+		       0 AS PROCESSED_SIZE
+          FROM T_NGS_DATA_REGIST R, T_NGS_DATA_ACHIVE A
+         WHERE R.REGIST_ID = A.REGIST_ID
+           AND R.DATA_TYPE = 'rawdata'
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(dataType)">
+		   AND R.DATA_TYPE = #{dataType}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registStatus)">
+		   AND R.REGIST_STATUS = #{registStatus}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(openYn)">
+		   AND R.OPEN_YN = #{openYn}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(fromYear)">
+		   AND DATE_FORMAT(R.REGIST_DATE, '%Y') &gt;= #{fromYear}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(toYear)">
+		   AND DATE_FORMAT(R.REGIST_DATE, '%Y') &lt;= #{toYear}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(fileType)">
+		   AND A.FILE_TYPE = #{fileType}
+		</if>
+         GROUP BY (PERIOD)
+	</sql>
+	
+	<sql id="processedStatsSql">
+		<choose>
+			<when test="period == 'monthly'">
+		SELECT DATE_FORMAT(R.REGIST_DATE, '%Y-%m') PERIOD,	
+			</when>
+			<otherwise>
+		SELECT DATE_FORMAT(R.REGIST_DATE, '%Y') PERIOD,
+			</otherwise>
+		</choose>
+		       0 AS RAW_COUNT, 
+		       0 AS RAW_SIZE, 
+		       COUNT(A.ACHIVE_ID) AS PROCESSED_COUNT, 
+		       SUM(A.FILE_SIZE) AS PROCESSED_SIZE
+          FROM T_NGS_DATA_REGIST R, T_NGS_DATA_ACHIVE A
+         WHERE R.REGIST_ID = A.REGIST_ID
+           AND R.DATA_TYPE = 'processed'
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(dataType)">
+		   AND R.DATA_TYPE = #{dataType}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registStatus)">
+		   AND R.REGIST_STATUS = #{registStatus}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(openYn)">
+		   AND R.OPEN_YN = #{openYn}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(fromYear)">
+		   AND DATE_FORMAT(R.REGIST_DATE, '%Y') &gt;= #{fromYear}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(toYear)">
+		   AND DATE_FORMAT(R.REGIST_DATE, '%Y') &lt;= #{toYear}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(fileType)">
+		   AND A.FILE_TYPE = #{fileType}
+		</if>
+         GROUP BY (PERIOD)
+	</sql>
+	
+	<select id="selectYears" resultType="int">
+		SELECT DISTINCT(DATE_FORMAT(REGIST_DATE, "%Y")) AS PERIOD
+		  FROM T_NGS_DATA_REGIST
+		<trim prefix="WHERE" prefixOverrides="OR|AND">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(dataType)">
+		   AND DATA_TYPE = #{dataType}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registStatus)">
+		   AND REGIST_STATUS = #{registStatus}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(openYn)">
+		   AND OPEN_YN = #{openYn}
+			</if>
+		</trim>
+		 ORDER BY PERIOD DESC;
+	</select>
+		
+	<select id="selectTaxon" resultMap="TaxonStatistics">
+		SELECT T.TAXON_ID, 
+		       T.NAME, 
+		       COUNT(A.ACHIVE_ID) AS FILE_COUNT, 
+		       SUM(A.FILE_SIZE) AS FILE_SIZE
+		  FROM T_NGS_DATA_REGIST R, T_NGS_DATA_ACHIVE A, T_TAXON_NAME T
+		 WHERE R.REGIST_ID = A.REGIST_ID
+		   AND R.TAXON_ID = T.TAXON_ID
+		   AND T.NAME_CLASS = 'scientific name'
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(dataType)">
+		   AND R.DATA_TYPE = #{dataType}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registStatus)">
+		   AND R.REGIST_STATUS = #{registStatus}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(openYn)">
+		   AND R.OPEN_YN = #{openYn}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(fromYear)">
+		   	AND DATE_FORMAT(R.REGIST_DATE, '%Y') &gt;= #{fromYear}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(toYear)">
+		   	AND DATE_FORMAT(R.REGIST_DATE, '%Y') &lt;= #{toYear}
+		</if>
+		 GROUP BY T.TAXON_ID, T.NAME
+		 ORDER BY FILE_COUNT DESC, T.NAME ASC
+	</select>
+	
+	<select id="select" resultMap="NgsStatistics">
+		SELECT PERIOD, 
+		       SUM(RAW_COUNT) AS RAW_COUNT, 
+		       SUM(RAW_SIZE) AS RAW_SIZE, 
+		       SUM(PROCESSED_COUNT) AS PROCESSED_COUNT, 
+		       SUM(PROCESSED_SIZE) AS PROCESSED_SIZE, 
+		       SUM(RAW_COUNT+PROCESSED_COUNT) AS FILE_COUNT, 
+		       SUM(RAW_SIZE+PROCESSED_SIZE) AS FILE_SIZE
+		  FROM ((<include refid="rawStatsSql" />)
+		        UNION ALL
+		        (<include refid="processedStatsSql" />)) STAT
+		 GROUP BY (PERIOD)
+		 ORDER BY PERIOD
+	</select>
+	
+	<select id="selectTaxonCount" resultType="int">
+		SELECT COUNT(DISTINCT(R.TAXON_ID))
+		  FROM T_NGS_DATA_REGIST R, T_NGS_DATA_ACHIVE A
+         WHERE R.REGIST_ID = A.REGIST_ID
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(dataType)">
+		   AND R.DATA_TYPE = #{dataType}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registStatus)">
+		   AND R.REGIST_STATUS = #{registStatus}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(openYn)">
+		   AND R.OPEN_YN = #{openYn}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(fromYear)">
+		   	AND DATE_FORMAT(R.REGIST_DATE, '%Y') &gt;= #{fromYear}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(toYear)">
+		   	AND DATE_FORMAT(R.REGIST_DATE, '%Y') &lt;= #{toYear}
+		</if>
+	</select>
+	
+	<select id="selectFileCount" resultType="int">
+		SELECT COUNT(DISTINCT(A.ACHIVE_ID))
+		  FROM T_NGS_DATA_REGIST R, T_NGS_DATA_ACHIVE A
+         WHERE R.REGIST_ID = A.REGIST_ID
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(dataType)">
+		   AND R.DATA_TYPE = #{dataType}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registStatus)">
+		   AND R.REGIST_STATUS = #{registStatus}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(openYn)">
+		   AND R.OPEN_YN = #{openYn}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(fromYear)">
+		   	AND DATE_FORMAT(R.REGIST_DATE, '%Y') &gt;= #{fromYear}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(toYear)">
+		   	AND DATE_FORMAT(R.REGIST_DATE, '%Y') &lt;= #{toYear}
+		</if>
+	</select>
+	
+	<select id="selectLastUpdated" resultType="java.util.Date">
+		SELECT MAX(A.UPDATE_DATE)
+		  FROM T_NGS_DATA_REGIST R, T_NGS_DATA_ACHIVE A
+         WHERE R.REGIST_ID = A.REGIST_ID
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(dataType)">
+		   AND R.DATA_TYPE = #{dataType}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registStatus)">
+		   AND R.REGIST_STATUS = #{registStatus}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(openYn)">
+		   AND R.OPEN_YN = #{openYn}
+		</if>
+	</select>
+	
+</mapper>

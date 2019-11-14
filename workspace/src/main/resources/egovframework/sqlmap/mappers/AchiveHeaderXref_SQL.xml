@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AchiveHeaderXref">
+	<select id="selectOne" parameterType="Integer" resultType="achiveHeaderXref">
+		SELECT 
+		    AHXREF_ID,
+		    ACHIVE_ID,
+		    HEADER_ID
+		FROM T_ACHIVE_HEADER_XREF
+		WHERE AHXREF_ID = #{ahxrefId}
+	</select>
+	
+	<select id="selectList" resultType="achiveHeaderXref">
+		SELECT 
+		    AHXREF_ID,
+		    ACHIVE_ID,
+		    HEADER_ID
+		FROM T_ACHIVE_HEADER_XREF
+	</select>
+	
+	<select id="selectIdList" resultType="int">
+		SELECT DISTINCT(HEADER_ID)
+		  FROM T_ACHIVE_HEADER_XREF
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveId)">
+    	   AND ACHIVE_ID = #{achiveId}
+    		</if>
+    	</trim>
+	</select>
+
+	<insert id="insert" parameterType="achiveHeaderXref" useGeneratedKeys="true" keyProperty="ahxrefId">
+		INSERT INTO T_ACHIVE_HEADER_XREF (
+		    ACHIVE_ID,
+		    HEADER_ID
+		) VALUES (
+			#{achiveId},
+			#{headerId} 
+		)
+	</insert>
+	
+	<update id="update" parameterType="achiveHeaderXref">
+		UPDATE T_ACHIVE_HEADER_XREF
+		SET 
+		    ACHIVE_ID = #{achiveId},
+		    HEADER_ID = #{headerId}
+		WHERE AHXREF_ID = #{ahxrefId}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM T_ACHIVE_HEADER_XREF
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(ahxrefId)">
+    	   AND AHXREF_ID = #{ahxrefId}
+    		</if>
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveId)">
+    	   AND ACHIVE_ID = #{achiveId}
+    		</if>
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(headerId)">
+    	   AND HEADER_ID = #{headerId}
+    		</if>
+    	</trim>
+	</delete>
+
+</mapper>

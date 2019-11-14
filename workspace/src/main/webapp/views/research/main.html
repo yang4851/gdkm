@@ -1,0 +1,178 @@
+ 
+<div class="container" ng-controller="ResearchController" ng-init="init('public')">
+	<!-- page-title -->
+	<div class="content_top">
+		<h1 class="title_page">
+			<a href="#" class="active">Research</a>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a href="#!/home">Home</a></li>
+			<li class="active">Research</li>
+		</ol>
+	</div>
+
+	<form ng-controller="ResearchListController" ng-init="init('public')">
+		<!-- search form -->
+		<div class="search_form_tbl">	
+			<div class="form-horizontal col_tbl">
+				<div class="form-group">
+					<label class="col-xs-3 control-label">Keyword</label>
+					
+					<div class="col-xs-3" style="float: left;">
+						<select class="form-control picker" ng-model="params.fields"
+						 ng-options="code.id as code.name for code in researchFieldCodeList"></select>
+					</div>
+					<div class="col-xs-6">
+						<input type="text" class="form-control" ng-model="params.keyword" ng-enter="search()" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="col_tbl">
+				<button type="submit" class="btn btn_brand" ng-click="search()">Search</button>
+			</div>
+		</div>
+		<!--/ search form -->
+		
+		<!-- action button -->
+		<div class="row toolbar">
+			<div class="col-xs-3">
+				<p class="form-control-static">
+					All <strong class="num">{{ pageHandler.getTotal() | number }}</strong>
+				</p>
+			</div>
+			<div class="col-xs-9 form-inline">
+				<button type="button" class="btn btn-default"
+					ng-disabled="isDownloadBtnDisabled()"
+					ng-click="downloadExcel()">
+					<i class="far fa-file-excel"><span> Download</span></i></button>
+				
+				<div class="form-group">
+					<select class="form-control picker"  
+						ng-options="code.id as code.name for code in rowSizeCodeList"
+						ng-model="pageHandler.numberOfRows" ng-change="search()"></select>
+				</div>
+				<button type="button" class="btn btn-default" ng-click="search()">
+					<i class="fa fa-undo"></i><span class="sr-only">Refresh</span>
+				</button>
+			</div>
+		</div>
+		<!--/ action button -->
+		
+		<!-- research data list -->
+		<div id="researchResultTable">
+		<table class="list_tbl panel_g">
+			<thead>
+				<tr>
+					<th class="th_check sorting_disabled" style="width: 39.5px;">
+						<input type="checkbox" i-check ng-model="modelHandler.checkedAll" 
+							ng-change="modelHandler.selectAll()" ng-disabled="modelHandler.size() == 0" />
+					</th>
+					<th style="width: 150px;">Research ID</th>
+					<th>Title</th>
+					<th style="width: 200px;">Journal</th>
+					<th style="width: 200px;">Submitter</th>
+					<th style="width: 30px">
+						<button type="button" class="btn toggle_panel" 
+							ng-class="toggle_panel_css()" ng-click="toggleActiveRows()" />
+					</th>
+				</tr>
+			</thead>
+			
+			<tbody ng-repeat="item in modelHandler.getItems()">
+				<tr class="panel_h" ng-class="panel_h_css(item.id)">
+					<td class="text-center">
+						<input type="checkbox" checklist-model="modelHandler.selectedIdList" 
+							checklist-value="item.id" ng-change="modelHandler.select(item)" i-check/>
+					</td>
+					<td class="text-center">
+						<a role="button" ng-click="showDetailPopup(item)">{{ item.registNo }}</a>
+					</td>
+					<td class="cell-ellipse" data-toggle="tooltip" data-placement="bottom" title="{{ tooltip(item.title, 55) }}">
+						<a role="button" ng-click="showDetailPopup(item)">{{ item.title }}</a>
+					</td>
+					<td class="cell-ellipse" data-toggle="tooltip" data-placement="bottom" title="{{ tooltip(item.journal, 25) }}">{{ item.journal }}</td>
+					<td class="cell-ellipse" data-toggle="tooltip" data-placement="bottom" title="{{ tooltip(item.submitter, 25) }}">{{ item.submitter }}</td>
+					<td class="text-center">
+						<button type="button" class="btn toggle_panel" ng-class="panel_h_css(item.id)" ng-click="activeRow(item.id)"></button>
+					</td>
+				</tr>
+				<tr class="panel-collapse" ng-class="panel_collapse_css(item.id)">
+					<td colspan="7">
+						<table class="table">
+							<caption>Summary view</caption>
+							<tbody>
+								<tr>
+									<th scope="row">Title</th>
+									<td>{{ item.title }}</td>
+								</tr>
+								<tr ng-hide="!item.journal">
+									<th scope="row">Journal</th>
+									<td>{{ item.journal }}</td>
+								</tr>
+								<tr ng-hide="!item.published && !item.issue && !item.pages">
+									<th scope="row">Volume, Issue, Pages</th>
+									<td>
+										<span ng-hide="!item.volume">Vol. {{ item.volume }}</span>
+										<span ng-hide="!item.issue">, Issue. {{ item.issue }}</span>
+										<span ng-hide="!item.pages">, Pages. {{ item.pages }}</span>
+									</td>
+								</tr>
+								<tr ng-hide="!item.published">
+									<th scope="row">Published</th>
+									<td>{{ item.published }}</td>
+								</tr>
+								<tr>
+									<th scope="row">Submitter</th>
+									<td>{{ item.submitter }}</td>
+								</tr>
+								<tr>
+									<th scope="row">Submit organization</th>
+									<td>{{ item.submitOrgan }}</td>
+								</tr>
+								<tr ng-hide="!item.fullTextLink">
+									<th scope="row">Fill text link</th>
+									<td>{{ item.fullTextLink }}</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+			<tbody ng-if="modelHandler.size() == 0">
+				<tr class="panel_h" >
+					<td colspan="6" class="text-center"> <i>No data</i></td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		<!-- pagination -->
+		<nav class="text-center">
+			<ul class="pagination">
+				<li ng-hide="pageHandler.isPrevDisabled()">
+					<a aria-label="Previous" ng-click="pageHandler.prev()">
+						<i class="fa fa-chevron-left" aria-hidden="true"></i>
+					</a>
+				</li>
+				<li ng-repeat="page in pageHandler.getPages()"
+					ng-class="(pageHandler.getCurrentPage() == page) ? 'active' : 'pointer'">
+					<a ng-click="pageHandler.setCurrentPage(page, true)">{{ page }}</a>
+				</li>
+				
+				<li ng-hide="pageHandler.isNextDisabled()">
+					<a aria-label="Next" ng-click="pageHandler.next()">
+						<i class="fa fa-chevron-right" aria-hidden="true"></i>
+					</a>
+				</li>
+			</ul>
+		</nav>
+		<!--/ research data list -->
+	</form>
+	
+	<div ng-include="'./views/popup/research-detail-popup2.html'"></div>
+	<div ng-include="'./views/popup/research-attachment-popup.html'"></div>
+	<div ng-include="'./views/popup/research-omics-popup.html'"></div>
+	<div ng-include="'./views/popup/processed-data-search-popup.html'"></div>
+	<div ng-include="'./views/popup/processed-data-detail-popup.html'" ng-controller="ProcessedController" ></div>
+	
+</div>

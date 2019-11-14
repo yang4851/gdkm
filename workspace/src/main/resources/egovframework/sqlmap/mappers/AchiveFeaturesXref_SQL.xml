@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AchiveFeaturesXref">
+	<select id="selectOne" parameterType="Integer" resultType="achiveFeaturesXref">
+		SELECT 
+			AFXREF_ID,
+		    FEATURES_ID,
+		    ACHIVE_ID
+		FROM T_ACHIVE_FEATURES_XREF
+		WHERE AFXREF_ID = #{afxrefId}
+	</select>
+	
+	<select id="selectList" resultType="achiveFeaturesXref">
+		SELECT 
+		    AFXREF_ID,
+		    FEATURES_ID,
+		    ACHIVE_ID
+		FROM T_ACHIVE_FEATURES_XREF
+	</select>
+	
+	<select id="selectIdList" resultType="int">
+		SELECT DISTINCT(FEATURES_ID)
+		  FROM T_ACHIVE_FEATURES_XREF
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveId)">
+    	   AND ACHIVE_ID = #{achiveId}
+    		</if>
+    	</trim>
+	</select>
+
+	<insert id="insert" parameterType="achiveFeaturesXref" useGeneratedKeys="true" keyProperty="afxrefId">
+		INSERT INTO T_ACHIVE_FEATURES_XREF (
+		    FEATURES_ID,
+		    ACHIVE_ID
+		) VALUES (
+			#{featuresId},
+			#{achiveId} 
+		)
+	</insert>
+	
+	<update id="update" parameterType="achiveFeaturesXref">
+		UPDATE T_ACHIVE_FEATURES_XREF
+		SET 
+		    FEATURES_ID = #{featuresId},
+		    ACHIVE_ID = #{achiveId},
+		WHERE FEATURES_ID = #{featuresId}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM T_ACHIVE_FEATURES_XREF
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(afxrefId)">
+    	   AND AFXREF_ID = #{afxrefId}
+    		</if>
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveId)">
+    	   AND ACHIVE_ID = #{achiveId}
+    		</if>
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(featuresId)">
+    	   AND FEATURES_ID = #{featuresId}
+    		</if>
+    	</trim>
+	</delete>
+
+</mapper>

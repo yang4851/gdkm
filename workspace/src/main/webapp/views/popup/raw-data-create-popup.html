@@ -1,0 +1,30 @@
+<div class="modal fade overflow-y" id="raw-data-create-popup" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<!-- modal-header -->
+			<div class="modal-header">
+				<h3 class="modal-title">Raw data registration
+<!-- 					<button type="button" class="btn-link"><span class="fa fa-print"></span></button> -->
+				</h3>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+			</div>
+			<!-- /modal-header -->
+
+			<!-- modal-body -->
+			<div class="modal-body">
+				<form ng-include="'./views/registration/raw-data-create.html'"></form>
+			</div>
+			<!-- /modal-body -->
+
+			<!-- modal-footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-default" ng-click="resetNgsDataForm()">Initialization</button>
+				<button type="button" class="btn btn_brand" ng-click="createNgsDataRegist()">Raw data registration</button>
+			</div>
+			<!-- /modal-footer -->
+
+		</div>
+	</div>
+</div>

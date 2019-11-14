@@ -1,0 +1,172 @@
+<div class="container" ng-controller="aniExecuteController" ng-init="init();">
+<div class="content_top">
+	<h1 class="title_page">
+		<a href="#!/tools/ani" class="active">Genomic relatedness analysis (ANI)</a>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#!/home">Home</a></li>
+		<li><a href="#!/tools/ani">Tools</a></li>
+		<li class="active">Genomic relatedness analysis (ANI)</li>
+	</ol>
+</div>		
+
+<h2 class="title_con">Genomic relatedness analysis</h2>
+
+<div class="row">
+	<Label for="" class="label-lg required col-md-3">Clustering method</Label>
+	<div class="col-md-3">
+		<select name="methodSelect" id="" class="form-control" ng-model="method">
+			<option ng-repeat="method in methods" ng-value="method">{{method}}</option>
+		</select>
+	</div>
+	<div class="col-md-6"></div>
+</div>
+<div class="row">
+	<div class="col-md-3"></div>
+	<div class="col-md-9">
+		<h5>- ANIm: uses MUMmer (NUCmer) to align the input sequences.</h5>
+		<h5>- ANIb: uses BLASTN+ to align 1020nt fragments of the input sequences</h5>
+		<h5>- ANIblastall: uses legacy BLASTN to align 1020nt fragments of the input sequences</h5>
+		<h5>- TETRA: calculates tetranucleotide frequencies of each input sequence</h5>
+		<br/>
+	</div>
+</div>
+
+<div class="row">
+	<Label for="" class="label-lg required col-md-3">Genomes</Label>
+	<div class="col-md-9">
+		<div>
+			Total : {{selectedFiles.length}} (user data : {{selectedUserFiles.length}}, registered data : {{selectedFiles.length - selectedUserFiles.length}})
+		</div>
+		<!-- === Option bar === -->
+		<div class="row toolbar" style="padding-bottom: 10px;">
+			<div class="col-xs-3">
+				<p class="form-control-static">
+					All <strong class="num ng-binding">{{selectedFiles.length}} </strong> 
+				</p>
+			</div>
+			<div class="col-xs-9 form-inline text-right">
+				<button type="submit" class="btn btn_brand" ng-click="onclickFastaFileList()">Load registered fasta file</button>
+				<label class="btn btn_secondary">
+					<i class="fa fa-upload"></i> Upload
+					<input type="file" class="" 
+					 ng-model="uploadFiles"
+					 ng-change="onclickUpload($uploadFiles)" 
+					 ngf-multiple="true" 
+					 ng-hide="true" ngf-select />
+				</label>
+				<button type="submit" class="btn btn-default" ng-click="onclickDeleteBtn()">Delete</button>
+			</div>
+		</div>
+		<!-- /Option bar -->
+		<!--
+		             # 테이블에 스크롤 넣고 싶으면, 테이블을 div class="table-responsive" 로 감싸줍니다.
+		             # 가로세로 스크롤을 원할 경우 class="overflow-auto" 로 감싸줍니다.
+		           -->
+		<div class="table-responsive" overflow-y: auto;">
+			<table class="list_tbl panel_g">
+				<thead class="thead-light text-center">
+					<tr>
+						<th class="th_check sorting_disabled" style="width: 39.5px;">
+							<input class="form-check-input" type="checkbox" ng-model="checkAll" ng-change="handleAutoSelectClick(selectedFiles, checkAll)">
+						</th>
+						<th>File name</th>
+						<th>Length (bp)</th>
+						<th>Label</th>
+						<th style="width: 30px">
+							<button type="button" class="btn toggle_panel"
+								ng-class="toggle_panel_css()" ng-click="toggleActiveRows(selectedFiles)" />
+						</th>
+					</tr>
+				</thead>
+				<tbody ng-show="selectedFiles.length!=0" class="text-center" ng-repeat="selectedFile in selectedFiles">
+					<tr class="panel_h" ng-class="panel_h_css(selectedFile.achiveRegistNo)">
+						<td class="text-center">
+							<input class="form-check-input" type="checkbox" ng-model="selectedFile._checked" ng-change="changeCheckBox(selectedFiles)">
+						</td>
+						<td>{{selectedFile.fileName}}</td>
+						<td>{{selectedFile.fileSize}}</td>
+						<td>
+							<input type="text" ng-model="selectedFile.aniLabel"/>
+						</td>
+						<td class="text-center">
+							<button type="button" class="btn toggle_panel" ng-class="panel_h_css(selectedFile.achiveRegistNo)" ng-click="activeRow(selectedFile.achiveRegistNo)"></button>
+						</td>
+					</tr>
+					<tr class="panel-collapse" ng-class="panel_collapse_css(selectedFile.achiveRegistNo)">
+						<td colspan="5">
+						<table class="table">
+							<tr ng-if="selectedFile.dataRegistNo != null">
+								<th>Annotation data ID</th>
+								<td><a class="pointer" ng-click="onclickProcessedDetail(selectedFile)">{{selectedFile.dataRegistNo}}</a></td>
+							</tr>
+							<tr ng-if="selectedFile.dataRegistNo != null">
+								<th>Strain</th>
+								<td>{{selectedFile.taxonomy.name}} / {{selectedFile.strain}}</td>
+							</tr>
+							<tr>
+								<th>Contig count</th>
+								<td>{{selectedFile.seqQuantityVO.readCount}}</td>
+							</tr>
+							<tr>
+								<th>Sequence total size (bp)</th>
+								<td>{{selectedFile.seqQuantityVO.totalLength}}</td>
+							</tr>
+							<tr>
+								<th>Sequence average length (bp)</th>
+								<td>{{selectedFile.seqQuantityVO.averageLength}}</td>
+							</tr>
+							<tr>
+								<th>GC contents (%)</th>
+								<td>{{ calcGcContents(selectedFile.seqQuantityVO) | number:2 }} %</td>
+							</tr>
+							<tr>
+								<th>'A' sequence count</th>
+								<td>{{selectedFile.seqQuantityVO.numberOfA}}</td>
+							</tr>
+							<tr>
+								<th>'T' sequence count</th>
+								<td>{{selectedFile.seqQuantityVO.numberOfT}}</td>
+							</tr>
+							<tr>
+								<th>'G' sequence count</th>
+								<td>{{selectedFile.seqQuantityVO.numberOfG}}</td>
+							</tr>
+							<tr>
+								<th>'C' sequence count</th>
+								<td>{{selectedFile.seqQuantityVO.numberOfC}}</td>
+							</tr>
+							<tr>
+								<th>'N' sequence count</th>
+								<td>{{selectedFile.seqQuantityVO.numberOfN}}</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</tbody>
+				<tbody ng-show="selectedFiles.length==0">
+					<tr class="panel_h" >
+						<td colspan="5" class="text-center"> <i>No data</i></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-md-3"></div>
+	<div class="col-md-9">
+		<button type="button" class="btn btn-default " style="padding: 5px 30px;" ng-click="reset()">Reset</button>
+		<button type="submit" class="btn btn_brand" style="padding: 5px 30px;" ng-click="submit()">Run</button>
+	</div>
+</div>
+
+<div ng-include="'./views/popup/ani-fasta-file-list-popup.html'"></div>
+<div ng-include="'./views/popup/processed-data-detail-popup.html'"></div>
+<div ng-include="'./views/popup/ani-class-change-popup.html'"></div>
+
+</div>
+<!-- /Table -->

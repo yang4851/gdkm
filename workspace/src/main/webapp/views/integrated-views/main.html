@@ -1,0 +1,97 @@
+<div class="container" ng-init="init();">
+	<!-- page-title -->
+	<div class="content_top">
+		<h1 class="title_page">
+			<a href="#" class="active">NGS Data Browser</a>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a href="#!/home">Home</a></li>
+			<li><a href="#!/integrated-view">Integrated Views</a></li>
+			<li class="active">NGS Data Browser</li>
+		</ol>
+	</div>
+	<!-- /page-title -->
+	<h2 class="title_con">NGS Browser (Raw and Annotation)</h2>
+	<div ng-controller="integratedSearchController as taxon" ng-init="init()">
+	<!-- search-form -->
+		<div class="search_form_tbl">
+			<div class="form-horizontal col_tbl">
+				<div class="form-group">
+					<label class="col-xs-3 control-label">Keyword</label>
+					<div class="col-xs-9">
+						<label class="radio-inline" ng-repeat="code in dataTypeCodeList">
+							<input class="minimal" type="radio" ng-value="code.id" ng-model="params.dataType" i-check/>
+							{{ code.name }}
+						</label>
+					</div>
+				</div>
+				<div class="form-group" ng-show="isAllSearch()">
+					<div class="col-xs-offset-3">
+						<input type="text" class="form-control" ng-model="params.keyword" ng-enter="search()" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="isRawDataSearch()">
+					<div class="col-xs-offset-3 col-xs-3">
+						<select class="form-control picker" ng-model="params.fields" 
+							ng-options="code.id as code.name for code in rawFieldCodeList"></select>
+					</div>
+					<div class="col-xs-6">
+						<input type="text" class="form-control" ng-model="params.keyword" ng-enter="search()" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="isProcessedSearch()">
+					<div class="col-xs-offset-3 col-xs-3">
+						<select class="form-control picker" ng-model="params.fields"
+							ng-options="code.id as code.name for code in proccessedFieldCodeList"></select>
+					</div>
+					<div class="col-xs-6">
+						<input type="text" class="form-control" ng-model="params.keyword" ng-enter="search()" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 control-label">Choose a  species/strain</label>
+					<div class="col-xs-6">
+						<input type="text" class="form-control" ng-model="params.species" ng-enter="search()" />
+					</div>
+					<div class="col-xs-3">
+						<select class="form-control picker" ng-model="params.match"
+							ng-options="code.id as code.name for code in matchCodeList"></select>
+					</div>
+				</div>
+			</div>
+			<div class="col_tbl">
+				<button type="submit" class="btn btn_brand" style="margin-top: 58px;" 
+					ng-click="search()">Search</button>
+			</div>
+		</div>
+		<h2 class="title_con">Details information</h2>
+		
+		<!-- Tab panel -->
+		<div role="tabpanel">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs">
+				<li class="pointer active"><a data-target="#tabBrowseFiles" data-toggle="tab">NGS Browser</a></li>
+				<li class="pointer"><a data-target="#tabRawDataFiles" data-toggle="tab">Raw data</a></li>
+				<li class="pointer"><a data-target="#tabProcessedFiles" data-toggle="tab">Annotation data</a></li>
+			</ul>
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div class="tab-pane active" id="tabBrowseFiles">
+					<form ng-include="'./views/integrated-views/ngs-data-browse.html'"></form>
+				</div>
+				<div class="tab-pane" id="tabRawDataFiles" ng-controller="integratedListController" ng-init="init('rawdata')">
+					<form ng-include="'./views/integrated-views/raw-data-file-list.html'"></form>
+				</div>
+				<div class="tab-pane" id="tabProcessedFiles" ng-controller="integratedListController" ng-init="init('processed')">
+					<form ng-include="'./views/integrated-views/processed-data-file-list.html'"></form>
+				</div>
+			</div>
+		</div>
+		<!-- /Tab panel -->
+	</div>
+</div>
+
+<div ng-include="'./views/popup/raw-data-detail-popup.html'"></div>
+<div ng-include="'./views/popup/processed-data-detail-popup.html'"></div>
+<div ng-include="'./views/popup/ngs-data-file-popup.html'"></div>
+<div ng-include="'./views/popup/ngs-data-gbk-popup.html'"></div>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html ng-app="gdkmApp">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+		<title>GDKM(Genome Database of Kimchi-associated Microbes)</title>
+		 
+		<!-- Global Styles -->
+		<link rel="stylesheet" type="text/css" href="./vendors/NanumGothic/NanumGothic.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/angular-ivh-treeview-master/dist/ivh-treeview.css">
+	 	<link rel="stylesheet" type="text/css" href="./vendors/angular-ivh-treeview-master/dist/ivh-treeview-theme-basic.css">
+		<link rel="stylesheet" type="text/css" href="./vendors/font-awesome-5/web-fonts-with-css/css/fontawesome-all.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/bootstrap-select/dist/css/bootstrap-select.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/pnotify/dist/pnotify.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/pnotify/dist/pnotify.buttons.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/blueimp-file-upload/css/jquery.fileupload.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/angular-moment-picker/dist/angular-moment-picker.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/iCheck/skins/all.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/parsleyjs/src/parsley.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/mocha/mocha.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/angular-bootstrap-grid-tree/src/treeGrid.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/angular-material/angular-material.min.css" />
+		
+		<!-- Custom Style -->
+		<link rel="stylesheet" type="text/css" href="./lib/css/vendors.min.css" />
+		<link rel="stylesheet" type="text/css" href="./lib/jstree/dist/themes/default/style.min.css" />
+		<link rel="stylesheet" type="text/css" href="./css/custom.css" />
+		<link rel="stylesheet" type="text/css" href="./css/home.css" />
+		
+		<script type="text/javascript" src="./vendors/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="./lib/jstree/dist/jstree.min.js"></script>
+		
+		<script type="text/javascript" src="./vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="./vendors/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+		<script type="text/javascript" src="./vendors/bootstrap-waitingfor/build/bootstrap-waitingfor.min.js"></script>
+		<script type="text/javascript" src="./vendors/pnotify/dist/pnotify.js"></script>
+		<script type="text/javascript" src="./vendors/pnotify/dist/pnotify.confirm.js"></script>
+		<script type="text/javascript" src="./vendors/pnotify/dist/pnotify.buttons.js"></script>
+		<script type="text/javascript" src="./vendors/parsleyjs/dist/parsley.min.js"></script>
+		<script type="text/javascript" src="./vendors/mocha/mocha.js"></script>
+		<script type="text/javascript" src="./vendors/moment/min/moment-with-locales.js"></script>
+		
+		<!-- angularjs Plugins-->
+		<script type="text/javascript" src="./vendors/angular/angular.js"></script>
+		<script type="text/javascript" src="./vendors/angular-cookies/angular-cookies.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-animate/angular-animate.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-route/angular-route.js"></script>
+		<script type="text/javascript" src="./vendors/angular-aria/angular-aria.js"></script>
+		<script type="text/javascript" src="./vendors/angular-sanitize/angular-sanitize.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-messages/angular-messages.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-material/angular-material.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-resource/angular-resource.js"></script>
+		<script type="text/javascript" src="./vendors/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+		<script type="text/javascript" src="./vendors/angular-moment-picker/dist/angular-moment-picker.js"></script>
+		<script type="text/javascript" src="./vendors/angular-bootstrap-select/build/angular-bootstrap-select.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-google-chart/ng-google-chart.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-pnotify/src/angular-pnotify.js"></script>
+		<script type="text/javascript" src="./vendors/ng-file-upload/ng-file-upload.js"></script>
+		<script type="text/javascript" src="./vendors/ng-file-upload/ng-file-upload-shim.js"></script>
+		<script type="text/javascript" src="./vendors/checklist-model/checklist-model.js"></script>		
+		<script type="text/javascript" src="./vendors/iCheck/icheck.js"></script>		
+		
+		<!-- Page Level Plugins -->		
+		<script type="text/javascript" src="./vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+		
+		<!-- Google chart -->
+		<script type="text/javascript" src="./js/www.gstatic.com_chart_loader.js"></script>
+		
+		<!-- tree -->
+		<script type="text/javascript" src="./vendors/angular-ivh-treeview-master/dist/ivh-treeview.js"></script>
+	</head>
+	<body>
+		<!--========== wrap ==========-->
+		<div ng-cloak class="wrap" ng-controller="myController" ng-init="init()">
+		
+			<label class="btn btn_secondary">
+				<i class="fa fa-upload"></i> Upload
+				<input type="file" ng-model="uploadHandler.files" 
+					ng-change="uploadHandler.upload()"
+					ngf-multiple="true"
+					ng-hide="true" ngf-select />
+			</label>
+			
+			<div class="btn-toolbar">Pending list</div>
+			
+			<table class="list_tbl mtb10">
+				<thead>
+					<tr>
+						<th>file name</th>
+						<th>file size</th>
+						<th>file type</th>
+						<th>progress</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in pendingList">
+						<td>{{ item.fileName }}</td>
+						<td>{{ item.fileSize }}</td>
+						<td>{{ item.fileType }}</td>
+						<td>{{ item.file.progress }} %</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<div class="btn-toolbar">Uploaded list</div>
+			
+			<table class="list_tbl mtb10">
+				<thead>
+					<tr>
+						<th>file name</th>
+						<th>file size</th>
+						<th>file type</th>
+						<th>file path</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in uploadedList">
+						<td><a class="pointer" ng-click="download(item)">{{ item.name }}</a></td>
+						<td>{{ item.size }}</td>
+						<td>{{ item.type }}</td>
+						<td><a class="pointer" ng-click="remove(item)">{{ item.path }}</a></td>
+					</tr>
+				</tbody>
+			</table>
+			
+		</div>
+		
+		<script type="text/javascript" src="./js/custom.js"></script>
+
+		<!-- Page Level Scripts -->
+		
+		<script type="text/javascript" src="./js/app.js"></script>
+		<script type="text/javascript" src="./js/app-common.js"></script>
+		<script type="text/javascript" src="./js/app-object.js"></script>
+		<script type="text/javascript" src="./js/app-select-object.js"></script>
+		<script type="text/javascript" src="./js/app-sample-value.js"></script>
+		<script type="text/javascript" src="./js/app-filter.js"></script>
+		<script type="text/javascript" src="./js/app-route.js"></script>
+		
+		<script type="text/javascript" src="./js/controller/index-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/home-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/user-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/code-group-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/code-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/taxonomy-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/ngs-deposit-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/ngs-deposit-list-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/rawdata-linked-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/integrated-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/integrated-search-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/integrated-list-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/statistics-controller.js"></script>
+		
+		<script type="text/javascript" src="./js/factory/login-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/user-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/code-group-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/code-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/taxon-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/taxon-tree-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/ngs-deposit-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/ngs-achive-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/statistics-factory.js"></script>
+		
+		<script type="text/javascript" src="./js/excel/excel-factory.js"></script>
+		
+		<script type="text/javascript" src="./js/factory/file-upload-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/file-download-factory.js"></script>
+		
+		<script>
+		gdkmApp.controller('myController', function($scope, $log, $timeout, $window, 
+				FileUploadFactory, FileDownloadFactory, Upload) {
+			
+			$scope.uploadHandler = UploadHandler.create($window, $timeout, Upload, )
+			
+			$scope.pendingList = [];
+
+			$scope.uploadedList = [];
+			
+			$scope.init = function() {
+				$scope.uploadHandler.clear();
+				$scope.uploadHandler.setRequestUrl(Utils.getContextPath() + "/temporaries");
+				$scope.uploadHandler.addUploadListener(onUploadTempFile);
+				
+				console.log("#### init(" + $scope.uploadHandler.getRequestUrl() + ") ####");
+			};
+			
+			$scope.download = function(file) {
+				console.log("#### download(" + file.path + ") ####");
+				console.info(file);
+				
+				FileUploadFactory.doDownloadTempFile(file);
+			};
+			
+			$scope.remove = function(file) {
+				console.log("#### remove(" + file.path + ") ####");
+				console.info(file);
+				
+				FileUploadFactory.doRemoveTempFile(file).then(
+						function(res){
+							console.info(res);
+						},
+						function(err){
+							console.error(err);
+						}
+					);
+			};
+			
+			function onUploadTempFile(state, file, data) {
+				if(UPLOAD_STATE.FAIL == state) {
+					removePendingFile(file);
+				} else if(UPLOAD_STATE.PENDING == state) {
+					appendPendingFile(file);
+				} else if(UPLOAD_STATE.COMPLETE == state) {
+					removePendingFile(file);
+					$scope.uploadedList.push(data);
+				}
+			};
+			
+			function appendPendingFile(file) {
+				var index = $scope.pendingList.indexOf(file);
+				if(index < 0)
+					$scope.pendingList.push(file);
+			}
+			
+			function removePendingFile(file) {
+				var index = $scope.pendingList.indexOf(file);
+				if(index >= 0)
+					$scope.pendingList.splice(index, 1);
+			}
+		});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,33 @@
+
+<div class="modal fade overflow-y" id="db-list-popup" tabindex="-1" >
+<div class="modal-dialog modal-lg">
+	<div class="modal-content">
+
+		<!-- modal-header -->
+		<div class="modal-header">
+			<h3 class="modal-title">
+				DB List
+			</h3>
+			<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+		</div>
+		<!-- /modal-header -->
+		
+		<!-- modal-body -->
+		<div class="modal-body">
+			<div ng-repeat="db in dbList">
+				<input class="form-check-input" type="checkbox" id="check-{{$index}}" ng-model="db._checked">
+                    <label class="form-check-label" for="check-{{$index}}">{{db.name}}</label>
+			</div>
+		</div>
+		<!-- /modal-body -->
+
+		<!-- modal-footer -->
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="onclickModalSubmit()">Submit</button>
+		</div>
+		<!-- /modal-footer -->
+
+	</div>
+</div>
+</div>

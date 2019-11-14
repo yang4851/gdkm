@@ -1,0 +1,6 @@
+user, code, codeGroup controllerTest는 postman으로 대체한다
+
+delete from T_NGS_RAW_DATA;
+delete from T_NGS_DATA_REGIST;
+alter table T_NGS_RAW_DATA auto_increment=1;
+alter table T_NGS_DATA_REGIST auto_increment=1;

@@ -1,0 +1,92 @@
+<form>
+	<!-- search-form -->
+	<div class="search_form_tbl" style="margin-bottom: 40px;">
+		<div class="col_tbl">
+			<div class="form-horizontal">
+				<div class="form-group">
+					<label class="col-xs-3 control-label">사용자ID</label>
+					<div class="col-xs-9">
+						<input type="text" class="form-control"
+						ng-model="searchHandler.user.userId">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 control-label">이름</label>
+					<div class="col-xs-9">
+						<input type="text" class="form-control"
+						ng-model="searchHandler.user.name">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 control-label">소속기관명</label>
+					<div class="col-xs-9">
+						<input type="text" class="form-control"
+						ng-model="searchHandler.user.institute">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col_tbl">
+			<button type="submit" class="btn btn_brand"
+			ng-click="searchHandler.search()">Search</button>
+		</div>
+	</div>
+</form>
+
+<div class="row toolbar" style="padding-bottom: 10px;">
+	<div class="col-xs-3">
+		<p class="form-control-static">
+			All <strong class="num">{{ pageHandler.getTotal() | number }}</strong>
+		</p>
+	</div>
+	<div class="col-xs-9 form-inline text-right">
+		<button type="button" class="btn btn_dark" data-toggle="modal" data-target="#user-create-popup">
+		<i class="fa fa-plus"></i>
+		New
+		</button>
+		<div class="form-group">
+			<select class="form-control picker" 
+				ng-options="code.id as code.name for code in rowSizeCodeList"
+				ng-model="pageHandler.numberOfRows" ng-change="reload()"></select>
+		</div>
+	</div>
+</div>
+
+<table class="list_tbl panel_g">
+	<thead>
+		<tr>
+			<th>사용자ID</th>
+			<th>사용자명</th>
+			<th>기관명</th>
+			<th>부서명</th>
+			<th>연락처</th>
+		</tr>
+	</thead>
+	<tbody ng-repeat="item in modelHandler.getItems()">
+		<tr class="panel_h" ng-class="panel_h_css(item.id)">
+			<td class="text-center"><a class="pointer" ng-click="onClickDetailLink(item)"><b>{{ item.userId }}</b></a></td>
+			<td class="text-center"><a class="pointer" ng-click="onClickDetailLink(item)"><b>{{ item.name }}</b></a></td>
+			<td class="text-center">{{ item.institute }}</td>
+			<td class="text-center">{{ item.department }}</td>
+			<td class="text-center">{{ item.phone }}</td>
+		</tr>
+	</tbody>
+</table>
+<nav class="text-center">
+	<ul class="pagination">
+		<li ng-class="pageHandler.isPrevDisabled()?'disabled':''" >
+			<a aria-label="Previous" ng-click="pageHandler.prev()"> 
+				<i class="fa fa-chevron-left" aria-hidden="true"></i>
+			</a>
+		</li>
+		<li ng-repeat="page in pageHandler.getPages()"
+			ng-class="(pageHandler.getCurrentPage() == page) ? 'active':'pointer'">
+			<a ng-click="pageHandler.setCurrentPage(page, true)">{{page}}</a>
+		</li>
+		<li ng-class="pageHandler.isNextDisabled()? 'disabled' : ''">
+			<a aria-label="Next" ng-click="pageHandler.next()"> 
+				<i class="fa fa-chevron-right" aria-hidden="true"></i>
+			</a>
+		</li>
+	</ul>
+</nav>

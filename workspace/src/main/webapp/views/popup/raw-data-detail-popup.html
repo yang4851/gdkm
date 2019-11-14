@@ -1,0 +1,38 @@
+<div class="modal fade overflow-y" id="raw-data-detail-popup" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<!-- modal-header -->
+			<div class="modal-header">
+				<h3 class="modal-title">Details of raw data file
+<!-- 				<button type="button" class="btn-link"><span class="fa fa-print"></span></button> -->
+				</h3>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+			</div>
+			<!-- /modal-header -->
+
+			<!-- modal-body -->
+			<div class="modal-body">
+				<form ng-include="'./views/registration/raw-data-detail.html'"></form>
+			</div>
+			<!-- /modal-body -->
+
+			<!-- modal-footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" ng-hide="!isEditableDeposit()" 
+					ng-click="showEditNgsDataPopup(model)">Raw data modify</button>				
+				<button type="button" class="btn btn-default" ng-hide="!isDeletableDeposit()"
+					ng-click="deleteNgsDataRegist()">Delete</button>
+				<button type="button" class="btn btn-default" ng-hide="!isSubmitDeposit()"
+					ng-click="changeConfirmStatus('accept')">Accept</button>
+				<button type="button" class="btn btn-default" ng-hide="!isSubmitDeposit()"
+					ng-click="changeConfirmStatus('reject')">Reject</button>
+				<button type="button" class="btn btn-default" ng-hide="!isFinishedDeposit()"
+					ng-click="revertRegistStatus()">Revert submission</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+			<!-- /modal-footer -->
+
+		</div>
+	</div>
+</div>

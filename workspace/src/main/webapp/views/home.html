@@ -1,0 +1,125 @@
+<div class="container" ng-init="init()">
+	<h3 class="sr-only">콘텐츠 영역</h3>
+	<div class="row" style="padding-top: 30px;">
+		<div class="col-xs-12"> Genome Database of Kimchi-associated Microbes (GDKM) is an integrated data management system that produces genomic information of the microorganisms associated with Korean fermented vegetables (kimchi) and makes standardized genome data available to researchers in academia and industry.</div>
+	</div>
+	<div class="row form_custom">
+		<div class="col-xs-6">
+			<h4 class="index_title">Search keyword (gene annotation)</h4>
+			<div class="form-horizontal">
+				<div class="form-group">
+					<label class="sr-only">Gene/Product name</label>
+					<div class="col-xs-12">
+						<input type="text" class="form-control" placeholder="Gene/Product name" ng-model="params.gene" ng-enter="onClickSearchBtn()"/>
+					</div>
+					<div class="col-xs-12 icheck_custom" style="padding-top: 5px;">
+						<label class="radio-inline" ng-repeat="code in matchCodeList"> 
+							<input class="minimal" type="radio" ng-value="code.id" ng-model="params.match"> {{ code.name }}
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-12" style="padding-bottom: 12px;">
+						Choose a specific strain (optional)
+					</label>
+					<div class="col-xs-12">
+						<input type="text" class="form-control" placeholder="Input strain to search" ng-model="params.strain" ng-enter="onClickSearchBtn()"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-12" style="padding-bottom: 12px;">
+						Or choose a species (optional)
+					</label>
+					<div class="col-xs-12">
+						<input type="text" class="form-control" placeholder="Input species to search" ng-model="params.species" ng-enter="onClickSearchBtn()"/>
+					</div>
+				</div>
+				<div class="form-group text-center">
+					<button type="button" class="btn btn_dark" ng-click="onClickSearchBtn()">Search registered data</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-6">
+			<h4 class="index_title">Category Statistics</h4>
+			<div class="row statistics">
+				<div class="col-xs-4">
+					<p>NCBI Taxonomy</p>
+					<p>{{ registStatSummary.taxonCount | number }}</p>
+				</div>
+				<div class="col-xs-4">
+					<p>Experiment(NGS)</p>
+					<p>{{ registStatSummary.registCount | number }}</p>
+				</div>
+				<div class="col-xs-4">
+					<p>Last Updated</p>
+					<p >{{ (registStatSummary.lastUpdated | date) == null ? '-' : (registStatSummary.lastUpdated | date) }}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div google-chart chart="taxonChart"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<h4 class="index_title">Data registration statistics</h4>
+			<div class="col-xs-7 form_box">
+				<div class="col-xs-5">
+					<select class="form-control picker col-xs-6" ng-model="statParams.dataType">
+						<option ng-repeat="dataType in registDataTyeList" value="{{ dataType.id }}">{{ dataType.name }}</option>
+					</select>
+				</div>
+				<div class="col-xs-3">
+					<select class="form-control picker col-xs-6" ng-model="statParams.year">
+						<option value="">Total (year)</option>
+						<option ng-repeat="year in registYearList" value="{{ year }}">{{ year }}</option>
+					</select>
+				</div>
+				<div class="col-xs-2">
+					<button type="button" class="btn btn_secondary" ng-click="onClickStatisticsBtn()">
+						<i class="fa fa-search"><span>Search</span></i>
+					</button>
+				</div>
+				<div class="col-xs-2">
+					<button type="button" class="btn btn_secondary" 
+						ng-disabled="disabledDownloadExcelBtn()"
+						ng-click="onClickStatisticsDownloadBtn('#statisticsTable')">
+						<i class="fa fa-download"><span>Download</span></i>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-6">
+			<div google-chart chart="registChart"></div>
+		</div>
+		<div class="col-xs-6" id="statisticsTable" >
+			<table class="home-table table">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Raw data</th>
+						<th>Annotation data</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="stat in registStatList">
+						<th>{{ stat.period }}</th>
+						<td>{{ stat.rawCount }}</td>
+						<td>{{ stat.processedCount }}</td>
+						<td>{{ stat.fileCount }}</td>
+					</tr>
+					<tr>
+						<th>Total</th>
+						<td>{{ sumOfStat(registStatList, 'rawCount') | number }}</td>
+						<td>{{ sumOfStat(registStatList, 'processedCount') | number }}</td>
+						<td>{{ sumOfStat(registStatList, 'fileCount') | number }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<!-- /container -->

@@ -1,0 +1,342 @@
+<div class="container" ng-controller="aniResultController" ng-init="init();">
+<div class="content_top">
+	<h1 class="title_page">
+		<a href="#!/tools/ani" class="active">ANI Calculator</a>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#!/home">Home</a></li>
+		<li><a href="#!/tools/ani">Tools</a></li>
+		<li class="active">ANI Calculator</li>
+	</ol>
+</div>	
+	<div class="summary">
+		<h2 class="title_con">Summary</h2>
+		<div id="collapse1-2" class="search_form_tbl">
+			<div class="card-body">
+				<table class="table-reset">
+					<tbody>
+						<tr>
+							<th class="wt-300">Total number of files</th>
+							<td>{{response.selectedFiles.length}}</td>
+						</tr>
+						<tr>
+							<th class="wt-300">Clustering method</th>
+							<td>{{response.method}}</td>
+						</tr>
+						<tr>
+							<th class="wt-300">Start time</th>
+							<td>{{startTime | date: 'yyyy-MM-dd hh:mm:ss' }}</td>
+						</tr>
+						<tr>
+							<th class="wt-300">End time</th>
+							<td>{{endTime| date: 'yyyy-MM-dd hh:mm:ss' }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+<!-- 	<h2 class="title_con">Comparison genomes</h2> -->
+<!-- 	<div class="table-responsive" > -->
+<!-- 		<table class="data_tbl table-word-break"> -->
+<!-- 			<thead class="thead-light text-center"> -->
+<!-- 				<tr> -->
+<!-- 					<th>No</th> -->
+<!-- 					<th>File name</th> -->
+<!-- 					<th>Organism</th> -->
+<!-- 					<th>Strain</th> -->
+<!-- 					<th>Length (bp)</th> -->
+<!-- 					<th>Label</th> -->
+<!-- 				</tr> -->
+<!-- 			</thead> -->
+<!-- 			<tbody class="text-center"> -->
+<!-- 				<tr ng-repeat="selectedFile in response.selectedFiles"> -->
+<!-- 					<td>{{$index + 1}} | {{response.selectedFiles.length}}</td> -->
+<!-- 					<td>{{selectedFile.fileName}}</td> -->
+<!-- 					<td>{{selectedFile.taxonomy.name}}</td> -->
+<!-- 					<td>{{selectedFile.strain == null?'-':selectedFile.strain}}</td> -->
+<!-- 					<td>{{selectedFile.fileSize}}</td> -->
+<!-- 					<td>{{selectedFile.aniLabel}}</td> -->
+<!-- 				<tr> -->
+<!-- 			</tbody> -->
+<!-- 		</table> -->
+<!-- 	</div> -->
+	<uib-accordion close-others="false"> 
+		<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[0]">
+			<uib-accordion-heading>Comparison genomes</uib-accordion-heading>
+			<div class="panel-collapse collapse in">
+				<div class="accordion-panel">
+					<table class="data_tbl table-word-break">
+						<tbody>
+							<tr>
+								<th>No</th>
+								<th>File name</th>
+								<th>Organism</th>
+								<th>Strain</th>
+								<th>Length (bp)</th>
+								<th>Label</th>
+							</tr>
+							<tr ng-repeat="selectedFile in response.selectedFiles">
+								<td>{{$index + 1}}</td>
+								<td>{{selectedFile.fileName}}</td>
+								<td>{{selectedFile.taxonomy.name}}</td>
+								<td>{{selectedFile.strain == null?'-':selectedFile.strain}}</td>
+								<td>{{selectedFile.fileSize}}</td>
+								<td>{{selectedFile.aniLabel}}</td>
+							<tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</uib-accordion>
+	
+	<div class="alignment-coverage" ng-if="coverage.length!=0">
+		<h2 class="title_con">{{response.method}} alignment coverage</h2>
+		<div class="ani-div">
+			<img class="ani-image" ng-src="./ani/output/image?outputDir={{response.outputDir}}&name=alignment_coverage&method={{response.method}}" 
+					alt="alignment-coverage">
+		</div>
+		
+		<!-- === Option bar === -->
+		<div class="row toolbar" style="padding-bottom: 10px;">
+			<div class="col-xs-3">
+			</div>
+			<div class="col-xs-9 form-inline text-right">
+				<button type="submit" class="btn btn-default" ng-click="downloadOutputFile('png', 'alignment_coverage')">Download as image</button>
+				<button type="submit" class="btn btn-default" ng-click="downloadOutputFile('tab', 'alignment_coverage')">Download as results</button>
+			</div>
+		</div>
+		<div class="grid" ui-grid="coverageGridOptions" ui-grid-resize ui-grid-resize-columns ui-grid-pinning></div>
+<!-- 		<div class="table-responsive" > -->
+<!-- 			<table class="list_tbl panel_g"> -->
+<!-- 				<thead class="thead-light text-center"> -->
+<!-- 					<tr> -->
+<!-- 						<th></th> -->
+<!-- 						<th ng-repeat="source in coverage.sources"> -->
+<!-- 							<a class="pointer" ng-click="onClickFileDetail(source)">{{source}}</a> -->
+<!-- 						</th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody class="text-center"> -->
+<!-- 					<tr ng-repeat="target in coverage.targets"> -->
+<!-- 						<td ng-repeat="content in target track by $index"> -->
+<!-- 							<span ng-if="$index==0" class="bold"> -->
+<!-- 								<a class="pointer" ng-click="onClickFileDetail(content)">{{content}}</a> -->
+<!-- 							</span> -->
+<!-- 							<span ng-if="$index!=0">{{content}}</span> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
+<!-- 				</tbody> -->
+<!-- 			</table> -->
+<!-- 		</div> -->
+	</div>
+	
+	<div class="alignment-lengths" ng-if="lengths.length!=0">
+		<h2 class="title_con">{{response.method}} alignment lengths</h2>
+		<div class="ani-div">
+			<img class="ani-image" ng-src="./ani/output/image?outputDir={{response.outputDir}}&name=alignment_lengths&method={{response.method}}" 
+					alt="alignment-lengths">
+		</div>
+		
+		<!-- === Option bar === -->
+		<div class="row toolbar" style="padding-bottom: 10px;">
+			<div class="col-xs-3">
+			</div>
+			<div class="col-xs-9 form-inline text-right">
+				<button type="submit" class="btn btn-default" ng-click="downloadOutputFile('png', 'alignment_lengths')">Download as image</button>
+				<button type="submit" class="btn btn-default" ng-click="downloadOutputFile('tab', 'alignment_lengths')">Download as results</button>
+			</div>
+		</div>
+		<div class="grid" ui-grid="lengthsGridOptions" ui-grid-resize ui-grid-resize-columns ui-grid-pinning></div>
+<!-- 		<div class="table-responsive" > -->
+<!-- 			<table class="list_tbl panel_g"> -->
+<!-- 				<thead class="thead-light text-center"> -->
+<!-- 					<tr> -->
+<!-- 						<th></th> -->
+<!-- 						<th ng-repeat="source in lengths.sources"> -->
+<!-- 							<a class="pointer" ng-click="onClickFileDetail(source)">{{source}}</a> -->
+<!-- 						</th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody class="text-center"> -->
+<!-- 					<tr ng-repeat="target in lengths.targets"> -->
+<!-- 						<td ng-repeat="content in target track by $index"> -->
+<!-- 							<span ng-if="$index==0" class="bold"> -->
+<!-- 								<a class="pointer" ng-click="onClickFileDetail(content)">{{content}}</a> -->
+<!-- 							</span> -->
+<!-- 							<span ng-if="$index!=0">{{content}}</span> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
+<!-- 				</tbody> -->
+<!-- 			</table> -->
+<!-- 		</div> -->
+	</div>
+	
+	<div class="hadamard" ng-if="hadamard.length!=0">
+		<h2 class="title_con">{{response.method}} hadamard</h2>
+		<div class="ani-div">
+			<img class="ani-image" ng-src="./ani/output/image?outputDir={{response.outputDir}}&name=hadamard&method={{response.method}}" 
+					alt="hadamard">
+		</div>
+		
+		<!-- === Option bar === -->
+		<div class="row toolbar" style="padding-bottom: 10px;">
+			<div class="col-xs-3">
+			</div>
+			<div class="col-xs-9 form-inline text-right">
+				<button type="submit" class="btn btn-default" ng-click="downloadOutputFile('png', 'hadamard')">Download as image</button>
+				<button type="submit" class="btn btn-default" ng-click="downloadOutputFile('tab', 'hadamard')">Download as results</button>
+			</div>
+		</div>
+		<div class="grid" ui-grid="hadamardGridOptions" ui-grid-resize ui-grid-resize-columns ui-grid-pinning></div>
+<!-- 		<div class="table-responsive" > -->
+<!-- 			<table class="list_tbl panel_g"> -->
+<!-- 				<thead class="thead-light text-center"> -->
+<!-- 					<tr> -->
+<!-- 						<th></th> -->
+<!-- 						<th ng-repeat="source in hadamard.sources"> -->
+<!-- 							<a class="pointer" ng-click="onClickFileDetail(source)">{{source}}</a> -->
+<!-- 						</th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody class="text-center"> -->
+<!-- 					<tr ng-repeat="target in hadamard.targets"> -->
+<!-- 						<td ng-repeat="content in target track by $index"> -->
+<!-- 							<span ng-if="$index==0" class="bold"> -->
+<!-- 								<a class="pointer" ng-click="onClickFileDetail(content)">{{content}}</a> -->
+<!-- 							</span> -->
+<!-- 							<span ng-if="$index!=0">{{content}}</span> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
+<!-- 				</tbody> -->
+<!-- 			</table> -->
+<!-- 		</div> -->
+	</div>
+	
+	<div class="percentage-identity" ng-if="identity.length!=0">
+		<h2 class="title_con">{{response.method}} percentage identity</h2>
+		<div class="ani-div">
+			<img class="ani-image" ng-src="./ani/output/image?outputDir={{response.outputDir}}&name=percentage_identity&method={{response.method}}" 
+					alt="percentage-identity">
+		</div>
+		
+		<!-- === Option bar === -->
+		<div class="row toolbar" style="padding-bottom: 10px;">
+			<div class="col-xs-3">
+			</div>
+			<div class="col-xs-9 form-inline text-right">
+				<button type="submit" class="btn btn-default" ng-click="downloadOutputFile('png', 'percentage_identity')">Download as image	</button>
+				<button type="submit" class="btn btn-default" ng-click="downloadOutputFile('tab', 'percentage_identity')">Download as results</button>
+			</div>
+		</div>
+		<div class="grid" ui-grid="identityGridOptions" ui-grid-resize ui-grid-resize-columns ui-grid-pinning></div>
+<!-- 		<div class="table-responsive" > -->
+<!-- 			<table class="list_tbl panel_g"> -->
+<!-- 				<thead class="thead-light text-center"> -->
+<!-- 					<tr> -->
+<!-- 						<th></th> -->
+<!-- 						<th ng-repeat="source in identity.sources"> -->
+<!-- 							<a class="pointer" ng-click="onClickFileDetail(source)">{{source}}</a> -->
+<!-- 						</th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody class="text-center"> -->
+<!-- 					<tr ng-repeat="target in identity.targets"> -->
+<!-- 						<td ng-repeat="content in target track by $index"> -->
+<!-- 							<span ng-if="$index==0" class="bold"> -->
+<!-- 								<a class="pointer" ng-click="onClickFileDetail(content)">{{content}}</a> -->
+<!-- 							</span> -->
+<!-- 							<span ng-if="$index!=0">{{content}}</span> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
+<!-- 				</tbody> -->
+<!-- 			</table> -->
+<!-- 		</div> -->
+	</div>
+	
+	<div class="similarity-errors" ng-if="similarity.length!=0">
+		<h2 class="title_con">{{response.method}} similarity errors</h2>
+		<div class="ani-div">
+			<img class="ani-image" ng-src="./ani/output/image?outputDir={{response.outputDir}}&name=similarity_errors&method={{response.method}}" 
+					alt="similarity-error">
+		</div>
+		
+		<!-- === Option bar === -->
+		<div class="row toolbar" style="padding-bottom: 10px;">
+			<div class="col-xs-3">
+			</div>
+			<div class="col-xs-9 form-inline text-right">
+				<button type="submit" class="btn btn-default" ng-click="downloadOutputFile('tab', 'similarity_errors')">Download as image</button>
+				<button type="submit" class="btn btn-default" ng-click="downloadOutputFile('tab', 'similarity_errors')">Download as results</button>
+			</div>
+		</div>
+		<div class="grid" ui-grid="similarityGridOptions" ui-grid-resize ui-grid-resize-columns ui-grid-pinning></div>
+<!-- 		<div class="table-responsive" > -->
+<!-- 			<table class="list_tbl panel_g"> -->
+<!-- 				<thead class="thead-light text-center"> -->
+<!-- 					<tr> -->
+<!-- 						<th></th> -->
+<!-- 						<th ng-repeat="source in similarity.sources"> -->
+<!-- 							<a class="pointer" ng-click="onClickFileDetail(source)">{{source}}</a> -->
+<!-- 						</th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody class="text-center"> -->
+<!-- 					<tr ng-repeat="target in similarity.targets"> -->
+<!-- 						<td ng-repeat="content in target track by $index"> -->
+<!-- 							<span ng-if="$index==0" class="bold"> -->
+<!-- 								<a class="pointer" ng-click="onClickFileDetail(content)">{{content}}</a> -->
+<!-- 							</span> -->
+<!-- 							<span ng-if="$index!=0">{{content}}</span> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
+<!-- 				</tbody> -->
+<!-- 			</table> -->
+<!-- 		</div> -->
+	</div>
+		
+	
+	<div class="tetra-correlations" ng-if="tetraCorrelations.length!=0">
+		<h2 class="title_con">TETRA correlations</h2>
+		<div class="ani-div">
+			<img class="ani-image" ng-src="./ani/output/image?outputDir={{response.outputDir}}&name=correlations&method=TETRA" 
+				alt="tetra-correlations">
+		</div>
+		
+		<!-- === Option bar === -->
+		<div class="row toolbar" style="padding-bottom: 10px;">
+			<div class="col-xs-3">
+			</div>
+			<div class="col-xs-9 form-inline text-right">
+				<button type="submit" class="btn btn-default" ng-click="downloadOutputFile('png', 'correlations')">Download as image</button>
+				<button type="submit" class="btn btn-default" ng-click="downloadOutputFile('tab', 'correlations')">Download as results</button>
+			</div>
+		</div>
+		<div class="grid" ui-grid="tetraCorrelationsGridOptions" ui-grid-resize ui-grid-resize-columns ui-grid-pinning></div> 
+<!-- 		<div class="table-responsive" > -->
+<!-- 			<table class="list_tbl panel_g"> -->
+<!-- 				<thead class="thead-light text-center"> -->
+<!-- 					<tr> -->
+<!-- 						<th></th> -->
+<!-- 						<th ng-repeat="source in tetraCorrelations.sources"> -->
+<!-- 							<a class="pointer" ng-click="onClickFileDetail(source)">{{source}}</a> -->
+<!-- 						</th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody class="text-center"> -->
+<!-- 					<tr ng-repeat="target in tetraCorrelations.targets"> -->
+<!-- 						<td ng-repeat="content in target track by $index"> -->
+<!-- 							<span ng-if="$index==0" class="bold"> -->
+<!-- 								<a class="pointer" ng-click="onClickFileDetail(content)">{{content}}</a> -->
+<!-- 							</span> -->
+<!-- 							<span ng-if="$index!=0">{{content}}</span> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
+<!-- 				</tbody> -->
+<!-- 			</table> -->
+<!-- 		</div> -->
+	</div>
+	
+	<div ng-include="'./views/popup/processed-data-detail-popup.html'"></div>
+</div>

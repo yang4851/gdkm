@@ -1,0 +1,2445 @@
+
+============== System information ====
++ lsb_release -a
+LSB Version:	:base-4.0-amd64:base-4.0-noarch:core-4.0-amd64:core-4.0-noarch
+Distributor ID:	CentOS
+Description:	CentOS release 6.9 (Final)
+Release:	6.9
+Codename:	Final
++ uname -a
+Linux localhost.localdomain 2.6.32-696.23.1.el6.x86_64 #1 SMP Tue Mar 13 22:44:18 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
++ sw_vers
+./setup.sh: line 84: sw_vers: command not found
++ system_profiler
+./setup.sh: line 85: system_profiler: command not found
++ grep MemTotal /proc/meminfo
+MemTotal:        8150456 kB
++ echo
+
++ echo
+
++ bin/cpanm -v --notest -l extlib/ --installdeps .
+cpanm (App::cpanminus) 1.7039 on perl 5.010001 built for x86_64-linux-thread-multi
+Work directory is /root/.cpanm/work/1529913671.6174
+You have make /usr/bin/make
+You have LWP 5.833
+You have /bin/tar: tar (GNU tar) 1.23
+Copyright (C) 2010 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written by John Gilmore and Jay Fenlason.
+You have /usr/bin/unzip
+Entering /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3
+Running Makefile.PL
+--> Working on .
+Configuring /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3 ... Warning: prerequisite Capture::Tiny 0 not found.
+Warning: prerequisite DBD::SQLite 0 not found.
+Warning: prerequisite Devel::Size 0 not found.
+Warning: prerequisite Hash::Merge 0 not found.
+Warning: prerequisite Heap::Simple::XS 0 not found.
+Warning: prerequisite JSON 2 not found.
+Warning: prerequisite JSON::XS 0 not found.
+Warning: prerequisite Parse::RecDescent 0 not found.
+Warning: prerequisite PerlIO::gzip 0 not found.
+Warning: prerequisite local::lib 0 not found.
+Can't parse version 'dev'
+Can't parse version 'dev'
+Generating a Unix-style Makefile
+Writing Makefile for JBrowse
+Writing MYMETA.yml and MYMETA.json
+Checking dependencies from MYMETA.json ...
+Checking if you have Capture::Tiny 0 ... No
+Checking if you have Pod::Usage 0 ... Yes (1.36)
+Checking if you have Storable 0 ... Yes (2.20)
+Checking if you have JSON::XS 0 ... No
+Checking if you have List::Util 0 ... Yes (1.50)
+Checking if you have PerlIO::gzip 0 ... No
+Checking if you have Digest::Crc32 0 ... Yes (0.01)
+Checking if you have File::Path 2 ... Yes (2.08)
+Checking if you have local::lib 0 ... No
+Checking if you have List::MoreUtils 0.28 ... Yes (0.428)
+Checking if you have Bio::FeatureIO 0 ... Yes (1.6.905)
+Checking if you have DBI 0 ... Yes (1.609)
+Checking if you have Getopt::Long 0 ... Yes (2.38)
+Checking if you have warnings 0 ... Yes (1.06)
+Checking if you have base 0 ... Yes (2.14)
+Checking if you have IO::File 0 ... Yes (1.14)
+Checking if you have Bio::Index::Fasta 0 ... Yes (undef)
+Checking if you have Data::Dumper 0 ... Yes (2.124)
+Checking if you have DB_File 0 ... Yes (1.841)
+Checking if you have Bio::Root::Version 1.006000 ... Yes (1.007002)
+Checking if you have Bio::Annotation::SimpleValue 0 ... Yes (undef)
+Checking if you have vars 0 ... Yes (1.01)
+Checking if you have Parse::RecDescent 0 ... No
+Checking if you have Test::More 0 ... Yes (1.302135)
+Checking if you have strict 0 ... Yes (1.04)
+Checking if you have File::Temp 0 ... Yes (0.22)
+Checking if you have File::Copy::Recursive 0 ... Yes (0.40)
+Checking if you have Scalar::Util 0 ... Yes (1.50)
+Checking if you have DBD::SQLite 0 ... No
+Checking if you have URI::Escape 0 ... Yes (3.31)
+Checking if you have FindBin 0 ... Yes (1.50)
+Checking if you have Fcntl 0 ... Yes (1.06)
+Checking if you have File::Spec 0 ... Yes (3.30)
+Checking if you have Heap::Simple::XS 0 ... No
+Checking if you have Heap::Simple 0 ... Yes (0.13)
+Checking if you have POSIX 0 ... Yes (1.17)
+Checking if you have Devel::Size 0 ... No
+Checking if you have File::Spec::Functions 0 ... Yes (3.30)
+Checking if you have Bio::SeqFeature::Lite 0 ... Yes (undef)
+Checking if you have Bio::GFF3::LowLevel::Parser 1.8 ... Yes (2.0)
+Checking if you have IO::Uncompress::Gunzip 0 ... Yes (2.021)
+Checking if you have Hash::Merge 0 ... No
+Checking if you have constant 0 ... Yes (1.17)
+Checking if you have Bio::OntologyIO 0 ... Yes (undef)
+Checking if you have Exporter 0 ... Yes (5.63)
+Checking if you have Bio::SeqFeature::Annotated 0 ... Yes (1.6.905)
+Checking if you have Carp 0 ... Yes (1.38)
+Checking if you have Test::Warn 0 ... Yes (0.32)
+Checking if you have File::Next 0 ... Yes (1.16)
+Checking if you have JSON 2 ... No
+Checking if you have File::Basename 0 ... Yes (2.77)
+Checking if you have Cwd 0 ... Yes (3.30)
+Searching Capture::Tiny (0) on cpanmetadb ...
+Unpacking Capture-Tiny-0.48.tar.gz
+OK
+==> Found dependencies: Capture::Tiny, JSON::XS, PerlIO::gzip, local::lib, Parse::RecDescent, DBD::SQLite, Heap::Simple::XS, Devel::Size, Hash::Merge, JSON
+--> Working on Capture::Tiny
+Fetching http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Capture-Tiny-0.48.tar.gz ... OK
+Capture-Tiny-0.48/
+Capture-Tiny-0.48/LICENSE
+Capture-Tiny-0.48/cpanfile
+Capture-Tiny-0.48/Changes
+Capture-Tiny-0.48/MANIFEST
+Capture-Tiny-0.48/perlcritic.rc
+Capture-Tiny-0.48/CONTRIBUTING.mkdn
+Capture-Tiny-0.48/t/
+Capture-Tiny-0.48/xt/
+Capture-Tiny-0.48/README
+Capture-Tiny-0.48/Todo
+Capture-Tiny-0.48/examples/
+Capture-Tiny-0.48/META.yml
+Capture-Tiny-0.48/lib/
+Capture-Tiny-0.48/Makefile.PL
+Capture-Tiny-0.48/META.json
+Capture-Tiny-0.48/dist.ini
+Capture-Tiny-0.48/lib/Capture/
+Capture-Tiny-0.48/lib/Capture/Tiny.pm
+Capture-Tiny-0.48/examples/tee.pl
+Capture-Tiny-0.48/examples/rt-58208.pl
+Capture-Tiny-0.48/xt/author/
+Capture-Tiny-0.48/xt/release/
+Capture-Tiny-0.48/xt/release/distmeta.t
+Capture-Tiny-0.48/xt/author/critic.t
+Capture-Tiny-0.48/xt/author/minimum-version.t
+Capture-Tiny-0.48/xt/author/test-version.t
+Capture-Tiny-0.48/xt/author/00-compile.t
+Capture-Tiny-0.48/xt/author/pod-syntax.t
+Capture-Tiny-0.48/xt/author/portability.t
+Capture-Tiny-0.48/xt/author/pod-spell.t
+Capture-Tiny-0.48/xt/author/pod-coverage.t
+Capture-Tiny-0.48/t/19-relayering.t
+Capture-Tiny-0.48/t/24-all-badtied.t
+Capture-Tiny-0.48/t/08-stdin-closed.t
+Capture-Tiny-0.48/t/13-stdout-tied.t
+Capture-Tiny-0.48/t/21-stderr-badtie.t
+Capture-Tiny-0.48/t/20-stdout-badtie.t
+Capture-Tiny-0.48/t/09-preserve-exit-code.t
+Capture-Tiny-0.48/t/12-stdin-string.t
+Capture-Tiny-0.48/t/02-capture.t
+Capture-Tiny-0.48/t/22-stdin-badtie.t
+Capture-Tiny-0.48/t/23-all-tied.t
+Capture-Tiny-0.48/t/01-Capture-Tiny.t
+Capture-Tiny-0.48/t/16-catch-errors.t
+Capture-Tiny-0.48/t/00-report-prereqs.t
+Capture-Tiny-0.48/t/lib/
+Capture-Tiny-0.48/t/25-cap-fork.t
+Capture-Tiny-0.48/t/11-stderr-string.t
+Capture-Tiny-0.48/t/10-stdout-string.t
+Capture-Tiny-0.48/t/06-stdout-closed.t
+Capture-Tiny-0.48/t/07-stderr-closed.t
+Capture-Tiny-0.48/t/00-report-prereqs.dd
+Capture-Tiny-0.48/t/18-custom-capture.t
+Capture-Tiny-0.48/t/17-pass-results.t
+Capture-Tiny-0.48/t/03-tee.t
+Capture-Tiny-0.48/t/14-stderr-tied.t
+Capture-Tiny-0.48/t/15-stdin-tied.t
+Capture-Tiny-0.48/t/lib/Cases.pm
+Capture-Tiny-0.48/t/lib/Utils.pm
+Capture-Tiny-0.48/t/lib/TieLC.pm
+Capture-Tiny-0.48/t/lib/TieEvil.pm
+Entering Capture-Tiny-0.48
+Checking configure dependencies from META.json
+Checking if you have ExtUtils::MakeMaker 6.58 ... Yes (7.34)
+Running Makefile.PL
+Configuring Capture-Tiny-0.48 ... Checking if your kit is complete...
+Looks good
+Generating a Unix-style Makefile
+Writing Makefile for Capture::Tiny
+Writing MYMETA.yml and MYMETA.json
+Checking dependencies from MYMETA.json ...
+Checking if you have Scalar::Util 0 ... Yes (1.50)
+Checking if you have warnings 0 ... Yes (1.06)
+Checking if you have ExtUtils::MakeMaker 0 ... Yes (7.34)
+Checking if you have File::Spec 0 ... Yes (3.30)
+Checking if you have IO::Handle 0 ... Yes (1.28)
+Checking if you have Exporter 0 ... Yes (5.63)
+Checking if you have Carp 0 ... Yes (1.38)
+Checking if you have strict 0 ... Yes (1.04)
+Checking if you have File::Temp 0 ... Yes (0.22)
+OK
+Building Capture-Tiny-0.48 ... cp lib/Capture/Tiny.pm blib/lib/Capture/Tiny.pm
+Manifying 1 pod document
+Manifying 1 pod document
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/Capture/Tiny.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/Capture::Tiny.3pm
+Appending installation info to /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/perllocal.pod
+OK
+Successfully installed Capture-Tiny-0.48
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/Capture-Tiny-0.48/install.json
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/Capture-Tiny-0.48/MYMETA.json
+Searching JSON::XS (0) on cpanmetadb ...
+Unpacking JSON-XS-3.04.tar.gz
+--> Working on JSON::XS
+Fetching http://www.cpan.org/authors/id/M/ML/MLEHMANN/JSON-XS-3.04.tar.gz ... OK
+JSON-XS-3.04/
+JSON-XS-3.04/typemap
+JSON-XS-3.04/t/
+JSON-XS-3.04/t/14_latin1.t
+JSON-XS-3.04/t/02_error.t
+JSON-XS-3.04/t/15_prefix.t
+JSON-XS-3.04/t/11_pc_expo.t
+JSON-XS-3.04/t/99_binary.t
+JSON-XS-3.04/t/22_comment_at_eof.t
+JSON-XS-3.04/t/03_types.t
+JSON-XS-3.04/t/05_dwiw_decode.t
+JSON-XS-3.04/t/21_evans.t
+JSON-XS-3.04/t/06_pc_pretty.t
+JSON-XS-3.04/t/01_utf8.t
+JSON-XS-3.04/t/10_pc_keysort.t
+JSON-XS-3.04/t/16_tied.t
+JSON-XS-3.04/t/09_pc_extra_number.t
+JSON-XS-3.04/t/07_pc_esc.t
+JSON-XS-3.04/t/52_object.t
+JSON-XS-3.04/t/18_json_checker.t
+JSON-XS-3.04/t/20_faihu.t
+JSON-XS-3.04/t/13_limit.t
+JSON-XS-3.04/t/12_blessed.t
+JSON-XS-3.04/t/19_incr.t
+JSON-XS-3.04/t/04_dwiw_encode.t
+JSON-XS-3.04/t/08_pc_base.t
+JSON-XS-3.04/t/17_relaxed.t
+JSON-XS-3.04/t/00_load.t
+JSON-XS-3.04/README
+JSON-XS-3.04/Changes
+JSON-XS-3.04/COPYING
+JSON-XS-3.04/XS.pm
+JSON-XS-3.04/XS/
+JSON-XS-3.04/XS/Boolean.pm
+JSON-XS-3.04/MANIFEST
+JSON-XS-3.04/eg/
+JSON-XS-3.04/eg/bench
+JSON-XS-3.04/bin/
+JSON-XS-3.04/bin/json_xs
+JSON-XS-3.04/XS.xs
+JSON-XS-3.04/Makefile.PL
+JSON-XS-3.04/META.yml
+JSON-XS-3.04/META.json
+Entering JSON-XS-3.04
+Checking configure dependencies from META.json
+Checking if you have ExtUtils::MakeMaker 6.58 ... Yes (7.34)
+Checking if you have Canary::Stability 0 ... No
+Searching Canary::Stability (0) on cpanmetadb ...
+Unpacking Canary-Stability-2012.tar.gz
+==> Found dependencies: Canary::Stability
+--> Working on Canary::Stability
+Fetching http://www.cpan.org/authors/id/M/ML/MLEHMANN/Canary-Stability-2012.tar.gz ... OK
+Canary-Stability-2012/
+Canary-Stability-2012/Stability.pm
+Canary-Stability-2012/Changes
+Canary-Stability-2012/Makefile.PL
+Canary-Stability-2012/README
+Canary-Stability-2012/COPYING
+Canary-Stability-2012/MANIFEST
+Canary-Stability-2012/META.yml
+Canary-Stability-2012/META.json
+Entering Canary-Stability-2012
+Checking configure dependencies from META.json
+Checking if you have ExtUtils::MakeMaker 6.58 ... Yes (7.34)
+Running Makefile.PL
+Configuring Canary-Stability-2012 ... Checking if your kit is complete...
+Looks good
+Generating a Unix-style Makefile
+Writing Makefile for Canary::Stability
+Writing MYMETA.yml and MYMETA.json
+Checking dependencies from MYMETA.json ...
+Checking if you have ExtUtils::MakeMaker 0 ... Yes (7.34)
+OK
+Building Canary-Stability-2012 ... cp Stability.pm blib/lib/Canary/Stability.pm
+Manifying 1 pod document
+Manifying 1 pod document
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/Canary/Stability.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/Canary::Stability.3pm
+Appending installation info to /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/perllocal.pod
+OK
+Successfully installed Canary-Stability-2012
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/Canary-Stability-2012/install.json
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/Canary-Stability-2012/MYMETA.json
+Running Makefile.PL
+Configuring JSON-XS-3.04 ... 
+***
+*** Canary::Stability COMPATIBILITY AND SUPPORT CHECK
+*** =================================================
+***
+*** Hi!
+***
+*** I do my best to provide predictable and reliable software.
+***
+*** However, in recent releases, P5P (who maintain perl) have been
+*** introducing regressions that are sometimes subtle and at other times
+*** catastrophic, often for personal preferences with little or no concern
+*** for existing code, most notably CPAN.
+***
+*** For this reason, it has become very hard for me to maintain the level
+*** of reliability and support I have committed myself to in the past, at
+*** least with some perl versions: I simply can't keep up working around new
+*** bugs or gratituous incompatibilities, and in turn you might suffer from
+*** unanticipated problems.
+***
+*** Therefore I have introduced a support and compatibility check, the results
+*** of which follow below, together with a FAQ and some recommendations.
+***
+*** This check is just to let you know that there might be a risk, so you can
+*** make judgement calls on how to proceed - it will not keep the module from
+*** installing or working.
+***
+*** The stability canary says: chirp! chirp! (it seems to be quite happy)
+***
+*** Your version of perl (5.010001) is quite supported by JSON::XS, nothing
+*** else to be said, hope it comes in handy.
+Warning: prerequisite Types::Serialiser 0 not found.
+Warning: prerequisite common::sense 0 not found.
+Checking if your kit is complete...
+Looks good
+Generating a Unix-style Makefile
+Writing Makefile for JSON::XS
+Writing MYMETA.yml and MYMETA.json
+Checking dependencies from MYMETA.json ...
+Checking if you have ExtUtils::MakeMaker 0 ... Yes (7.34)
+Checking if you have Types::Serialiser 0 ... No
+Checking if you have common::sense 0 ... No
+Searching Types::Serialiser (0) on cpanmetadb ...
+Unpacking Types-Serialiser-1.0.tar.gz
+OK
+==> Found dependencies: Types::Serialiser, common::sense
+--> Working on Types::Serialiser
+Fetching http://www.cpan.org/authors/id/M/ML/MLEHMANN/Types-Serialiser-1.0.tar.gz ... OK
+Types-Serialiser-1.0/
+Types-Serialiser-1.0/Makefile.PL
+Types-Serialiser-1.0/Serialiser.pm
+Types-Serialiser-1.0/META.yml
+Types-Serialiser-1.0/Changes
+Types-Serialiser-1.0/META.json
+Types-Serialiser-1.0/COPYING
+Types-Serialiser-1.0/README
+Types-Serialiser-1.0/t/
+Types-Serialiser-1.0/t/00_load.t
+Types-Serialiser-1.0/t/51_types.t
+Types-Serialiser-1.0/Serialiser/
+Types-Serialiser-1.0/Serialiser/Error.pm
+Types-Serialiser-1.0/MANIFEST
+Entering Types-Serialiser-1.0
+Checking configure dependencies from META.json
+Checking if you have ExtUtils::MakeMaker 6.58 ... Yes (7.34)
+Running Makefile.PL
+Configuring Types-Serialiser-1.0 ... Warning: prerequisite common::sense 0 not found.
+Checking if your kit is complete...
+Looks good
+Generating a Unix-style Makefile
+Writing Makefile for Types::Serialiser
+Writing MYMETA.yml and MYMETA.json
+Checking dependencies from MYMETA.json ...
+Checking if you have ExtUtils::MakeMaker 0 ... Yes (7.34)
+Checking if you have common::sense 0 ... No
+Searching common::sense (0) on cpanmetadb ...
+Unpacking common-sense-3.74.tar.gz
+OK
+==> Found dependencies: common::sense
+--> Working on common::sense
+Fetching http://www.cpan.org/authors/id/M/ML/MLEHMANN/common-sense-3.74.tar.gz ... OK
+common-sense-3.74/
+common-sense-3.74/Makefile.PL
+common-sense-3.74/sense.pm.PL
+common-sense-3.74/META.yml
+common-sense-3.74/Changes
+common-sense-3.74/META.json
+common-sense-3.74/LICENSE
+common-sense-3.74/README
+common-sense-3.74/t/
+common-sense-3.74/t/00_load.t
+common-sense-3.74/t/01_arch.t
+common-sense-3.74/sense.pod
+common-sense-3.74/MANIFEST
+Entering common-sense-3.74
+Checking configure dependencies from META.json
+Checking if you have ExtUtils::MakeMaker 6.58 ... Yes (7.34)
+Running Makefile.PL
+Configuring common-sense-3.74 ... Checking if your kit is complete...
+Looks good
+Generating a Unix-style Makefile
+Writing Makefile for common::sense
+Writing MYMETA.yml and MYMETA.json
+Checking dependencies from MYMETA.json ...
+Checking if you have ExtUtils::MakeMaker 0 ... Yes (7.34)
+OK
+Building common-sense-3.74 ... "/usr/bin/perl" sense.pm.PL sense.pm
+cp sense.pod blib/lib/common/sense.pod
+cp sense.pm blib/arch/common/sense.pm
+Manifying 2 pod documents
+Manifying 2 pod documents
+Files found in blib/arch: installing files in blib/lib into architecture dependent library tree
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/common/sense.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/common/sense.pod
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/common::sense.3pm
+Appending installation info to /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/perllocal.pod
+OK
+Successfully installed common-sense-3.74
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/common-sense-3.74/install.json
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/common-sense-3.74/MYMETA.json
+Building Types-Serialiser-1.0 ... cp Serialiser.pm blib/lib/Types/Serialiser.pm
+cp Serialiser/Error.pm blib/lib/Types/Serialiser/Error.pm
+Manifying 2 pod documents
+Manifying 2 pod documents
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/Types/Serialiser.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/Types/Serialiser/Error.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/Types::Serialiser::Error.3pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/Types::Serialiser.3pm
+Appending installation info to /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/perllocal.pod
+OK
+Successfully installed Types-Serialiser-1.0
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/Types-Serialiser-1.0/install.json
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/Types-Serialiser-1.0/MYMETA.json
+Already tried common::sense. Skipping.
+Building JSON-XS-3.04 ... cp XS/Boolean.pm blib/lib/JSON/XS/Boolean.pm
+cp XS.pm blib/lib/JSON/XS.pm
+Running Mkbootstrap for XS ()
+chmod 644 "XS.bs"
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- XS.bs blib/arch/auto/JSON/XS/XS.bs 644
+"/usr/bin/perl" "/usr/share/perl5/ExtUtils/xsubpp"  -typemap '/usr/share/perl5/ExtUtils/typemap' -typemap '/root/.cpanm/work/1529913671.6174/JSON-XS-3.04/typemap'  XS.xs > XS.xsc
+mv XS.xsc XS.c
+gcc -c   -D_REENTRANT -D_GNU_SOURCE -fno-strict-aliasing -pipe -fstack-protector -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic   -DVERSION=\"3.04\" -DXS_VERSION=\"3.04\" -fPIC "-I/usr/lib64/perl5/CORE"   XS.c
+XS.xs: In function ‘ptr_to_index’:
+XS.xs:233: warning: pointer targets in passing argument 2 of ‘Perl_utf8_distance’ differ in signedness
+/usr/lib64/perl5/CORE/proto.h:3558: note: expected ‘const U8 *’ but argument is of type ‘char *’
+XS.xs:233: warning: pointer targets in passing argument 3 of ‘Perl_utf8_distance’ differ in signedness
+/usr/lib64/perl5/CORE/proto.h:3558: note: expected ‘const U8 *’ but argument is of type ‘char *’
+XS.xs: In function ‘ref_bool_type’:
+XS.xs:344: warning: suggest explicit braces to avoid ambiguous ‘else’
+XS.xs: In function ‘encode_str’:
+XS.xs:455: warning: pointer targets in passing argument 1 of ‘decode_utf8’ differ in signedness
+XS.xs:191: note: expected ‘unsigned char *’ but argument is of type ‘char *’
+XS.xs:508: warning: pointer targets in passing argument 1 of ‘encode_utf8’ differ in signedness
+XS.xs:208: note: expected ‘unsigned char *’ but argument is of type ‘char *’
+XS.xs:508: warning: pointer targets in assignment differ in signedness
+XS.xs: In function ‘encode_sv’:
+XS.xs:899: warning: ignoring return value of ‘gcvt’, declared with attribute warn_unused_result
+XS.xs: In function ‘decode_str’:
+XS.xs:1121: warning: suggest explicit braces to avoid ambiguous ‘else’
+XS.xs:1147: warning: pointer targets in passing argument 1 of ‘encode_utf8’ differ in signedness
+XS.xs:208: note: expected ‘unsigned char *’ but argument is of type ‘char *’
+XS.xs:1147: warning: pointer targets in assignment differ in signedness
+XS.xs:1167: warning: pointer targets in passing argument 1 of ‘decode_utf8’ differ in signedness
+XS.xs:191: note: expected ‘unsigned char *’ but argument is of type ‘char *’
+XS.xs: In function ‘decode_num’:
+XS.xs:1320: warning: suggest explicit braces to avoid ambiguous ‘else’
+XS.xs: In function ‘decode_hv’:
+XS.xs:1446: warning: value computed is not used
+XS.xs:1465: warning: value computed is not used
+XS.xs: In function ‘decode_json’:
+XS.xs:1807: warning: pointer targets in passing argument 3 of ‘Perl_pv_uni_display’ differ in signedness
+/usr/lib64/perl5/CORE/proto.h:3651: note: expected ‘const U8 *’ but argument is of type ‘char *’
+XS.xs:1908:26: warning: multi-line comment
+XS.xs: In function ‘incr_parse’:
+XS.xs:1972: warning: label ‘modechange’ defined but not used
+XS.c: In function ‘XS_JSON__XS_CLONE’:
+XS.c:2052: warning: unused variable ‘items’
+XS.xs: In function ‘XS_JSON__XS_filter_json_single_key_object’:
+XS.xs:2112: warning: value computed is not used
+XS.xs:2115: warning: value computed is not used
+XS.xs: In function ‘XS_JSON__XS_incr_parse’:
+XS.xs:2155: warning: suggest explicit braces to avoid ambiguous ‘else’
+XS.xs:2177: warning: suggest explicit braces to avoid ambiguous ‘else’
+rm -f blib/arch/auto/JSON/XS/XS.so
+gcc  -shared -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic  XS.o  -o blib/arch/auto/JSON/XS/XS.so  \
+	      \
+	  
+chmod 755 blib/arch/auto/JSON/XS/XS.so
+cp bin/json_xs blib/script/json_xs
+"/usr/bin/perl" -MExtUtils::MY -e 'MY->fixin(shift)' -- blib/script/json_xs
+Manifying 1 pod document
+Manifying 2 pod documents
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- XS.bs blib/arch/auto/JSON/XS/XS.bs 644
+Manifying 1 pod document
+Manifying 2 pod documents
+Files found in blib/arch: installing files in blib/lib into architecture dependent library tree
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/auto/JSON/XS/XS.so
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/JSON/XS.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/JSON/XS/Boolean.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man1/json_xs.1
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/JSON::XS::Boolean.3pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/JSON::XS.3pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/bin/json_xs
+Appending installation info to /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/perllocal.pod
+OK
+Successfully installed JSON-XS-3.04
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/JSON-XS-3.04/install.json
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/JSON-XS-3.04/MYMETA.json
+Searching PerlIO::gzip (0) on cpanmetadb ...
+Unpacking PerlIO-gzip-0.20.tar.gz
+--> Working on PerlIO::gzip
+Fetching http://www.cpan.org/authors/id/N/NW/NWCLARK/PerlIO-gzip-0.20.tar.gz ... OK
+PerlIO-gzip-0.20/
+PerlIO-gzip-0.20/gzip.xs
+PerlIO-gzip-0.20/META.yml
+PerlIO-gzip-0.20/META.json
+PerlIO-gzip-0.20/MANIFEST
+PerlIO-gzip-0.20/Changes
+PerlIO-gzip-0.20/gzip.pm
+PerlIO-gzip-0.20/Makefile.PL
+PerlIO-gzip-0.20/t/
+PerlIO-gzip-0.20/t/ok17.gz
+PerlIO-gzip-0.20/t/read.t
+PerlIO-gzip-0.20/t/ok58.gz.crc
+PerlIO-gzip-0.20/t/ok19
+PerlIO-gzip-0.20/t/ok54.gz.len
+PerlIO-gzip-0.20/t/ok3.gz
+PerlIO-gzip-0.20/t/ok50.gz.short
+PerlIO-gzip-0.20/t/ok21
+PerlIO-gzip-0.20/t/write.t
+PerlIO-gzip-0.20/README
+Entering PerlIO-gzip-0.20
+Checking configure dependencies from META.json
+Checking if you have ExtUtils::MakeMaker 6.58 ... Yes (7.34)
+Running Makefile.PL
+Configuring PerlIO-gzip-0.20 ... Checking if your kit is complete...
+Looks good
+Generating a Unix-style Makefile
+Writing Makefile for PerlIO::gzip
+Writing MYMETA.yml and MYMETA.json
+Checking dependencies from MYMETA.json ...
+Checking if you have ExtUtils::MakeMaker 0 ... Yes (7.34)
+OK
+Building PerlIO-gzip-0.20 ... cp gzip.pm blib/lib/PerlIO/gzip.pm
+Running Mkbootstrap for gzip ()
+chmod 644 "gzip.bs"
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- gzip.bs blib/arch/auto/PerlIO/gzip/gzip.bs 644
+"/usr/bin/perl" "/usr/share/perl5/ExtUtils/xsubpp"  -typemap '/usr/share/perl5/ExtUtils/typemap'  gzip.xs > gzip.xsc
+mv gzip.xsc gzip.c
+gcc -c   -D_REENTRANT -D_GNU_SOURCE -fno-strict-aliasing -pipe -fstack-protector -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic   -DVERSION=\"0.20\" -DXS_VERSION=\"0.20\" -fPIC "-I/usr/lib64/perl5/CORE"   gzip.c
+gzip.xs: In function ‘PerlIOGzip_getarg’:
+gzip.xs:675: warning: ‘mode’ may be used uninitialized in this function
+rm -f blib/arch/auto/PerlIO/gzip/gzip.so
+LD_RUN_PATH="/lib64" gcc  -shared -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic  gzip.o  -o blib/arch/auto/PerlIO/gzip/gzip.so  \
+	   -lz   \
+	  
+chmod 755 blib/arch/auto/PerlIO/gzip/gzip.so
+Manifying 1 pod document
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- gzip.bs blib/arch/auto/PerlIO/gzip/gzip.bs 644
+Manifying 1 pod document
+Files found in blib/arch: installing files in blib/lib into architecture dependent library tree
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/auto/PerlIO/gzip/gzip.so
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/PerlIO/gzip.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/PerlIO::gzip.3pm
+Appending installation info to /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/perllocal.pod
+OK
+Successfully installed PerlIO-gzip-0.20
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/PerlIO-gzip-0.20/install.json
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/PerlIO-gzip-0.20/MYMETA.json
+Searching local::lib (0) on cpanmetadb ...
+Unpacking local-lib-2.000024.tar.gz
+--> Working on local::lib
+Fetching http://www.cpan.org/authors/id/H/HA/HAARG/local-lib-2.000024.tar.gz ... OK
+local-lib-2.000024/
+local-lib-2.000024/inc/
+local-lib-2.000024/LICENSE
+local-lib-2.000024/Changes
+local-lib-2.000024/MANIFEST
+local-lib-2.000024/t/
+local-lib-2.000024/xt/
+local-lib-2.000024/README
+local-lib-2.000024/META.yml
+local-lib-2.000024/lib/
+local-lib-2.000024/Makefile.PL
+local-lib-2.000024/maint/
+local-lib-2.000024/eg/
+local-lib-2.000024/META.json
+local-lib-2.000024/eg/scripted_install.pl
+local-lib-2.000024/maint/Makefile.PL.include
+local-lib-2.000024/lib/POD2/
+local-lib-2.000024/lib/local/
+local-lib-2.000024/lib/lib/
+local-lib-2.000024/lib/lib/core/
+local-lib-2.000024/lib/lib/core/only.pm
+local-lib-2.000024/lib/local/lib.pm
+local-lib-2.000024/lib/POD2/PT_BR/
+local-lib-2.000024/lib/POD2/DE/
+local-lib-2.000024/lib/POD2/DE/local/
+local-lib-2.000024/lib/POD2/DE/local/lib.pod
+local-lib-2.000024/lib/POD2/PT_BR/local/
+local-lib-2.000024/lib/POD2/PT_BR/local/lib.pod
+local-lib-2.000024/xt/install.t
+local-lib-2.000024/xt/cpan-bootstrap.t
+local-lib-2.000024/xt/author/
+local-lib-2.000024/xt/bootstrap.t
+local-lib-2.000024/xt/release/
+local-lib-2.000024/xt/cpan-bootstrap.pl
+local-lib-2.000024/xt/lib/
+local-lib-2.000024/xt/lib/dist_util.pm
+local-lib-2.000024/xt/release/no-tabs.t
+local-lib-2.000024/xt/release/eol.t
+local-lib-2.000024/xt/author/pod-syntax.t
+local-lib-2.000024/xt/author/cpan-changes.t
+local-lib-2.000024/t/shell.t
+local-lib-2.000024/t/bad_variables.t
+local-lib-2.000024/t/carp-mismatch.t
+local-lib-2.000024/t/subroutine-in-inc.t
+local-lib-2.000024/t/taint-mode.t
+local-lib-2.000024/t/stackable.t
+local-lib-2.000024/t/lib/
+local-lib-2.000024/t/pipeline.t
+local-lib-2.000024/t/classmethod.t
+local-lib-2.000024/t/de-dup.t
+local-lib-2.000024/t/lib-core-only.t
+local-lib-2.000024/t/lib/TempDir.pm
+local-lib-2.000024/t/lib/ENVDumper.pm
+local-lib-2.000024/inc/CPANBootstrapper.pm
+local-lib-2.000024/inc/CheckVersion.pm
+Entering local-lib-2.000024
+Checking configure dependencies from META.json
+Running Makefile.PL
+Configuring local-lib-2.000024 ... Checking if your kit is complete...
+Looks good
+Generating a Unix-style Makefile
+Writing Makefile for local::lib
+Writing MYMETA.yml and MYMETA.json
+Checking dependencies from MYMETA.json ...
+OK
+Building local-lib-2.000024 ... cp lib/POD2/PT_BR/local/lib.pod blib/lib/POD2/PT_BR/local/lib.pod
+cp lib/lib/core/only.pm blib/lib/lib/core/only.pm
+cp lib/local/lib.pm blib/lib/local/lib.pm
+cp lib/POD2/DE/local/lib.pod blib/lib/POD2/DE/local/lib.pod
+Manifying 4 pod documents
+Manifying 4 pod documents
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/local/lib.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/lib/core/only.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/POD2/PT_BR/local/lib.pod
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/POD2/DE/local/lib.pod
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/lib::core::only.3pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/POD2::PT_BR::local::lib.3pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/local::lib.3pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/POD2::DE::local::lib.3pm
+Appending installation info to /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/perllocal.pod
+OK
+Successfully installed local-lib-2.000024
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/local-lib-2.000024/install.json
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/local-lib-2.000024/MYMETA.json
+Searching Parse::RecDescent (0) on cpanmetadb ...
+Unpacking Parse-RecDescent-1.967015.tar.gz
+--> Working on Parse::RecDescent
+Fetching http://www.cpan.org/authors/id/J/JT/JTBRAUN/Parse-RecDescent-1.967015.tar.gz ... OK
+Parse-RecDescent-1.967015/
+Parse-RecDescent-1.967015/Changes
+Parse-RecDescent-1.967015/demo/
+Parse-RecDescent-1.967015/demo/demo_dot.pl
+Parse-RecDescent-1.967015/demo/demo_LaTeXish.pl
+Parse-RecDescent-1.967015/demo/demo_parsetree.pl
+Parse-RecDescent-1.967015/demo/demo_separators.pl
+Parse-RecDescent-1.967015/demo/demo_metaRD.pm
+Parse-RecDescent-1.967015/demo/demo_restructure_easy.pl
+Parse-RecDescent-1.967015/demo/demo_OOautoparsetree.pl
+Parse-RecDescent-1.967015/demo/demo_logic.pl
+Parse-RecDescent-1.967015/demo/demo_selfmod.pl
+Parse-RecDescent-1.967015/demo/demo_undumper.pl
+Parse-RecDescent-1.967015/demo/demo_quicklist.pl
+Parse-RecDescent-1.967015/demo/demo_mccoy.pl
+Parse-RecDescent-1.967015/demo/demo_autoscoresep.pl
+Parse-RecDescent-1.967015/demo/demo.pl
+Parse-RecDescent-1.967015/demo/demo_lisplike.pl
+Parse-RecDescent-1.967015/demo/demo_derived.pl
+Parse-RecDescent-1.967015/demo/demo_skipcomment.pl
+Parse-RecDescent-1.967015/demo/demo_buildcalc.pl
+Parse-RecDescent-1.967015/demo/demo_recipe.pl
+Parse-RecDescent-1.967015/demo/demo_piecewise.pl
+Parse-RecDescent-1.967015/demo/demo_simplequery.pl
+Parse-RecDescent-1.967015/demo/demo_language.pl
+Parse-RecDescent-1.967015/demo/demo_PerlCSV.pl
+Parse-RecDescent-1.967015/demo/demo_implicit.pl
+Parse-RecDescent-1.967015/demo/demo_decomment.pl
+Parse-RecDescent-1.967015/demo/demo_autostub.pl
+Parse-RecDescent-1.967015/demo/demo_eval.pl
+Parse-RecDescent-1.967015/demo/demo_LaTeXish_autoact.pl
+Parse-RecDescent-1.967015/demo/demo_perlparsing.pl
+Parse-RecDescent-1.967015/demo/demo_leftop.pl
+Parse-RecDescent-1.967015/demo/demo_NL2SQL.pl
+Parse-RecDescent-1.967015/demo/demo_decomment_nonlocal.pl
+Parse-RecDescent-1.967015/demo/demo_precalc.pl
+Parse-RecDescent-1.967015/demo/demo_cpp.pl
+Parse-RecDescent-1.967015/demo/demo_simple.pl
+Parse-RecDescent-1.967015/demo/demo_matchrule2.pl
+Parse-RecDescent-1.967015/demo/demo_embedding.pl
+Parse-RecDescent-1.967015/demo/demo_errors.pl
+Parse-RecDescent-1.967015/demo/demo_delete.pl
+Parse-RecDescent-1.967015/demo/demo.c
+Parse-RecDescent-1.967015/demo/demo_another_Cgrammar.pl
+Parse-RecDescent-1.967015/demo/demo_whoson.pl
+Parse-RecDescent-1.967015/demo/demo_tokens.pl
+Parse-RecDescent-1.967015/demo/demo_codeblock.pl
+Parse-RecDescent-1.967015/demo/demo_textgen.pl
+Parse-RecDescent-1.967015/demo/demo_Cgrammar_v2.pl
+Parse-RecDescent-1.967015/demo/demo_methods.pl
+Parse-RecDescent-1.967015/demo/demo_Cgrammar.pl
+Parse-RecDescent-1.967015/demo/demo_simpleXML.pl
+Parse-RecDescent-1.967015/demo/demo_street.pl
+Parse-RecDescent-1.967015/demo/demo_bad.pl
+Parse-RecDescent-1.967015/demo/demo_opreps.pl
+Parse-RecDescent-1.967015/demo/demo_arithmetic.pl
+Parse-RecDescent-1.967015/demo/demo_restructure_painful.pl
+Parse-RecDescent-1.967015/demo/demo_itemhash.pl
+Parse-RecDescent-1.967015/demo/demo_autorule.pl
+Parse-RecDescent-1.967015/demo/demo_calc.pl
+Parse-RecDescent-1.967015/demo/demo_scoredsep.pl
+Parse-RecDescent-1.967015/demo/demo_operator.pl
+Parse-RecDescent-1.967015/demo/demo_leftassoc.pl
+Parse-RecDescent-1.967015/demo/demo_template.pl
+Parse-RecDescent-1.967015/demo/demo_randomsentence.pl
+Parse-RecDescent-1.967015/demo/demo_lexer.pl
+Parse-RecDescent-1.967015/demo/demo_matchrule.pl
+Parse-RecDescent-1.967015/demo/demo_OOparsetree.pl
+Parse-RecDescent-1.967015/Makefile.PL
+Parse-RecDescent-1.967015/MANIFEST
+Parse-RecDescent-1.967015/lib/
+Parse-RecDescent-1.967015/lib/Parse/
+Parse-RecDescent-1.967015/lib/Parse/RecDescent.pm
+Parse-RecDescent-1.967015/README
+Parse-RecDescent-1.967015/Build.PL
+Parse-RecDescent-1.967015/META.json
+Parse-RecDescent-1.967015/tutorial/
+Parse-RecDescent-1.967015/tutorial/TPJ_maze.gif
+Parse-RecDescent-1.967015/tutorial/TPJ-yacc-proc.gif
+Parse-RecDescent-1.967015/tutorial/TPJ_tree.gif
+Parse-RecDescent-1.967015/tutorial/TPJ-PRD-proc.gif
+Parse-RecDescent-1.967015/tutorial/tutorial.html
+Parse-RecDescent-1.967015/t/
+Parse-RecDescent-1.967015/t/00.load.t
+Parse-RecDescent-1.967015/t/reproducible.t
+Parse-RecDescent-1.967015/t/reentry.t
+Parse-RecDescent-1.967015/t/precompile.t
+Parse-RecDescent-1.967015/t/skip.t
+Parse-RecDescent-1.967015/t/separated_repetition.t
+Parse-RecDescent-1.967015/t/pod.t
+Parse-RecDescent-1.967015/t/leftop_cap.t
+Parse-RecDescent-1.967015/t/text.t
+Parse-RecDescent-1.967015/t/util.pl
+Parse-RecDescent-1.967015/t/01.basics.t
+Parse-RecDescent-1.967015/t/autotree.t
+Parse-RecDescent-1.967015/t/re_capture_return.t
+Parse-RecDescent-1.967015/t/skip_dynamic.t
+Parse-RecDescent-1.967015/META.yml
+Parse-RecDescent-1.967015/ToDo
+Entering Parse-RecDescent-1.967015
+Checking configure dependencies from META.json
+Checking if you have ExtUtils::MakeMaker 6.58 ... Yes (7.34)
+Running Build.PL
+Configuring Parse-RecDescent-1.967015 ... Created MYMETA.yml and MYMETA.json
+Creating new 'Build' script for 'Parse-RecDescent' version '1.967015'
+Checking dependencies from MYMETA.json ...
+Checking if you have Test::More 0 ... Yes (1.302135)
+Checking if you have Text::Balanced 1.95 ... Yes (2.0.0)
+OK
+Building Parse-RecDescent-1.967015 ... Building Parse-RecDescent
+Building Parse-RecDescent
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/Parse/RecDescent.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/Parse::RecDescent.3pm
+OK
+Successfully installed Parse-RecDescent-1.967015
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/Parse-RecDescent-1.967015/install.json
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/Parse-RecDescent-1.967015/MYMETA.json
+Searching DBD::SQLite (0) on cpanmetadb ...
+Unpacking DBD-SQLite-1.58.tar.gz
+--> Working on DBD::SQLite
+Fetching http://www.cpan.org/authors/id/I/IS/ISHIGAKI/DBD-SQLite-1.58.tar.gz ... OK
+DBD-SQLite-1.58/
+DBD-SQLite-1.58/typemap
+DBD-SQLite-1.58/constants.inc
+DBD-SQLite-1.58/README
+DBD-SQLite-1.58/SQLiteXS.h
+DBD-SQLite-1.58/SQLite.xs
+DBD-SQLite-1.58/ppport.h
+DBD-SQLite-1.58/lib/
+DBD-SQLite-1.58/lib/DBD/
+DBD-SQLite-1.58/lib/DBD/SQLite.pm
+DBD-SQLite-1.58/lib/DBD/SQLite/
+DBD-SQLite-1.58/lib/DBD/SQLite/Cookbook.pod
+DBD-SQLite-1.58/lib/DBD/SQLite/VirtualTable.pm
+DBD-SQLite-1.58/lib/DBD/SQLite/Constants.pm
+DBD-SQLite-1.58/lib/DBD/SQLite/VirtualTable/
+DBD-SQLite-1.58/lib/DBD/SQLite/VirtualTable/FileContent.pm
+DBD-SQLite-1.58/lib/DBD/SQLite/VirtualTable/PerlData.pm
+DBD-SQLite-1.58/lib/DBD/SQLite/Fulltext_search.pod
+DBD-SQLite-1.58/t/
+DBD-SQLite-1.58/t/43_fts3.t
+DBD-SQLite-1.58/t/62_regexp_multibyte_char_class.t
+DBD-SQLite-1.58/t/40_multiple_statements.t
+DBD-SQLite-1.58/t/35_table_info.t
+DBD-SQLite-1.58/t/rt_40594_nullable.t
+DBD-SQLite-1.58/t/rt_64177_ping_wipes_out_the_errstr.t
+DBD-SQLite-1.58/t/28_schemachange.t
+DBD-SQLite-1.58/t/38_empty_statement.t
+DBD-SQLite-1.58/t/55_statistics_info.t
+DBD-SQLite-1.58/t/49_trace_and_profile.t
+DBD-SQLite-1.58/t/25_chopblanks.t
+DBD-SQLite-1.58/t/21_blobtext.t
+DBD-SQLite-1.58/t/rt_76395_int_overflow.t
+DBD-SQLite-1.58/t/52_db_filename.t
+DBD-SQLite-1.58/t/12_unicode.t
+DBD-SQLite-1.58/t/rt_77724_primary_key_with_a_whitespace.t
+DBD-SQLite-1.58/t/07_error.t
+DBD-SQLite-1.58/t/rt_29629_sqlite_where_length.t
+DBD-SQLite-1.58/t/45_savepoints.t
+DBD-SQLite-1.58/t/14_progress_handler.t
+DBD-SQLite-1.58/t/15_ak_dbd.t
+DBD-SQLite-1.58/t/rt_48393_debug_panic_with_commit.t
+DBD-SQLite-1.58/t/56_open_flags.t
+DBD-SQLite-1.58/t/lib/
+DBD-SQLite-1.58/t/lib/SQLiteTest.pm
+DBD-SQLite-1.58/t/rt_26775_distinct.t
+DBD-SQLite-1.58/t/58_see_if_its_a_number_and_explicit_binding.t
+DBD-SQLite-1.58/t/rt_32889_prepare_cached_reexecute.t
+DBD-SQLite-1.58/t/59_extended_result_codes.t
+DBD-SQLite-1.58/t/04_insert.t
+DBD-SQLite-1.58/t/36_hooks.t
+DBD-SQLite-1.58/t/rt_96877_unicode_statements.t
+DBD-SQLite-1.58/t/22_listfields.t
+DBD-SQLite-1.58/t/rt_73159_fts_tokenizer_segfault.t
+DBD-SQLite-1.58/t/rt_97598_crash_on_disconnect_with_virtual_tables.t
+DBD-SQLite-1.58/t/01_compile.t
+DBD-SQLite-1.58/t/rt_81536_multi_column_primary_key_info.t
+DBD-SQLite-1.58/t/rt_67581_bind_params_mismatch.t
+DBD-SQLite-1.58/t/23_nulls.t
+DBD-SQLite-1.58/t/rt_25460_numeric_aggregate.t
+DBD-SQLite-1.58/t/18_insertfetch.t
+DBD-SQLite-1.58/t/rt_78833_utf8_flag_for_column_names.t
+DBD-SQLite-1.58/t/51_table_column_metadata.t
+DBD-SQLite-1.58/t/02_logon.t
+DBD-SQLite-1.58/t/57_uri_filename.t
+DBD-SQLite-1.58/t/rt_115465_column_info_with_spaces.t
+DBD-SQLite-1.58/t/rt_21406_auto_finish.t
+DBD-SQLite-1.58/t/47_execute.t
+DBD-SQLite-1.58/t/rt_15186_prepcached.t
+DBD-SQLite-1.58/t/rt_50503_fts3.t
+DBD-SQLite-1.58/t/rt_27553_prepared_cache_and_analyze.t
+DBD-SQLite-1.58/t/rt_25924_user_defined_func_unicode.t
+DBD-SQLite-1.58/t/20_blobs.t
+DBD-SQLite-1.58/t/rt_31324_full_names.t
+DBD-SQLite-1.58/t/50_foreign_key_info.t
+DBD-SQLite-1.58/t/virtual_table/
+DBD-SQLite-1.58/t/virtual_table/rt_99748.t
+DBD-SQLite-1.58/t/virtual_table/10_filecontent.t
+DBD-SQLite-1.58/t/virtual_table/01_destroy.t
+DBD-SQLite-1.58/t/virtual_table/20_perldata.t
+DBD-SQLite-1.58/t/virtual_table/02_find_function.t
+DBD-SQLite-1.58/t/virtual_table/21_perldata_charinfo.t
+DBD-SQLite-1.58/t/virtual_table/11_filecontent_fulltext.t
+DBD-SQLite-1.58/t/virtual_table/00_base.t
+DBD-SQLite-1.58/t/26_commit.t
+DBD-SQLite-1.58/t/rt_124227_index_regression.t
+DBD-SQLite-1.58/t/48_bind_param_is_sticky.t
+DBD-SQLite-1.58/t/13_create_collation.t
+DBD-SQLite-1.58/t/rt_25371_asymmetric_unicode.t
+DBD-SQLite-1.58/t/09_create_function.t
+DBD-SQLite-1.58/t/53_status.t
+DBD-SQLite-1.58/t/37_regexp.t
+DBD-SQLite-1.58/t/54_literal_txn.t
+DBD-SQLite-1.58/t/31_bind_weird_number_param.t
+DBD-SQLite-1.58/t/27_metadata.t
+DBD-SQLite-1.58/t/30_auto_rollback.t
+DBD-SQLite-1.58/t/60_readonly.t
+DBD-SQLite-1.58/t/63_param_values.t
+DBD-SQLite-1.58/t/08_busy.t
+DBD-SQLite-1.58/t/rt_96050_db_filename_for_a_closed_database.t
+DBD-SQLite-1.58/t/19_bindparam.t
+DBD-SQLite-1.58/t/46_mod_perl.t
+DBD-SQLite-1.58/t/rt_73787_exponential_buffer_overflow.t
+DBD-SQLite-1.58/t/44_rtree.t
+DBD-SQLite-1.58/t/06_tran.t
+DBD-SQLite-1.58/t/32_inactive_error.t
+DBD-SQLite-1.58/t/03_create_table.t
+DBD-SQLite-1.58/t/16_column_info.t
+DBD-SQLite-1.58/t/rt_62370_diconnected_handles_operation.t
+DBD-SQLite-1.58/t/rt_106151_outermost_savepoint.t
+DBD-SQLite-1.58/t/rt_36838_unique_and_bus_error.t
+DBD-SQLite-1.58/t/cookbook_variance.t
+DBD-SQLite-1.58/t/24_numrows.t
+DBD-SQLite-1.58/t/rt_106950_extra_warnings_with_savepoints.t
+DBD-SQLite-1.58/t/rt_29058_group_by.t
+DBD-SQLite-1.58/t/05_select.t
+DBD-SQLite-1.58/t/rt_71311_bind_col_and_unicode.t
+DBD-SQLite-1.58/t/42_primary_key_info.t
+DBD-SQLite-1.58/t/rt_53235_icu_compatibility.t
+DBD-SQLite-1.58/t/rt_36836_duplicate_key.t
+DBD-SQLite-1.58/t/rt_96878_fts_contentless_table.t
+DBD-SQLite-1.58/t/61_strlike.t
+DBD-SQLite-1.58/t/rt_52573_manual_exclusive_lock.t
+DBD-SQLite-1.58/t/17_createdrop.t
+DBD-SQLite-1.58/t/34_online_backup.t
+DBD-SQLite-1.58/t/41_placeholders.t
+DBD-SQLite-1.58/t/39_foreign_keys.t
+DBD-SQLite-1.58/t/rt_88228_sqlite_3_8_0_crash.t
+DBD-SQLite-1.58/t/33_non_latin_path.t
+DBD-SQLite-1.58/t/10_create_aggregate.t
+DBD-SQLite-1.58/dbdimp_tokenizer.inc
+DBD-SQLite-1.58/sqlite3.c
+DBD-SQLite-1.58/dbdimp_virtual_table.inc
+DBD-SQLite-1.58/.travis.yml
+DBD-SQLite-1.58/META.json
+DBD-SQLite-1.58/sqlite3.h
+DBD-SQLite-1.58/inc/
+DBD-SQLite-1.58/inc/Test/
+DBD-SQLite-1.58/inc/Test/NoWarnings/
+DBD-SQLite-1.58/inc/Test/NoWarnings/Warning.pm
+DBD-SQLite-1.58/inc/Test/NoWarnings.pm
+DBD-SQLite-1.58/Changes
+DBD-SQLite-1.58/sqlite3ext.h
+DBD-SQLite-1.58/Makefile.PL
+DBD-SQLite-1.58/fts3_tokenizer.h
+DBD-SQLite-1.58/META.yml
+DBD-SQLite-1.58/MANIFEST
+DBD-SQLite-1.58/dbdimp.c
+DBD-SQLite-1.58/dbdimp.h
+DBD-SQLite-1.58/LICENSE
+DBD-SQLite-1.58/MANIFEST.SKIP
+DBD-SQLite-1.58/xt/
+DBD-SQLite-1.58/xt/cpp_comments.t
+DBD-SQLite-1.58/xt/meta.t
+DBD-SQLite-1.58/xt/pod.t
+DBD-SQLite-1.58/xt/pmv.t
+Entering DBD-SQLite-1.58
+Checking configure dependencies from META.json
+Checking if you have File::Spec 0.82 ... Yes (3.30)
+Checking if you have ExtUtils::MakeMaker 6.58 ... Yes (7.34)
+Checking if you have DBI 1.57 ... Yes (1.609)
+Running Makefile.PL
+Configuring DBD-SQLite-1.58 ... Checking if your kit is complete...
+Looks good
+Using DBI 1.609 (for perl 5.010001 on x86_64-linux-thread-multi) installed in /usr/lib64/perl5/auto/DBI/
+Generating a Unix-style Makefile
+Writing Makefile for DBD::SQLite
+Writing MYMETA.yml and MYMETA.json
+Checking dependencies from MYMETA.json ...
+Checking if you have Test::More 0.47 ... Yes (1.302135)
+Checking if you have Test::Builder 0.86 ... Yes (1.302135)
+Checking if you have ExtUtils::MakeMaker 0 ... Yes (7.34)
+Checking if you have File::Spec 0.82 ... Yes (3.30)
+Checking if you have DBI 1.57 ... Yes (1.609)
+Checking if you have Tie::Hash 0 ... Yes (1.03)
+OK
+Building DBD-SQLite-1.58 ... cp lib/DBD/SQLite/VirtualTable/FileContent.pm blib/lib/DBD/SQLite/VirtualTable/FileContent.pm
+cp lib/DBD/SQLite/VirtualTable/PerlData.pm blib/lib/DBD/SQLite/VirtualTable/PerlData.pm
+cp lib/DBD/SQLite/Fulltext_search.pod blib/lib/DBD/SQLite/Fulltext_search.pod
+cp lib/DBD/SQLite.pm blib/lib/DBD/SQLite.pm
+cp lib/DBD/SQLite/VirtualTable.pm blib/lib/DBD/SQLite/VirtualTable.pm
+cp lib/DBD/SQLite/Constants.pm blib/lib/DBD/SQLite/Constants.pm
+cp lib/DBD/SQLite/Cookbook.pod blib/lib/DBD/SQLite/Cookbook.pod
+Running Mkbootstrap for SQLite ()
+chmod 644 "SQLite.bs"
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- SQLite.bs blib/arch/auto/DBD/SQLite/SQLite.bs 644
+"/usr/bin/perl" -p -e "s/~DRIVER~/SQLite/g" /usr/lib64/perl5/auto/DBI/Driver.xst > SQLite.xsi
+"/usr/bin/perl" "/usr/share/perl5/ExtUtils/xsubpp"  -typemap '/usr/share/perl5/ExtUtils/typemap' -typemap '/root/.cpanm/work/1529913671.6174/DBD-SQLite-1.58/typemap'  SQLite.xs > SQLite.xsc
+mv SQLite.xsc SQLite.c
+gcc -c  -I. -I/usr/lib64/perl5/auto/DBI -D_REENTRANT -D_GNU_SOURCE -fno-strict-aliasing -pipe -fstack-protector -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -Wl,-Bsymbolic -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic   -DVERSION=\"1.58\" -DXS_VERSION=\"1.58\" -fPIC "-I/usr/lib64/perl5/CORE"  -DSQLITE_ENABLE_FTS4 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_FTS5 -DNDEBUG=1 -DHAVE_USLEEP=1 SQLite.c
+SQLite.c: In function ‘XS_DBD__SQLite__db_last_insert_rowid’:
+SQLite.c:110: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_create_function’:
+SQLite.c:137: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_enable_load_extension’:
+SQLite.c:176: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_load_extension’:
+SQLite.c:203: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_create_aggregate’:
+SQLite.c:238: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_create_collation’:
+SQLite.c:274: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_collation_needed’:
+SQLite.c:302: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_progress_handler’:
+SQLite.c:326: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_profile’:
+SQLite.c:380: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_commit_hook’:
+SQLite.c:407: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_rollback_hook’:
+SQLite.c:434: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_update_hook’:
+SQLite.c:461: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_set_authorizer’:
+SQLite.c:488: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_busy_timeout’:
+SQLite.c:515: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_backup_from_file’:
+SQLite.c:546: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_backup_to_file’:
+SQLite.c:571: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_table_column_metadata’:
+SQLite.c:596: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_db_filename’:
+SQLite.c:624: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_register_fts3_perl_tokenizer’:
+SQLite.c:648: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_db_status’:
+SQLite.c:672: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__db_create_module’:
+SQLite.c:704: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite__st_st_status’:
+SQLite.c:732: warning: unused variable ‘ix’
+SQLite.c: In function ‘XS_DBD__SQLite_compile_options’:
+SQLite.c:768: warning: unused variable ‘targ’
+SQLite.c:767: warning: unused variable ‘RETVAL’
+SQLite.c: At top level:
+dbdimp.h:141: warning: ‘newUTF8SVpv’ defined but not used
+dbdimp.h:151: warning: ‘newUTF8SVpvn’ defined but not used
+gcc -c  -I. -I/usr/lib64/perl5/auto/DBI -D_REENTRANT -D_GNU_SOURCE -fno-strict-aliasing -pipe -fstack-protector -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -Wl,-Bsymbolic -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic   -DVERSION=\"1.58\" -DXS_VERSION=\"1.58\" -fPIC "-I/usr/lib64/perl5/CORE"  -DSQLITE_ENABLE_FTS4 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_FTS5 -DNDEBUG=1 -DHAVE_USLEEP=1 dbdimp.c
+dbdimp.c: In function ‘sqlite_db_login6’:
+dbdimp.c:428: warning: value computed is not used
+dbdimp.c: In function ‘sqlite_db_do_sv’:
+dbdimp.c:494: warning: unused variable ‘i’
+dbdimp.c: In function ‘sqlite_st_FETCH_attrib’:
+dbdimp.c:1413: warning: value computed is not used
+dbdimp.c: In function ‘_sqlite_status’:
+dbdimp.c:1533: warning: value computed is not used
+dbdimp.c:1533: warning: value computed is not used
+dbdimp.c:1533: warning: value computed is not used
+dbdimp.c:1534: warning: value computed is not used
+dbdimp.c:1534: warning: value computed is not used
+dbdimp.c:1534: warning: value computed is not used
+dbdimp.c:1535: warning: value computed is not used
+dbdimp.c:1535: warning: value computed is not used
+dbdimp.c:1535: warning: value computed is not used
+dbdimp.c:1536: warning: value computed is not used
+dbdimp.c:1536: warning: value computed is not used
+dbdimp.c:1536: warning: value computed is not used
+dbdimp.c:1538: warning: value computed is not used
+dbdimp.c:1538: warning: value computed is not used
+dbdimp.c:1538: warning: value computed is not used
+dbdimp.c:1540: warning: value computed is not used
+dbdimp.c:1540: warning: value computed is not used
+dbdimp.c:1540: warning: value computed is not used
+dbdimp.c:1541: warning: value computed is not used
+dbdimp.c:1541: warning: value computed is not used
+dbdimp.c:1541: warning: value computed is not used
+dbdimp.c:1542: warning: value computed is not used
+dbdimp.c:1542: warning: value computed is not used
+dbdimp.c:1542: warning: value computed is not used
+dbdimp.c:1543: warning: value computed is not used
+dbdimp.c:1543: warning: value computed is not used
+dbdimp.c:1543: warning: value computed is not used
+dbdimp.c:1545: warning: value computed is not used
+dbdimp.c:1545: warning: value computed is not used
+dbdimp.c:1545: warning: value computed is not used
+dbdimp.c:1547: warning: value computed is not used
+dbdimp.c:1547: warning: value computed is not used
+dbdimp.c:1547: warning: value computed is not used
+dbdimp.c: In function ‘_sqlite_db_status’:
+dbdimp.c:1560: warning: value computed is not used
+dbdimp.c:1560: warning: value computed is not used
+dbdimp.c:1560: warning: value computed is not used
+dbdimp.c:1562: warning: value computed is not used
+dbdimp.c:1562: warning: value computed is not used
+dbdimp.c:1562: warning: value computed is not used
+dbdimp.c:1565: warning: value computed is not used
+dbdimp.c:1565: warning: value computed is not used
+dbdimp.c:1565: warning: value computed is not used
+dbdimp.c:1566: warning: value computed is not used
+dbdimp.c:1566: warning: value computed is not used
+dbdimp.c:1566: warning: value computed is not used
+dbdimp.c:1569: warning: value computed is not used
+dbdimp.c:1569: warning: value computed is not used
+dbdimp.c:1569: warning: value computed is not used
+dbdimp.c:1570: warning: value computed is not used
+dbdimp.c:1570: warning: value computed is not used
+dbdimp.c:1570: warning: value computed is not used
+dbdimp.c:1571: warning: value computed is not used
+dbdimp.c:1571: warning: value computed is not used
+dbdimp.c:1571: warning: value computed is not used
+dbdimp.c:1574: warning: value computed is not used
+dbdimp.c:1574: warning: value computed is not used
+dbdimp.c:1574: warning: value computed is not used
+dbdimp.c:1575: warning: value computed is not used
+dbdimp.c:1575: warning: value computed is not used
+dbdimp.c:1575: warning: value computed is not used
+dbdimp.c:1578: warning: value computed is not used
+dbdimp.c:1578: warning: value computed is not used
+dbdimp.c:1578: warning: value computed is not used
+dbdimp.c: In function ‘_sqlite_st_status’:
+dbdimp.c:1591: warning: value computed is not used
+dbdimp.c:1592: warning: value computed is not used
+dbdimp.c:1595: warning: value computed is not used
+dbdimp.c: In function ‘sqlite_db_func_dispatcher’:
+dbdimp.c:1664: warning: value computed is not used
+dbdimp.c:1672: warning: value computed is not used
+dbdimp.c: In function ‘sqlite_db_table_column_metadata’:
+dbdimp.c:1810: warning: value computed is not used
+dbdimp.c:1811: warning: value computed is not used
+dbdimp.c:1812: warning: value computed is not used
+dbdimp.c:1813: warning: value computed is not used
+dbdimp.c:1814: warning: value computed is not used
+dbdimp.c: In function ‘sqlite_db_aggr_new_dispatcher’:
+dbdimp.c:1849: warning: value computed is not used
+dbdimp.c:1857: warning: value computed is not used
+dbdimp.c: In function ‘sqlite_db_aggr_step_dispatcher’:
+dbdimp.c:1914: warning: value computed is not used
+dbdimp.c: In function ‘sqlite_db_aggr_finalize_dispatcher’:
+dbdimp.c:1955: warning: value computed is not used
+dbdimp.c:1962: warning: value computed is not used
+In file included from dbdimp.c:2655:
+dbdimp_tokenizer.inc: In function ‘perl_tokenizer_Next’:
+dbdimp_tokenizer.inc:178: warning: unused variable ‘n_a’
+In file included from dbdimp.c:2656:
+dbdimp_virtual_table.inc: In function ‘perl_vt_BestIndex’:
+dbdimp_virtual_table.inc:237: warning: value computed is not used
+dbdimp_virtual_table.inc:238: warning: value computed is not used
+dbdimp_virtual_table.inc:239: warning: value computed is not used
+dbdimp_virtual_table.inc:248: warning: value computed is not used
+dbdimp_virtual_table.inc:249: warning: value computed is not used
+dbdimp_virtual_table.inc: In function ‘perl_vt_FindFunction’:
+dbdimp_virtual_table.inc:662: warning: value computed is not used
+dbdimp_virtual_table.inc: In function ‘sqlite_db_destroy_module_data’:
+dbdimp_virtual_table.inc:759: warning: unused variable ‘rc’
+dbdimp.c: At top level:
+dbdimp.h:141: warning: ‘newUTF8SVpv’ defined but not used
+dbdimp.h:151: warning: ‘newUTF8SVpvn’ defined but not used
+In file included from dbdimp.c:2656:
+dbdimp_virtual_table.inc: In function ‘perl_vt_Eof’:
+dbdimp_virtual_table.inc:449: warning: ‘eof’ may be used uninitialized in this function
+gcc -c  -I. -I/usr/lib64/perl5/auto/DBI -D_REENTRANT -D_GNU_SOURCE -fno-strict-aliasing -pipe -fstack-protector -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -Wl,-Bsymbolic -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic   -DVERSION=\"1.58\" -DXS_VERSION=\"1.58\" -fPIC "-I/usr/lib64/perl5/CORE"  -DSQLITE_ENABLE_FTS4 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_FTS5 -DNDEBUG=1 -DHAVE_USLEEP=1 sqlite3.c
+rm -f blib/arch/auto/DBD/SQLite/SQLite.so
+gcc  -shared -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic -Wl,-Bsymbolic  SQLite.o dbdimp.o sqlite3.o  -o blib/arch/auto/DBD/SQLite/SQLite.so  \
+	      \
+	  
+chmod 755 blib/arch/auto/DBD/SQLite/SQLite.so
+Manifying 7 pod documents
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- SQLite.bs blib/arch/auto/DBD/SQLite/SQLite.bs 644
+Manifying 7 pod documents
+Files found in blib/arch: installing files in blib/lib into architecture dependent library tree
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/auto/DBD/SQLite/SQLite.so
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/auto/share/dist/DBD-SQLite/sqlite3.h
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/auto/share/dist/DBD-SQLite/sqlite3ext.h
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/auto/share/dist/DBD-SQLite/sqlite3.c
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/DBD/SQLite.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/DBD/SQLite/VirtualTable.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/DBD/SQLite/Cookbook.pod
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/DBD/SQLite/Constants.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/DBD/SQLite/Fulltext_search.pod
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/DBD/SQLite/VirtualTable/FileContent.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/DBD/SQLite/VirtualTable/PerlData.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/DBD::SQLite::Fulltext_search.3pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/DBD::SQLite::Constants.3pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/DBD::SQLite::Cookbook.3pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/DBD::SQLite::VirtualTable::PerlData.3pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/DBD::SQLite.3pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/DBD::SQLite::VirtualTable.3pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/DBD::SQLite::VirtualTable::FileContent.3pm
+Appending installation info to /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/perllocal.pod
+OK
+Successfully installed DBD-SQLite-1.58
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/DBD-SQLite-1.58/install.json
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/DBD-SQLite-1.58/MYMETA.json
+Searching Heap::Simple::XS (0) on cpanmetadb ...
+Unpacking Heap-Simple-XS-0.10.tar.gz
+--> Working on Heap::Simple::XS
+Fetching http://www.cpan.org/authors/id/T/TH/THOSPEL/Heap-Simple-XS-0.10.tar.gz ... OK
+Heap-Simple-XS-0.10/
+Heap-Simple-XS-0.10/Makefile.PL
+Heap-Simple-XS-0.10/ppport.h
+Heap-Simple-XS-0.10/Changes
+Heap-Simple-XS-0.10/README
+Heap-Simple-XS-0.10/t/
+Heap-Simple-XS-0.10/t/speed_priority
+Heap-Simple-XS-0.10/t/speed_binary
+Heap-Simple-XS-0.10/t/speed_array
+Heap-Simple-XS-0.10/t/speed_hash
+Heap-Simple-XS-0.10/t/speed_binomial
+Heap-Simple-XS-0.10/t/Ties.pm
+Heap-Simple-XS-0.10/t/speed_scalar
+Heap-Simple-XS-0.10/t/04_overload.t
+Heap-Simple-XS-0.10/t/02_stress.t
+Heap-Simple-XS-0.10/t/99_speed.t
+Heap-Simple-XS-0.10/t/FakeHeap.pm
+Heap-Simple-XS-0.10/t/03_magic.t
+Heap-Simple-XS-0.10/t/00_load.t
+Heap-Simple-XS-0.10/t/01_basic.t
+Heap-Simple-XS-0.10/t/speed_fibonacci
+Heap-Simple-XS-0.10/XS.xs
+Heap-Simple-XS-0.10/typemap
+Heap-Simple-XS-0.10/MANIFEST.SKIP
+Heap-Simple-XS-0.10/MANIFEST
+Heap-Simple-XS-0.10/META.yml
+Heap-Simple-XS-0.10/lib/
+Heap-Simple-XS-0.10/lib/Heap/
+Heap-Simple-XS-0.10/lib/Heap/Simple/
+Heap-Simple-XS-0.10/lib/Heap/Simple/XS/
+Heap-Simple-XS-0.10/lib/Heap/Simple/XS/Package.pm
+Heap-Simple-XS-0.10/lib/Heap/Simple/XS.pm
+Heap-Simple-XS-0.10/md5-versions
+Entering Heap-Simple-XS-0.10
+Checking configure dependencies from META.yml
+Running Makefile.PL
+Configuring Heap-Simple-XS-0.10 ... 
+   Note that you can avoid these questions by passing
+   the '-n' or '-y' option to 'Makefile.PL'.
+
+Run Heap::Simple benchmarks during 'make test' ? [n] n
+Checking if your kit is complete...
+Looks good
+Generating a Unix-style Makefile
+Writing Makefile for Heap::Simple::XS
+Writing MYMETA.yml and MYMETA.json
+Checking dependencies from MYMETA.json ...
+Checking if you have Test::More 0.11 ... Yes (1.302135)
+Checking if you have ExtUtils::MakeMaker 0 ... Yes (7.34)
+Checking if you have Heap::Simple 0.09 ... Yes (0.13)
+OK
+Building Heap-Simple-XS-0.10 ... cp lib/Heap/Simple/XS/Package.pm blib/lib/Heap/Simple/XS/Package.pm
+cp lib/Heap/Simple/XS.pm blib/lib/Heap/Simple/XS.pm
+Running Mkbootstrap for XS ()
+chmod 644 "XS.bs"
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- XS.bs blib/arch/auto/Heap/Simple/XS/XS.bs 644
+"/usr/bin/perl" "/usr/share/perl5/ExtUtils/xsubpp"  -typemap '/usr/share/perl5/ExtUtils/typemap' -typemap '/root/.cpanm/work/1529913671.6174/Heap-Simple-XS-0.10/typemap'  XS.xs > XS.xsc
+mv XS.xsc XS.c
+gcc -c  -I. -D_REENTRANT -D_GNU_SOURCE -fno-strict-aliasing -pipe -fstack-protector -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic  -DPERL_EXTMALLOC_DEF -Dmalloc=Perl_malloc -Dfree=Perl_mfree -Drealloc=Perl_realloc -Dcalloc=Perl_calloc -DVERSION=\"0.10\" -DXS_VERSION=\"0.10\" -fPIC "-I/usr/lib64/perl5/CORE"   XS.c
+XS.xs: In function ‘my_isa_lookup’:
+XS.xs:116: warning: null argument where non-null required (argument 1)
+XS.xs:116: warning: null argument where non-null required (argument 1)
+XS.xs:116: warning: null argument where non-null required (argument 1)
+XS.xs:116: warning: null argument where non-null required (argument 1)
+XS.xs:116: warning: null argument where non-null required (argument 1)
+XS.xs:116: warning: null argument where non-null required (argument 1)
+XS.xs:116: warning: null argument where non-null required (argument 1)
+XS.xs:116: warning: null argument where non-null required (argument 1)
+XS.xs: In function ‘key_insert’:
+XS.xs:438: warning: ‘new’ may be used uninitialized in this function
+XS.xs:438: warning: ‘t1’ may be used uninitialized in this function
+XS.c: In function ‘XS_Heap__Simple__XS_merge_arrays’:
+XS.xs:2275: warning: ‘av’ may be used uninitialized in this function
+XS.xs:2275: note: ‘av’ was declared here
+XS.c: In function ‘XS_Heap__Simple__XS__key_absorb’:
+XS.xs:1859: warning: ‘value’ may be used uninitialized in this function
+XS.xs:1859: note: ‘value’ was declared here
+XS.xs:1859: warning: ‘key’ may be used uninitialized in this function
+XS.xs:1859: note: ‘key’ was declared here
+XS.c: In function ‘XS_Heap__Simple__XS__absorb’:
+XS.xs:1648: warning: ‘value’ may be used uninitialized in this function
+XS.xs:1648: note: ‘value’ was declared here
+rm -f blib/arch/auto/Heap/Simple/XS/XS.so
+gcc  -shared -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic  XS.o  -o blib/arch/auto/Heap/Simple/XS/XS.so  \
+	      \
+	  
+chmod 755 blib/arch/auto/Heap/Simple/XS/XS.so
+Manifying 1 pod document
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- XS.bs blib/arch/auto/Heap/Simple/XS/XS.bs 644
+Manifying 1 pod document
+Files found in blib/arch: installing files in blib/lib into architecture dependent library tree
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/auto/Heap/Simple/XS/XS.so
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/Heap/Simple/XS.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/Heap/Simple/XS/Package.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/Heap::Simple::XS.3pm
+Appending installation info to /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/perllocal.pod
+OK
+Successfully installed Heap-Simple-XS-0.10
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/Heap-Simple-XS-0.10/install.json
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/Heap-Simple-XS-0.10/MYMETA.json
+Searching Devel::Size (0) on cpanmetadb ...
+Unpacking Devel-Size-0.82.tar.gz
+--> Working on Devel::Size
+Fetching http://www.cpan.org/authors/id/N/NW/NWCLARK/Devel-Size-0.82.tar.gz ... OK
+Devel-Size-0.82/
+Devel-Size-0.82/META.yml
+Devel-Size-0.82/META.json
+Devel-Size-0.82/Size.xs
+Devel-Size-0.82/ppport.h
+Devel-Size-0.82/MANIFEST
+Devel-Size-0.82/MANIFEST.SKIP
+Devel-Size-0.82/lib/
+Devel-Size-0.82/lib/Devel/
+Devel-Size-0.82/lib/Devel/Size.pm
+Devel-Size-0.82/Makefile.PL
+Devel-Size-0.82/t/
+Devel-Size-0.82/t/pvbm.t
+Devel-Size-0.82/t/pod.t
+Devel-Size-0.82/t/warnings.t
+Devel-Size-0.82/t/code.t
+Devel-Size-0.82/t/globs.t
+Devel-Size-0.82/t/magic.t
+Devel-Size-0.82/t/basic.t
+Devel-Size-0.82/t/recurse.t
+Devel-Size-0.82/t/pod_cov.t
+Devel-Size-0.82/CHANGES
+Devel-Size-0.82/typemap
+Devel-Size-0.82/README
+Entering Devel-Size-0.82
+Checking configure dependencies from META.json
+Checking if you have ExtUtils::MakeMaker 6.58 ... Yes (7.34)
+Running Makefile.PL
+Configuring Devel-Size-0.82 ... Checking if your kit is complete...
+Looks good
+Generating a Unix-style Makefile
+Writing Makefile for Devel::Size
+Writing MYMETA.yml and MYMETA.json
+Checking dependencies from MYMETA.json ...
+Checking if you have Test::More 0 ... Yes (1.302135)
+Checking if you have XSLoader 0 ... Yes (0.24)
+Checking if you have ExtUtils::MakeMaker 0 ... Yes (7.34)
+OK
+Building Devel-Size-0.82 ... cp lib/Devel/Size.pm blib/lib/Devel/Size.pm
+Running Mkbootstrap for Size ()
+chmod 644 "Size.bs"
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- Size.bs blib/arch/auto/Devel/Size/Size.bs 644
+"/usr/bin/perl" "/usr/share/perl5/ExtUtils/xsubpp"  -typemap '/usr/share/perl5/ExtUtils/typemap' -typemap '/root/.cpanm/work/1529913671.6174/Devel-Size-0.82/typemap'  Size.xs > Size.xsc
+mv Size.xsc Size.c
+gcc -c   -D_REENTRANT -D_GNU_SOURCE -fno-strict-aliasing -pipe -fstack-protector -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic   -DVERSION=\"0.82\" -DXS_VERSION=\"0.82\" -fPIC "-I/usr/lib64/perl5/CORE"  -DALIGN_BITS=3 Size.c
+Size.xs: In function ‘check_new’:
+Size.xs:115: warning: unused variable ‘c’
+Size.c: In function ‘XS_Devel__Size_size’:
+Size.c:1153: warning: unused variable ‘Perl___notused’
+Size.c: In function ‘boot_Devel__Size’:
+Size.c:1192: warning: unused variable ‘Perl___notused’
+rm -f blib/arch/auto/Devel/Size/Size.so
+gcc  -shared -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic  Size.o  -o blib/arch/auto/Devel/Size/Size.so  \
+	      \
+	  
+chmod 755 blib/arch/auto/Devel/Size/Size.so
+Manifying 1 pod document
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- Size.bs blib/arch/auto/Devel/Size/Size.bs 644
+Manifying 1 pod document
+Files found in blib/arch: installing files in blib/lib into architecture dependent library tree
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/auto/Devel/Size/Size.so
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/Devel/Size.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/Devel::Size.3pm
+Appending installation info to /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/perllocal.pod
+OK
+Successfully installed Devel-Size-0.82
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/Devel-Size-0.82/install.json
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/Devel-Size-0.82/MYMETA.json
+Searching Hash::Merge (0) on cpanmetadb ...
+Unpacking Hash-Merge-0.300.tar.gz
+--> Working on Hash::Merge
+Fetching http://www.cpan.org/authors/id/R/RE/REHSACK/Hash-Merge-0.300.tar.gz ... OK
+Hash-Merge-0.300/
+Hash-Merge-0.300/MAINTAINER.md
+Hash-Merge-0.300/Changes
+Hash-Merge-0.300/MANIFEST
+Hash-Merge-0.300/t/
+Hash-Merge-0.300/README.md
+Hash-Merge-0.300/MANIFEST.SKIP
+Hash-Merge-0.300/META.yml
+Hash-Merge-0.300/lib/
+Hash-Merge-0.300/Makefile.PL
+Hash-Merge-0.300/META.json
+Hash-Merge-0.300/lib/Hash/
+Hash-Merge-0.300/lib/Hash/Merge.pm
+Hash-Merge-0.300/t/Auto/
+Hash-Merge-0.300/t/Storable/
+Hash-Merge-0.300/t/ClonePP/
+Hash-Merge-0.300/t/inline/
+Hash-Merge-0.300/t/Clone/
+Hash-Merge-0.300/t/Clone/02-oo.t
+Hash-Merge-0.300/t/Clone/01-merge.t
+Hash-Merge-0.300/t/Clone/00-load.t
+Hash-Merge-0.300/t/inline/02-oo.t
+Hash-Merge-0.300/t/inline/01-merge.t
+Hash-Merge-0.300/t/inline/00-load.t
+Hash-Merge-0.300/t/ClonePP/02-oo.t
+Hash-Merge-0.300/t/ClonePP/01-merge.t
+Hash-Merge-0.300/t/ClonePP/00-load.t
+Hash-Merge-0.300/t/Storable/02-oo.t
+Hash-Merge-0.300/t/Storable/01-merge.t
+Hash-Merge-0.300/t/Storable/00-load.t
+Hash-Merge-0.300/t/Auto/02-oo.t
+Hash-Merge-0.300/t/Auto/01-merge.t
+Hash-Merge-0.300/t/Auto/00-load.t
+Entering Hash-Merge-0.300
+Checking configure dependencies from META.json
+Checking if you have ExtUtils::MakeMaker 6.64 ... Yes (7.34)
+Running Makefile.PL
+Configuring Hash-Merge-0.300 ... Warning: prerequisite Clone::Choose 0.008 not found.
+Checking if your kit is complete...
+Looks good
+Generating a Unix-style Makefile
+Writing Makefile for Hash::Merge
+Writing MYMETA.yml and MYMETA.json
+Checking dependencies from MYMETA.json ...
+Checking if you have Scalar::Util 0 ... Yes (1.50)
+Checking if you have Clone::Choose 0.008 ... No
+Searching Clone::Choose (0.008) on cpanmetadb ...
+Unpacking Clone-Choose-0.010.tar.gz
+OK
+==> Found dependencies: Clone::Choose
+--> Working on Clone::Choose
+Fetching http://www.cpan.org/authors/id/H/HE/HERMES/Clone-Choose-0.010.tar.gz ... OK
+Clone-Choose-0.010/
+Clone-Choose-0.010/MANIFEST
+Clone-Choose-0.010/MANIFEST.SKIP
+Clone-Choose-0.010/META.yml
+Clone-Choose-0.010/Changes
+Clone-Choose-0.010/Makefile.PL
+Clone-Choose-0.010/t/
+Clone-Choose-0.010/t/ClonePP/
+Clone-Choose-0.010/t/ClonePP/MR/
+Clone-Choose-0.010/t/ClonePP/MR/00-load.t
+Clone-Choose-0.010/t/ClonePP/MR/05-scalar.t
+Clone-Choose-0.010/t/ClonePP/MR/07-hash.t
+Clone-Choose-0.010/t/ClonePP/MR/01-simple.t
+Clone-Choose-0.010/t/ClonePP/MR/06-array.t
+Clone-Choose-0.010/t/ClonePP/MR/09-get_backends.t
+Clone-Choose-0.010/t/ClonePP/NoMR/
+Clone-Choose-0.010/t/ClonePP/NoMR/00-load.t
+Clone-Choose-0.010/t/ClonePP/NoMR/05-scalar.t
+Clone-Choose-0.010/t/ClonePP/NoMR/07-hash.t
+Clone-Choose-0.010/t/ClonePP/NoMR/01-simple.t
+Clone-Choose-0.010/t/ClonePP/NoMR/06-array.t
+Clone-Choose-0.010/t/ClonePP/NoMR/09-get_backends.t
+Clone-Choose-0.010/t/Auto/
+Clone-Choose-0.010/t/Auto/MR/
+Clone-Choose-0.010/t/Auto/MR/00-load.t
+Clone-Choose-0.010/t/Auto/MR/05-scalar.t
+Clone-Choose-0.010/t/Auto/MR/07-hash.t
+Clone-Choose-0.010/t/Auto/MR/01-simple.t
+Clone-Choose-0.010/t/Auto/MR/06-array.t
+Clone-Choose-0.010/t/Auto/MR/09-get_backends.t
+Clone-Choose-0.010/t/Auto/NoMR/
+Clone-Choose-0.010/t/Auto/NoMR/00-load.t
+Clone-Choose-0.010/t/Auto/NoMR/05-scalar.t
+Clone-Choose-0.010/t/Auto/NoMR/07-hash.t
+Clone-Choose-0.010/t/Auto/NoMR/01-simple.t
+Clone-Choose-0.010/t/Auto/NoMR/06-array.t
+Clone-Choose-0.010/t/Auto/NoMR/09-get_backends.t
+Clone-Choose-0.010/t/02-load-with-clone.t
+Clone-Choose-0.010/t/Clone/
+Clone-Choose-0.010/t/Clone/MR/
+Clone-Choose-0.010/t/Clone/MR/00-load.t
+Clone-Choose-0.010/t/Clone/MR/05-scalar.t
+Clone-Choose-0.010/t/Clone/MR/07-hash.t
+Clone-Choose-0.010/t/Clone/MR/01-simple.t
+Clone-Choose-0.010/t/Clone/MR/06-array.t
+Clone-Choose-0.010/t/Clone/MR/09-get_backends.t
+Clone-Choose-0.010/t/Clone/NoMR/
+Clone-Choose-0.010/t/Clone/NoMR/00-load.t
+Clone-Choose-0.010/t/Clone/NoMR/05-scalar.t
+Clone-Choose-0.010/t/Clone/NoMR/07-hash.t
+Clone-Choose-0.010/t/Clone/NoMR/01-simple.t
+Clone-Choose-0.010/t/Clone/NoMR/06-array.t
+Clone-Choose-0.010/t/Clone/NoMR/09-get_backends.t
+Clone-Choose-0.010/t/inline/
+Clone-Choose-0.010/t/inline/00-load.t
+Clone-Choose-0.010/t/inline/05-scalar.t
+Clone-Choose-0.010/t/inline/07-hash.t
+Clone-Choose-0.010/t/inline/01-simple.t
+Clone-Choose-0.010/t/inline/06-array.t
+Clone-Choose-0.010/t/inline/09-get_backends.t
+Clone-Choose-0.010/t/04-load-with-clone-pp.t
+Clone-Choose-0.010/t/03-load-with-storable.t
+Clone-Choose-0.010/t/Storable/
+Clone-Choose-0.010/t/Storable/MR/
+Clone-Choose-0.010/t/Storable/MR/00-load.t
+Clone-Choose-0.010/t/Storable/MR/05-scalar.t
+Clone-Choose-0.010/t/Storable/MR/07-hash.t
+Clone-Choose-0.010/t/Storable/MR/01-simple.t
+Clone-Choose-0.010/t/Storable/MR/06-array.t
+Clone-Choose-0.010/t/Storable/MR/09-get_backends.t
+Clone-Choose-0.010/t/Storable/NoMR/
+Clone-Choose-0.010/t/Storable/NoMR/00-load.t
+Clone-Choose-0.010/t/Storable/NoMR/05-scalar.t
+Clone-Choose-0.010/t/Storable/NoMR/07-hash.t
+Clone-Choose-0.010/t/Storable/NoMR/01-simple.t
+Clone-Choose-0.010/t/Storable/NoMR/06-array.t
+Clone-Choose-0.010/t/Storable/NoMR/09-get_backends.t
+Clone-Choose-0.010/t/08-import-fail.t
+Clone-Choose-0.010/META.json
+Clone-Choose-0.010/README.md
+Clone-Choose-0.010/lib/
+Clone-Choose-0.010/lib/Clone/
+Clone-Choose-0.010/lib/Clone/Choose.pm
+Entering Clone-Choose-0.010
+Checking configure dependencies from META.json
+Checking if you have ExtUtils::MakeMaker 6.58 ... Yes (7.34)
+Running Makefile.PL
+Configuring Clone-Choose-0.010 ... Checking if your kit is complete...
+Looks good
+Generating a Unix-style Makefile
+Writing Makefile for Clone::Choose
+Writing MYMETA.yml and MYMETA.json
+Checking dependencies from MYMETA.json ...
+Checking if you have Storable 0 ... Yes (2.20)
+OK
+Building Clone-Choose-0.010 ... cp lib/Clone/Choose.pm blib/lib/Clone/Choose.pm
+Manifying 1 pod document
+Manifying 1 pod document
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/Clone/Choose.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/Clone::Choose.3pm
+Appending installation info to /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/perllocal.pod
+OK
+Successfully installed Clone-Choose-0.010
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/Clone-Choose-0.010/install.json
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/Clone-Choose-0.010/MYMETA.json
+Building Hash-Merge-0.300 ... cp lib/Hash/Merge.pm blib/lib/Hash/Merge.pm
+Manifying 1 pod document
+Manifying 1 pod document
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/Hash/Merge.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/Hash::Merge.3pm
+Appending installation info to /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/perllocal.pod
+OK
+Successfully installed Hash-Merge-0.300
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/Hash-Merge-0.300/install.json
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/Hash-Merge-0.300/MYMETA.json
+Searching JSON (2) on cpanmetadb ...
+Unpacking JSON-2.97001.tar.gz
+--> Working on JSON
+Fetching http://www.cpan.org/authors/id/I/IS/ISHIGAKI/JSON-2.97001.tar.gz ... OK
+JSON-2.97001/
+JSON-2.97001/eg/
+JSON-2.97001/eg/bench_encode.pl
+JSON-2.97001/eg/bench_decode.pl
+JSON-2.97001/README
+JSON-2.97001/lib/
+JSON-2.97001/lib/JSON.pm
+JSON-2.97001/lib/JSON/
+JSON-2.97001/lib/JSON/backportPP/
+JSON-2.97001/lib/JSON/backportPP/Compat5006.pm
+JSON-2.97001/lib/JSON/backportPP/Compat5005.pm
+JSON-2.97001/lib/JSON/backportPP/Boolean.pm
+JSON-2.97001/lib/JSON/backportPP.pm
+JSON-2.97001/t/
+JSON-2.97001/t/15_prefix.t
+JSON-2.97001/t/x00_load.t
+JSON-2.97001/t/116_incr_parse_fixed.t
+JSON-2.97001/t/e90_misc.t
+JSON-2.97001/t/117_numbers.t
+JSON-2.97001/t/109_encode.t
+JSON-2.97001/t/e00_func.t
+JSON-2.97001/t/113_overloaded_eq.t
+JSON-2.97001/t/18_json_checker.t
+JSON-2.97001/t/112_upgrade.t
+JSON-2.97001/t/x12_blessed.t
+JSON-2.97001/t/106_allow_barekey.t
+JSON-2.97001/t/00_backend_version.t
+JSON-2.97001/t/e01_property.t
+JSON-2.97001/t/rt_116998_wrong_character_offset.t
+JSON-2.97001/t/xe19_xs_and_suportbypp.t
+JSON-2.97001/t/01_utf8.t
+JSON-2.97001/t/03_types.t
+JSON-2.97001/t/114_decode_prefix.t
+JSON-2.97001/t/13_limit.t
+JSON-2.97001/t/20_unknown.t
+JSON-2.97001/t/14_latin1.t
+JSON-2.97001/t/xe21_is_pp.t
+JSON-2.97001/t/12_blessed.t
+JSON-2.97001/t/22_comment_at_eof.t
+JSON-2.97001/t/e02_bool.t
+JSON-2.97001/t/gh_29_trailing_false_value.t
+JSON-2.97001/t/rt_90071_incr_parse.t
+JSON-2.97001/t/02_error.t
+JSON-2.97001/t/xe05_indent_length.t
+JSON-2.97001/t/zero-mojibake.t
+JSON-2.97001/t/17_relaxed.t
+JSON-2.97001/t/xe20_croak_message.t
+JSON-2.97001/t/_unicode_handling.pm
+JSON-2.97001/t/115_tie_ixhash.t
+JSON-2.97001/t/19_incr.t
+JSON-2.97001/t/07_pc_esc.t
+JSON-2.97001/t/xe04_escape_slash.t
+JSON-2.97001/t/104_sortby.t
+JSON-2.97001/t/x02_error.t
+JSON-2.97001/t/99_binary.t
+JSON-2.97001/t/00_load_backport_pp.t
+JSON-2.97001/t/108_decode.t
+JSON-2.97001/t/00_load.t
+JSON-2.97001/t/x17_strange_overload.t
+JSON-2.97001/t/xe12_boolean.t
+JSON-2.97001/t/21_evans_bugrep.t
+JSON-2.97001/t/110_bignum.t
+JSON-2.97001/t/16_tied.t
+JSON-2.97001/t/e11_conv_blessed_univ.t
+JSON-2.97001/t/105_esc_slash.t
+JSON-2.97001/t/107_allow_singlequote.t
+JSON-2.97001/t/e03_bool2.t
+JSON-2.97001/t/11_pc_expo.t
+JSON-2.97001/t/09_pc_extra_number.t
+JSON-2.97001/t/10_pc_keysort.t
+JSON-2.97001/t/08_pc_base.t
+JSON-2.97001/t/00_pod.t
+JSON-2.97001/t/gh_28_json_test_suite.t
+JSON-2.97001/t/x16_tied.t
+JSON-2.97001/t/06_pc_pretty.t
+JSON-2.97001/.travis.yml
+JSON-2.97001/META.json
+JSON-2.97001/Changes
+JSON-2.97001/Makefile.PL
+JSON-2.97001/META.yml
+JSON-2.97001/MANIFEST
+Entering JSON-2.97001
+Checking configure dependencies from META.json
+Checking if you have ExtUtils::MakeMaker 6.58 ... Yes (7.34)
+Running Makefile.PL
+Configuring JSON-2.97001 ... Welcome to JSON (v.2.97001)
+=============================
+
+ ** BACKWARD INCOMPATIBILITY **
+
+Since version 2.90, stringification (and string comparison) for
+JSON::true and JSON::false has not been overloaded. It shouldn't
+matter as long as you treat them as boolean values, but a code that
+expects they are stringified as "true" or "false" doesn't work as
+you have expected any more.
+
+    if (JSON::true eq 'true') {  # now fails
+
+    print "The result is 1 now."; # => The result is 1 now.
+
+And now these boolean values don't inherit JSON::Boolean, either.
+When you need to test a value is a JSON boolean value or not, use
+JSON::is_bool function, instead of testing the value inherits
+a particular boolean class or not.
+
+Checking if your kit is complete...
+Looks good
+Generating a Unix-style Makefile
+Writing Makefile for JSON
+Writing MYMETA.yml and MYMETA.json
+Checking dependencies from MYMETA.json ...
+Checking if you have Test::More 0 ... Yes (1.302135)
+Checking if you have ExtUtils::MakeMaker 0 ... Yes (7.34)
+OK
+Building JSON-2.97001 ... cp lib/JSON/backportPP/Compat5005.pm blib/lib/JSON/backportPP/Compat5005.pm
+cp lib/JSON.pm blib/lib/JSON.pm
+cp lib/JSON/backportPP/Compat5006.pm blib/lib/JSON/backportPP/Compat5006.pm
+cp lib/JSON/backportPP/Boolean.pm blib/lib/JSON/backportPP/Boolean.pm
+cp lib/JSON/backportPP.pm blib/lib/JSON/backportPP.pm
+Manifying 5 pod documents
+Manifying 5 pod documents
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/JSON.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/JSON/backportPP.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/JSON/backportPP/Compat5006.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/JSON/backportPP/Compat5005.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/JSON/backportPP/Boolean.pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/JSON::backportPP::Boolean.3pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/JSON::backportPP.3pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/JSON.3pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/JSON::backportPP::Compat5005.3pm
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/man/man3/JSON::backportPP::Compat5006.3pm
+Appending installation info to /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/perllocal.pod
+OK
+Successfully installed JSON-2.97001
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/JSON-2.97001/install.json
+Installing /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/extlib/lib/perl5/x86_64-linux-thread-multi/.meta/JSON-2.97001/MYMETA.json
+<== Installed dependencies for .. Finishing.
+14 distributions installed
++ bin/cpanm -v --notest -l extlib/ --installdeps .
+cpanm (App::cpanminus) 1.7039 on perl 5.010001 built for x86_64-linux-thread-multi
+Work directory is /root/.cpanm/work/1529913778.7383
+You have make /usr/bin/make
+You have LWP 5.833
+You have /bin/tar: tar (GNU tar) 1.23
+Copyright (C) 2010 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written by John Gilmore and Jay Fenlason.
+You have /usr/bin/unzip
+Entering /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3
+Running Makefile.PL
+--> Working on .
+Configuring /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3 ... Can't parse version 'dev'
+Can't parse version 'dev'
+Generating a Unix-style Makefile
+Writing Makefile for JBrowse
+Writing MYMETA.yml and MYMETA.json
+Checking dependencies from MYMETA.json ...
+Checking if you have Capture::Tiny 0 ... Yes (0.48)
+Checking if you have Pod::Usage 0 ... Yes (1.36)
+Checking if you have Storable 0 ... Yes (2.20)
+Checking if you have JSON::XS 0 ... Yes (3.04)
+Checking if you have List::Util 0 ... Yes (1.50)
+Checking if you have PerlIO::gzip 0 ... Yes (0.20)
+Checking if you have Digest::Crc32 0 ... Yes (0.01)
+Checking if you have File::Path 2 ... Yes (2.08)
+Checking if you have local::lib 0 ... Yes (2.000024)
+Checking if you have List::MoreUtils 0.28 ... Yes (0.428)
+Checking if you have Bio::FeatureIO 0 ... Yes (1.6.905)
+Checking if you have DBI 0 ... Yes (1.609)
+Checking if you have Getopt::Long 0 ... Yes (2.38)
+Checking if you have warnings 0 ... Yes (1.06)
+Checking if you have base 0 ... Yes (2.14)
+Checking if you have IO::File 0 ... Yes (1.14)
+Checking if you have Bio::Index::Fasta 0 ... Yes (undef)
+Checking if you have Data::Dumper 0 ... Yes (2.124)
+Checking if you have DB_File 0 ... Yes (1.841)
+Checking if you have Bio::Root::Version 1.006000 ... Yes (1.007002)
+Checking if you have Bio::Annotation::SimpleValue 0 ... Yes (undef)
+Checking if you have vars 0 ... Yes (1.01)
+Checking if you have Parse::RecDescent 0 ... Yes (1.967015)
+Checking if you have Test::More 0 ... Yes (1.302135)
+Checking if you have strict 0 ... Yes (1.04)
+Checking if you have File::Temp 0 ... Yes (0.22)
+Checking if you have File::Copy::Recursive 0 ... Yes (0.40)
+Checking if you have Scalar::Util 0 ... Yes (1.50)
+Checking if you have DBD::SQLite 0 ... Yes (1.58)
+Checking if you have URI::Escape 0 ... Yes (3.31)
+Checking if you have FindBin 0 ... Yes (1.50)
+Checking if you have Fcntl 0 ... Yes (1.06)
+Checking if you have File::Spec 0 ... Yes (3.30)
+Checking if you have Heap::Simple::XS 0 ... Yes (0.10)
+Checking if you have Heap::Simple 0 ... Yes (0.13)
+Checking if you have POSIX 0 ... Yes (1.17)
+Checking if you have Devel::Size 0 ... Yes (0.82)
+Checking if you have File::Spec::Functions 0 ... Yes (3.30)
+Checking if you have Bio::SeqFeature::Lite 0 ... Yes (undef)
+Checking if you have Bio::GFF3::LowLevel::Parser 1.8 ... Yes (2.0)
+Checking if you have IO::Uncompress::Gunzip 0 ... Yes (2.021)
+Checking if you have Hash::Merge 0 ... Yes (0.300)
+Checking if you have constant 0 ... Yes (1.17)
+Checking if you have Bio::OntologyIO 0 ... Yes (undef)
+Checking if you have Exporter 0 ... Yes (5.63)
+Checking if you have Bio::SeqFeature::Annotated 0 ... Yes (1.6.905)
+Checking if you have Carp 0 ... Yes (1.38)
+Checking if you have Test::Warn 0 ... Yes (0.32)
+Checking if you have File::Next 0 ... Yes (1.16)
+Checking if you have JSON 2 ... Yes (2.97001)
+Checking if you have File::Basename 0 ... Yes (2.77)
+Checking if you have Cwd 0 ... Yes (3.30)
+OK
+<== Installed dependencies for .. Finishing.
++ set -e
++ bin/cpanm -v --notest -l extlib/ --installdeps .
+cpanm (App::cpanminus) 1.7039 on perl 5.010001 built for x86_64-linux-thread-multi
+Work directory is /root/.cpanm/work/1529913778.7392
+You have make /usr/bin/make
+You have LWP 5.833
+You have /bin/tar: tar (GNU tar) 1.23
+Copyright (C) 2010 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written by John Gilmore and Jay Fenlason.
+You have /usr/bin/unzip
+Entering /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3
+Running Makefile.PL
+--> Working on .
+Configuring /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3 ... Can't parse version 'dev'
+Can't parse version 'dev'
+Generating a Unix-style Makefile
+Writing Makefile for JBrowse
+Writing MYMETA.yml and MYMETA.json
+Checking dependencies from MYMETA.json ...
+Checking if you have Capture::Tiny 0 ... Yes (0.48)
+Checking if you have Pod::Usage 0 ... Yes (1.36)
+Checking if you have Storable 0 ... Yes (2.20)
+Checking if you have JSON::XS 0 ... Yes (3.04)
+Checking if you have List::Util 0 ... Yes (1.50)
+Checking if you have PerlIO::gzip 0 ... Yes (0.20)
+Checking if you have Digest::Crc32 0 ... Yes (0.01)
+Checking if you have File::Path 2 ... Yes (2.08)
+Checking if you have local::lib 0 ... Yes (2.000024)
+Checking if you have List::MoreUtils 0.28 ... Yes (0.428)
+Checking if you have Bio::FeatureIO 0 ... Yes (1.6.905)
+Checking if you have DBI 0 ... Yes (1.609)
+Checking if you have Getopt::Long 0 ... Yes (2.38)
+Checking if you have warnings 0 ... Yes (1.06)
+Checking if you have base 0 ... Yes (2.14)
+Checking if you have IO::File 0 ... Yes (1.14)
+Checking if you have Bio::Index::Fasta 0 ... Yes (undef)
+Checking if you have Data::Dumper 0 ... Yes (2.124)
+Checking if you have DB_File 0 ... Yes (1.841)
+Checking if you have Bio::Root::Version 1.006000 ... Yes (1.007002)
+Checking if you have Bio::Annotation::SimpleValue 0 ... Yes (undef)
+Checking if you have vars 0 ... Yes (1.01)
+Checking if you have Parse::RecDescent 0 ... Yes (1.967015)
+Checking if you have Test::More 0 ... Yes (1.302135)
+Checking if you have strict 0 ... Yes (1.04)
+Checking if you have File::Temp 0 ... Yes (0.22)
+Checking if you have File::Copy::Recursive 0 ... Yes (0.40)
+Checking if you have Scalar::Util 0 ... Yes (1.50)
+Checking if you have DBD::SQLite 0 ... Yes (1.58)
+Checking if you have URI::Escape 0 ... Yes (3.31)
+Checking if you have FindBin 0 ... Yes (1.50)
+Checking if you have Fcntl 0 ... Yes (1.06)
+Checking if you have File::Spec 0 ... Yes (3.30)
+Checking if you have Heap::Simple::XS 0 ... Yes (0.10)
+Checking if you have Heap::Simple 0 ... Yes (0.13)
+Checking if you have POSIX 0 ... Yes (1.17)
+Checking if you have Devel::Size 0 ... Yes (0.82)
+Checking if you have File::Spec::Functions 0 ... Yes (3.30)
+Checking if you have Bio::SeqFeature::Lite 0 ... Yes (undef)
+Checking if you have Bio::GFF3::LowLevel::Parser 1.8 ... Yes (2.0)
+Checking if you have IO::Uncompress::Gunzip 0 ... Yes (2.021)
+Checking if you have Hash::Merge 0 ... Yes (0.300)
+Checking if you have constant 0 ... Yes (1.17)
+Checking if you have Bio::OntologyIO 0 ... Yes (undef)
+Checking if you have Exporter 0 ... Yes (5.63)
+Checking if you have Bio::SeqFeature::Annotated 0 ... Yes (1.6.905)
+Checking if you have Carp 0 ... Yes (1.38)
+Checking if you have Test::Warn 0 ... Yes (0.32)
+Checking if you have File::Next 0 ... Yes (1.16)
+Checking if you have JSON 2 ... Yes (2.97001)
+Checking if you have File::Basename 0 ... Yes (2.77)
+Checking if you have Cwd 0 ... Yes (3.30)
+OK
+<== Installed dependencies for .. Finishing.
++ rm -rf sample_data/json/volvox
++ bin/prepare-refseqs.pl --fasta docs/tutorial/data_files/volvox.fa --out sample_data/json/volvox
+Attempting to create directory /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/bin/../src/perl5/../../extlib
++ bin/biodb-to-json.pl -v --conf docs/tutorial/conf_files/volvox.json --out sample_data/json/volvox
+
+working on refseq ctgA
+working on track ExampleFeatures
+mergedTrackCfg: $VAR1 = {
+          'feature' => [
+                         'remark'
+                       ],
+          'autocomplete' => 'all',
+          'track' => 'ExampleFeatures',
+          'style' => {
+                       'className' => 'feature2'
+                     },
+          'compress' => 0,
+          'category' => 'Miscellaneous',
+          'key' => 'HTMLFeatures - Example Features'
+        };
+searching for features of type: remark
+working on track NameTest
+mergedTrackCfg: $VAR1 = {
+          'feature' => [
+                         'protein_coding_primary_transcript',
+                         'polypeptide'
+                       ],
+          'autocomplete' => 'all',
+          'track' => 'NameTest',
+          'style' => {
+                       'className' => 'feature2'
+                     },
+          'compress' => 0,
+          'category' => 'Miscellaneous',
+          'key' => 'HTMLFeatures - Name test track has a really long track label'
+        };
+searching for features of type: protein_coding_primary_transcript, polypeptide
+working on track snps
+mergedTrackCfg: $VAR1 = {
+          'feature' => [
+                         'SNP'
+                       ],
+          'autocomplete' => 'all',
+          'track' => 'snps',
+          'style' => {
+                       'className' => 'triangle hgred'
+                     },
+          'compress' => 0,
+          'category' => 'Miscellaneous',
+          'key' => 'HTMLFeatures - SNPs'
+        };
+searching for features of type: SNP
+working on track Motifs
+mergedTrackCfg: $VAR1 = {
+          'autocomplete' => 'all',
+          'track' => 'Motifs',
+          'style' => {
+                       'className' => 'feature3',
+                       'label' => 'function(feature) { return feature.get(\'Name\')+\' (via JS callback)\' }',
+                       'description' => 'function(feature) { return feature.get(\'Name\')+\': \'+feature.get(\'Note\'); }'
+                     },
+          'description' => 1,
+          'key' => 'HTMLFeatures - Example motifs',
+          'feature' => [
+                         'polypeptide_domain'
+                       ],
+          'compress' => 0,
+          'category' => 'Miscellaneous'
+        };
+searching for features of type: polypeptide_domain
+working on track malformed_alignments
+mergedTrackCfg: $VAR1 = {
+          'autocomplete' => 'all',
+          'track' => 'malformed_alignments',
+          'style' => {
+                       'className' => 'feature4'
+                     },
+          'menuTemplate' => [
+                              {
+                                'children' => [
+                                                {
+                                                  'children' => [
+                                                                  {
+                                                                    'iconClass' => 'dijitIconBookmark',
+                                                                    'url' => 'http://wiki.trin.org.au/{name}-{start}-{end}',
+                                                                    'action' => 'newWindow',
+                                                                    'label' => 'Query trin for {name}'
+                                                                  },
+                                                                  {
+                                                                    'iconClass' => 'dijitIconSearch',
+                                                                    'url' => 'http://example.com/{name}-{start}-{end}',
+                                                                    'label' => 'Query example.com for {name}'
+                                                                  }
+                                                                ],
+                                                  'label' => 'Check gene on databases'
+                                                },
+                                                {
+                                                  'label' => '2nd child of demo'
+                                                },
+                                                {
+                                                  'label' => '3rd child: this is a track'
+                                                }
+                                              ],
+                                'label' => 'Item with submenu'
+                              },
+                              {
+                                'iconClass' => 'dijitIconDatabase',
+                                'url' => 'http://www.example.com?featurename={name}',
+                                'action' => 'iframeDialog',
+                                'title' => 'The magnificent example.com (feature {name})',
+                                'label' => 'Open example.com in an iframe popup'
+                              },
+                              {
+                                'iconClass' => 'dijitIconDatabase',
+                                'url' => 'sample_data/test_snippet.html?featurename={name}:{start}-{end}',
+                                'action' => 'xhrDialog',
+                                'title' => 'function(track,feature,div) { return \'Random XHR HTML \'+Math.random()+\' title!\'; }',
+                                'label' => 'Open popup with XHR HTML snippet (btw this is feature {name})'
+                              },
+                              {
+                                'iconClass' => 'dijitIconDatabase',
+                                'content' => 'function(track,feature,div) { return \'<h2>\'+feature.get(\'name\')+\'</h2><p>This is some test content!</p><p>This message brought to you by the number <span style="font-size: 300%">\'+Math.round(Math.random()*100)+\'</span>.</p>\';} ',
+                                'action' => 'contentDialog',
+                                'title' => 'function(track,feature,div) { return \'Random content snippet \'+Math.random()+\' title!\'; }',
+                                'label' => 'Popup with content snippet from a function (feature {name})'
+                              },
+                              {
+                                'iconClass' => 'dijitIconDatabase',
+                                'content' => '<h2>{name}</h2><p>This is some test content about {name}, which goes from {start} to {end} on the {strand} strand.</p>',
+                                'action' => 'contentDialog',
+                                'title' => '{randomNumberTitle}',
+                                'label' => 'Popup with content snippet from string (feature {name})'
+                              },
+                              {
+                                'iconClass' => 'dijitIconDatabase',
+                                'action' => '{exampleFeatureClick}',
+                                'label' => '{randomNumberLabel}'
+                              }
+                            ],
+          'hooks' => {
+                       'modify' => 'function( track, feature, div ) { div.style.backgroundColor = [\'green\',\'blue\',\'red\',\'orange\',\'purple\'][Math.round(Math.random()*5)];}'
+                     },
+          'key' => 'HTMLFeatures - Features with right-click menus',
+          'feature' => [
+                         'match'
+                       ],
+          'shortDescription' => 'Features with customized right-click menus',
+          'compress' => 0,
+          'metadata' => {
+                          'category' => 'Miscellaneous',
+                          'Description' => 'Features with extensively customized right-click menus, and with their colors set at random by a JavaScript callback.'
+                        }
+        };
+searching for features of type: match
+working on track Genes
+mergedTrackCfg: $VAR1 = {
+          'fmtDetailValue_Name' => 'function(name,feature) { if(feature.get(\'type\')==\'gene\') { return name + \' <a href=http://www.ncbi.nlm.nih.gov/gquery/?term=\'+name+\'>[NCBI custom link]</a>\'; } else { return name; } }',
+          'fmtMetaDescription_Name' => 'function(name) { return \'[Custom description]\'; }',
+          'fmtMetaValue_Name' => 'function(name) { return name+\' [Track with custom callbacks for About track popup]\'; }',
+          'key' => 'CanvasFeatures - Protein-coding genes',
+          'onClick' => {
+                         'action' => 'defaultDialog',
+                         'title' => '{type} {name}',
+                         'label' => '<div style=\'font:normal 12px Univers,Helvetica,Arial,sans-serif\'><div style=\'font-weight:bold\'>Custom tooltip</div><div style=\'color:blue;\'>Feature name: {name}<br />Feature start: {start}<br />Feature end: {end}</div></div>'
+                       },
+          'feature' => [
+                         'gene'
+                       ],
+          'fmtDetailField_Name' => 'function(name,feature) { if(feature.get(\'type\')==\'gene\') { return \'Gene Name\'; } else { return name; } }',
+          'fmtMetaField_Name' => 'function(name) { return \'Track Name\'; }',
+          'fmtDetailField_Load_id' => 'function(name,feature) { /* remove field from dialog box */ return null; }',
+          'category' => 'Transcripts',
+          'autocomplete' => 'all',
+          'track' => 'Genes',
+          'style' => {
+                       'className' => 'feature5'
+                     },
+          'menuTemplate' => [
+                              {
+                                'label' => 'View details'
+                              },
+                              {
+                                'label' => 'Zoom this gene'
+                              },
+                              {
+                                'label' => 'Highlight this gene'
+                              },
+                              {
+                                'iconClass' => 'dijitIconDatabase',
+                                'content' => '<h2>{name}</h2>This is some test content about {type} {name}, which goes from {start} to {end} on the {strand} strand.',
+                                'action' => 'contentDialog',
+                                'title' => '{randomNumberTitle}',
+                                'label' => 'Popup with content snippet from string (feature {name})'
+                              }
+                            ],
+          'trackType' => 'JBrowse/View/Track/CanvasFeatures',
+          'compress' => 0
+        };
+searching for features of type: gene
+working on track ReadingFrame
+mergedTrackCfg: $VAR1 = {
+          'autocomplete' => 'all',
+          'track' => 'ReadingFrame',
+          'style' => {
+                       'className' => 'cds'
+                     },
+          'key' => 'HTMLFeatures - mRNAs',
+          'onClick' => {
+                         'url' => 'http://www.ncbi.nlm.nih.gov/gquery/?term={name}',
+                         'title' => 'NCBI search box',
+                         'label' => 'Search for {name} at NCBI
+Feature start {start}
+Feature end {end}'
+                       },
+          'feature' => [
+                         'mRNA'
+                       ],
+          'phase' => 1,
+          'compress' => 0,
+          'category' => 'Transcripts'
+        };
+searching for features of type: mRNA
+working on track CDS
+mergedTrackCfg: $VAR1 = {
+          'autocomplete' => 'all',
+          'track' => 'CDS',
+          'style' => {
+                       'className' => 'cds',
+                       'linkTemplate' => 'http://www.ncbi.nlm.nih.gov/gquery/?term={name}-{start}-{end}'
+                     },
+          'key' => 'CanvasFeatures - mixed mRNAs and CDSs',
+          'feature' => [
+                         'CDS:bare_predicted',
+                         'mRNA:exonerate',
+                         'mRNA:predicted'
+                       ],
+          'trackType' => 'CanvasFeatures',
+          'compress' => 0,
+          'category' => 'Transcripts'
+        };
+searching for features of type: CDS:bare_predicted, mRNA:exonerate, mRNA:predicted
+working on track Transcript
+mergedTrackCfg: $VAR1 = {
+          'autocomplete' => 'all',
+          'track' => 'Transcript',
+          'style' => {
+                       'className' => 'feature',
+                       'color' => '#E32A3A'
+                     },
+          'description' => 1,
+          'key' => 'CanvasFeatures - transcripts',
+          'onClick' => '{exampleFeatureClick}',
+          'feature' => [
+                         'mRNA:exonerate'
+                       ],
+          'trackType' => 'JBrowse/View/Track/CanvasFeatures',
+          'compress' => 0,
+          'category' => 'Transcripts',
+          'subfeatures' => bless( do{\(my $o = 1)}, 'JSON::PP::Boolean' )
+        };
+searching for features of type: mRNA:exonerate
+working on track Clones
+mergedTrackCfg: $VAR1 = {
+          'autocomplete' => 'all',
+          'track' => 'Clones',
+          'style' => {
+                       'className' => 'exon'
+                     },
+          'description' => 1,
+          'key' => 'HTMLFeatures - Fingerprinted BACs',
+          'feature' => [
+                         'BAC'
+                       ],
+          'compress' => 0,
+          'category' => 'Miscellaneous'
+        };
+searching for features of type: BAC
+working on track EST
+mergedTrackCfg: $VAR1 = {
+          'feature' => [
+                         'EST_match:est'
+                       ],
+          'autocomplete' => 'all',
+          'track' => 'EST',
+          'style' => {
+                       'className' => 'est'
+                     },
+          'compress' => 0,
+          'category' => 'Miscellaneous',
+          'key' => 'HTMLFeatures - ESTs'
+        };
+searching for features of type: EST_match:est
+
+working on refseq ctgB
+working on track ExampleFeatures
+mergedTrackCfg: $VAR1 = {
+          'feature' => [
+                         'remark'
+                       ],
+          'autocomplete' => 'all',
+          'track' => 'ExampleFeatures',
+          'style' => {
+                       'className' => 'feature2'
+                     },
+          'compress' => 0,
+          'category' => 'Miscellaneous',
+          'key' => 'HTMLFeatures - Example Features'
+        };
+searching for features of type: remark
+working on track NameTest
+mergedTrackCfg: $VAR1 = {
+          'feature' => [
+                         'protein_coding_primary_transcript',
+                         'polypeptide'
+                       ],
+          'autocomplete' => 'all',
+          'track' => 'NameTest',
+          'style' => {
+                       'className' => 'feature2'
+                     },
+          'compress' => 0,
+          'category' => 'Miscellaneous',
+          'key' => 'HTMLFeatures - Name test track has a really long track label'
+        };
+searching for features of type: protein_coding_primary_transcript, polypeptide
+working on track snps
+mergedTrackCfg: $VAR1 = {
+          'feature' => [
+                         'SNP'
+                       ],
+          'autocomplete' => 'all',
+          'track' => 'snps',
+          'style' => {
+                       'className' => 'triangle hgred'
+                     },
+          'compress' => 0,
+          'category' => 'Miscellaneous',
+          'key' => 'HTMLFeatures - SNPs'
+        };
+searching for features of type: SNP
+working on track Motifs
+mergedTrackCfg: $VAR1 = {
+          'autocomplete' => 'all',
+          'track' => 'Motifs',
+          'style' => {
+                       'className' => 'feature3',
+                       'label' => 'function(feature) { return feature.get(\'Name\')+\' (via JS callback)\' }',
+                       'description' => 'function(feature) { return feature.get(\'Name\')+\': \'+feature.get(\'Note\'); }'
+                     },
+          'description' => 1,
+          'key' => 'HTMLFeatures - Example motifs',
+          'feature' => [
+                         'polypeptide_domain'
+                       ],
+          'compress' => 0,
+          'category' => 'Miscellaneous'
+        };
+searching for features of type: polypeptide_domain
+working on track malformed_alignments
+mergedTrackCfg: $VAR1 = {
+          'autocomplete' => 'all',
+          'track' => 'malformed_alignments',
+          'style' => {
+                       'className' => 'feature4'
+                     },
+          'menuTemplate' => [
+                              {
+                                'children' => [
+                                                {
+                                                  'children' => [
+                                                                  {
+                                                                    'iconClass' => 'dijitIconBookmark',
+                                                                    'url' => 'http://wiki.trin.org.au/{name}-{start}-{end}',
+                                                                    'action' => 'newWindow',
+                                                                    'label' => 'Query trin for {name}'
+                                                                  },
+                                                                  {
+                                                                    'iconClass' => 'dijitIconSearch',
+                                                                    'url' => 'http://example.com/{name}-{start}-{end}',
+                                                                    'label' => 'Query example.com for {name}'
+                                                                  }
+                                                                ],
+                                                  'label' => 'Check gene on databases'
+                                                },
+                                                {
+                                                  'label' => '2nd child of demo'
+                                                },
+                                                {
+                                                  'label' => '3rd child: this is a track'
+                                                }
+                                              ],
+                                'label' => 'Item with submenu'
+                              },
+                              {
+                                'iconClass' => 'dijitIconDatabase',
+                                'url' => 'http://www.example.com?featurename={name}',
+                                'action' => 'iframeDialog',
+                                'title' => 'The magnificent example.com (feature {name})',
+                                'label' => 'Open example.com in an iframe popup'
+                              },
+                              {
+                                'iconClass' => 'dijitIconDatabase',
+                                'url' => 'sample_data/test_snippet.html?featurename={name}:{start}-{end}',
+                                'action' => 'xhrDialog',
+                                'title' => 'function(track,feature,div) { return \'Random XHR HTML \'+Math.random()+\' title!\'; }',
+                                'label' => 'Open popup with XHR HTML snippet (btw this is feature {name})'
+                              },
+                              {
+                                'iconClass' => 'dijitIconDatabase',
+                                'content' => 'function(track,feature,div) { return \'<h2>\'+feature.get(\'name\')+\'</h2><p>This is some test content!</p><p>This message brought to you by the number <span style="font-size: 300%">\'+Math.round(Math.random()*100)+\'</span>.</p>\';} ',
+                                'action' => 'contentDialog',
+                                'title' => 'function(track,feature,div) { return \'Random content snippet \'+Math.random()+\' title!\'; }',
+                                'label' => 'Popup with content snippet from a function (feature {name})'
+                              },
+                              {
+                                'iconClass' => 'dijitIconDatabase',
+                                'content' => '<h2>{name}</h2><p>This is some test content about {name}, which goes from {start} to {end} on the {strand} strand.</p>',
+                                'action' => 'contentDialog',
+                                'title' => '{randomNumberTitle}',
+                                'label' => 'Popup with content snippet from string (feature {name})'
+                              },
+                              {
+                                'iconClass' => 'dijitIconDatabase',
+                                'action' => '{exampleFeatureClick}',
+                                'label' => '{randomNumberLabel}'
+                              }
+                            ],
+          'hooks' => {
+                       'modify' => 'function( track, feature, div ) { div.style.backgroundColor = [\'green\',\'blue\',\'red\',\'orange\',\'purple\'][Math.round(Math.random()*5)];}'
+                     },
+          'key' => 'HTMLFeatures - Features with right-click menus',
+          'feature' => [
+                         'match'
+                       ],
+          'shortDescription' => 'Features with customized right-click menus',
+          'compress' => 0,
+          'metadata' => {
+                          'category' => 'Miscellaneous',
+                          'Description' => 'Features with extensively customized right-click menus, and with their colors set at random by a JavaScript callback.'
+                        }
+        };
+searching for features of type: match
+working on track Genes
+mergedTrackCfg: $VAR1 = {
+          'fmtDetailValue_Name' => 'function(name,feature) { if(feature.get(\'type\')==\'gene\') { return name + \' <a href=http://www.ncbi.nlm.nih.gov/gquery/?term=\'+name+\'>[NCBI custom link]</a>\'; } else { return name; } }',
+          'fmtMetaDescription_Name' => 'function(name) { return \'[Custom description]\'; }',
+          'fmtMetaValue_Name' => 'function(name) { return name+\' [Track with custom callbacks for About track popup]\'; }',
+          'key' => 'CanvasFeatures - Protein-coding genes',
+          'onClick' => {
+                         'action' => 'defaultDialog',
+                         'title' => '{type} {name}',
+                         'label' => '<div style=\'font:normal 12px Univers,Helvetica,Arial,sans-serif\'><div style=\'font-weight:bold\'>Custom tooltip</div><div style=\'color:blue;\'>Feature name: {name}<br />Feature start: {start}<br />Feature end: {end}</div></div>'
+                       },
+          'feature' => [
+                         'gene'
+                       ],
+          'fmtDetailField_Name' => 'function(name,feature) { if(feature.get(\'type\')==\'gene\') { return \'Gene Name\'; } else { return name; } }',
+          'fmtMetaField_Name' => 'function(name) { return \'Track Name\'; }',
+          'fmtDetailField_Load_id' => 'function(name,feature) { /* remove field from dialog box */ return null; }',
+          'category' => 'Transcripts',
+          'autocomplete' => 'all',
+          'track' => 'Genes',
+          'style' => {
+                       'className' => 'feature5'
+                     },
+          'menuTemplate' => [
+                              {
+                                'label' => 'View details'
+                              },
+                              {
+                                'label' => 'Zoom this gene'
+                              },
+                              {
+                                'label' => 'Highlight this gene'
+                              },
+                              {
+                                'iconClass' => 'dijitIconDatabase',
+                                'content' => '<h2>{name}</h2>This is some test content about {type} {name}, which goes from {start} to {end} on the {strand} strand.',
+                                'action' => 'contentDialog',
+                                'title' => '{randomNumberTitle}',
+                                'label' => 'Popup with content snippet from string (feature {name})'
+                              }
+                            ],
+          'trackType' => 'JBrowse/View/Track/CanvasFeatures',
+          'compress' => 0
+        };
+searching for features of type: gene
+working on track ReadingFrame
+mergedTrackCfg: $VAR1 = {
+          'autocomplete' => 'all',
+          'track' => 'ReadingFrame',
+          'style' => {
+                       'className' => 'cds'
+                     },
+          'key' => 'HTMLFeatures - mRNAs',
+          'onClick' => {
+                         'url' => 'http://www.ncbi.nlm.nih.gov/gquery/?term={name}',
+                         'title' => 'NCBI search box',
+                         'label' => 'Search for {name} at NCBI
+Feature start {start}
+Feature end {end}'
+                       },
+          'feature' => [
+                         'mRNA'
+                       ],
+          'phase' => 1,
+          'compress' => 0,
+          'category' => 'Transcripts'
+        };
+searching for features of type: mRNA
+working on track CDS
+mergedTrackCfg: $VAR1 = {
+          'autocomplete' => 'all',
+          'track' => 'CDS',
+          'style' => {
+                       'className' => 'cds',
+                       'linkTemplate' => 'http://www.ncbi.nlm.nih.gov/gquery/?term={name}-{start}-{end}'
+                     },
+          'key' => 'CanvasFeatures - mixed mRNAs and CDSs',
+          'feature' => [
+                         'CDS:bare_predicted',
+                         'mRNA:exonerate',
+                         'mRNA:predicted'
+                       ],
+          'trackType' => 'CanvasFeatures',
+          'compress' => 0,
+          'category' => 'Transcripts'
+        };
+searching for features of type: CDS:bare_predicted, mRNA:exonerate, mRNA:predicted
+working on track Transcript
+mergedTrackCfg: $VAR1 = {
+          'autocomplete' => 'all',
+          'track' => 'Transcript',
+          'style' => {
+                       'className' => 'feature',
+                       'color' => '#E32A3A'
+                     },
+          'description' => 1,
+          'key' => 'CanvasFeatures - transcripts',
+          'onClick' => '{exampleFeatureClick}',
+          'feature' => [
+                         'mRNA:exonerate'
+                       ],
+          'trackType' => 'JBrowse/View/Track/CanvasFeatures',
+          'compress' => 0,
+          'category' => 'Transcripts',
+          'subfeatures' => bless( do{\(my $o = 1)}, 'JSON::PP::Boolean' )
+        };
+searching for features of type: mRNA:exonerate
+working on track Clones
+mergedTrackCfg: $VAR1 = {
+          'autocomplete' => 'all',
+          'track' => 'Clones',
+          'style' => {
+                       'className' => 'exon'
+                     },
+          'description' => 1,
+          'key' => 'HTMLFeatures - Fingerprinted BACs',
+          'feature' => [
+                         'BAC'
+                       ],
+          'compress' => 0,
+          'category' => 'Miscellaneous'
+        };
+searching for features of type: BAC
+working on track EST
+mergedTrackCfg: $VAR1 = {
+          'feature' => [
+                         'EST_match:est'
+                       ],
+          'autocomplete' => 'all',
+          'track' => 'EST',
+          'style' => {
+                       'className' => 'est'
+                     },
+          'compress' => 0,
+          'category' => 'Miscellaneous',
+          'key' => 'HTMLFeatures - ESTs'
+        };
+searching for features of type: EST_match:est
++ cat docs/tutorial/data_files/volvox_microarray.bw.conf
++ cat docs/tutorial/data_files/volvox_sine.bw.conf
++ cat docs/tutorial/data_files/volvox-sorted.bam.conf
++ cat docs/tutorial/data_files/volvox-sorted.bam.coverage.conf
++ cat docs/tutorial/data_files/volvox-paired.bam.conf
++ cat docs/tutorial/data_files/volvox.vcf.conf
++ cat docs/tutorial/data_files/volvox_fromconfig.conf
++ cat docs/tutorial/data_files/volvox.gff3.conf
++ cat docs/tutorial/data_files/volvox.gtf.conf
++ cat docs/tutorial/data_files/volvox.sort.gff3.gz.conf
++ cat docs/tutorial/data_files/volvox.sort.bed.gz.conf
++ cat docs/tutorial/data_files/bookmarks.conf
++ bin/add-json.pl '{ "dataset_id": "volvox", "include": [ "../../raw/volvox/functions.conf" ] }' sample_data/json/volvox/trackList.json
++ bin/add-json.pl '{ "dataset_id": "volvox", "plugins": [ "NeatHTMLFeatures","NeatCanvasFeatures","HideTrackLabels" ] }' sample_data/json/volvox/trackList.json
++ bin/generate-names.pl --safeMode -v --out sample_data/json/volvox
+VCF file 'sample_data/json/volvox/../../raw/volvox/volvox.filtered.vcf.gz' not found, or not readable.  Skipping.
+VCF file 'sample_data/json/volvox/../../raw/volvox/volvox.test.vcf.gz' not found, or not readable.  Skipping.
+Tracks:
+    DNA
+    ExampleFeatures
+    NameTest
+    snps
+    Motifs
+    malformed_alignments
+    Genes
+    ReadingFrame
+    CDS
+    Transcript
+    Clones
+    EST
+    volvox_bed_tabix
+    fromconfig
+    volvox-sorted-vcf
+    volvox-paired_bam
+    volvox_sine_density
+    volvox_sine_xyplot
+    volvox_vcf_test
+    volvox_gtf
+    volvox-sorted_bam
+    volvox_gff3_tabix
+    volvox_gff3
+    volvox-sorted_bam_coverage
+    volvox_microarray_bw_xyplot
+    volvox_microarray_bw_density
+Sampled input stats:
+                   avg record text bytes 56.9339622641509
+                      name input records 207
+        operation stream estimated count 844
+           record stream estimated count 211
+                     total namerec bytes 12070
+                       total input bytes 12038
+                         operations made 1034
+                       namerecs buffered 212
+        namerecs converted to operations 212
+Removing existing contents of target dir sample_data/json/volvox/names
+Hash store cache size: 2684 buckets
+Using 1 chars for sort log names (16 sort logs)
++ '[' -d sample_data/json/modencode ']'
++ mkdir -p sample_data/raw
++ '[' '!' -e sample_data/raw/volvox ']'
++ ln -s ../../docs/tutorial/data_files sample_data/raw/volvox
++ ln -sf ../../docs/tutorial/conf_files/volvox.json sample_data/raw/
++ touch sample_data/json/volvox/successfully_run
++ rm -rf sample_data/json/yeast/
++ bin/prepare-refseqs.pl --fasta sample_data/raw/yeast_scaffolds/chr1.fa.gz --fasta sample_data/raw/yeast_scaffolds/chr2.fa.gzip --out sample_data/json/yeast/
+그런 파일이나 디렉터리가 없습니다 reading sample_data/raw/yeast_scaffolds/chr1.fa.gz at /usr/local/tomcat8/apache-tomcat-8/webapps/gdkm/JBrowse-1.12.3/bin/../src/perl5/Bio/JBrowse/Cmd/FormatSequences.pm line 247.

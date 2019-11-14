@@ -1,0 +1,5 @@
+node_modules
+bower_components
+test.html
+npm-debug.log
+.tmp

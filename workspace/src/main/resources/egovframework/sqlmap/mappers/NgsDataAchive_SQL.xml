@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NgsDataAchive">
+	
+	<resultMap id="TinyNgsDataAchive" type="ngsDataAchive">
+		<result property="id" column="ACHIVE_ID"/>
+		<result property="registNo" column="REGIST_NO"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="fileType" column="FILE_TYPE"/>
+		<result property="fileSize" column="FILE_SIZE"/>
+		<result property="checksum" column="FILE_CHECKSUM"/>
+		<result property="verifiStatus" column="VERIFI_STATUS"/>
+		<result property="verifiError" column="VERIFI_ERROR"/>
+		<result property="registStatus" column="REGIST_STATUS"/>
+	</resultMap>
+	
+ 	<resultMap id="BasicNgsDataAchive" type="ngsDataAchive">
+		<result property="id" column="ACHIVE_ID"/>
+		<result property="registNo" column="REGIST_NO"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="fileType" column="FILE_TYPE"/>
+		<result property="fileSize" column="FILE_SIZE"/>
+		<result property="checksum" column="FILE_CHECKSUM"/>
+		<result property="verifiStatus" column="VERIFI_STATUS"/>
+		<result property="verifiError" column="VERIFI_ERROR"/>
+		<result property="registStatus" column="REGIST_STATUS"/>
+		
+		<association property="dataRegist" column="{registId=REGIST_ID}" javaType="ngsDataRegist" select="NgsDataRegist.getBasic"/>
+	</resultMap> 
+	
+ 	<resultMap id="NgsDataAchive" type="ngsDataAchive">
+		<result property="id" column="ACHIVE_ID"/>
+		<result property="registNo" column="REGIST_NO"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="fileType" column="FILE_TYPE"/>
+		<result property="fileSize" column="FILE_SIZE"/>
+		<result property="checksum" column="FILE_CHECKSUM"/>
+		<result property="verifiStatus" column="VERIFI_STATUS"/>
+		<result property="verifiError" column="VERIFI_ERROR"/>
+		<result property="registStatus" column="REGIST_STATUS"/>
+		<result property="registDate" column="REGIST_DATE"/>
+		<result property="updateDate" column="UPDATE_DATE"/>
+		
+		<association property="dataRegist" column="{registId=REGIST_ID}" javaType="ngsDataRegist" select="NgsDataRegist.getBasic"/>
+		<association property="registUser" column="{userId=REGIST_USER}" javaType="user" select="User.getBasicUser"/>
+		<association property="updateUser" column="{userId=UPDATE_USER}" javaType="user" select="User.getBasicUser"/>
+	</resultMap>
+	
+	<sql id="selectIdsRelatedFeatures">
+		SELECT DISTINCT(X.ACHIVE_ID)
+		  FROM T_NGS_DATA_FEATURES F, T_ACHIVE_FEATURES_XREF X
+		 WHERE F.FEATURES_ID = X.FEATURES_ID
+		<choose>
+			<when test="@com.insilicogen.gdkm.MybatisHelper@isExactMatch(match)">
+		   AND (UPPER(F.GENE)=UPPER(#{gene}) OR UPPER(F.PRODUCT)=UPPER(#{gene}))
+			</when>
+			<otherwise>
+		   AND (UPPER(F.GENE) LIKE CONCAT('%',UPPER(#{gene}),'%') OR UPPER(F.PRODUCT) LIKE CONCAT('%',UPPER(#{gene}),'%'))
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<sql id="selectSql">
+		SELECT A.ACHIVE_ID,
+		       A.REGIST_ID,
+		       A.REGIST_NO,
+		       A.FILE_NAME,
+		       A.FILE_TYPE,
+		       A.FILE_SIZE,
+		       A.FILE_CHECKSUM,
+		       A.VERIFI_STATUS,
+		       A.VERIFI_ERROR,
+		       A.REGIST_STATUS,
+		       AES_DECRYPT(UNHEX(A.REGIST_USER),'raison') AS REGIST_USER,
+		       A.REGIST_DATE,
+		       AES_DECRYPT(UNHEX(A.UPDATE_USER),'raison') AS UPDATE_USER,
+		       A.UPDATE_DATE
+		  FROM T_NGS_DATA_ACHIVE A 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveId)">
+	       AND A.ACHIVE_ID = #{achiveId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(gene)">
+	       AND A.ACHIVE_ID IN (<include refid="NgsDataAchive.selectIdsRelatedFeatures" />)
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registId)">
+	       AND A.REGIST_ID = #{registId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(fileType)">
+           AND A.FILE_TYPE = #{fileType}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(verifiStatus)">
+	  	   AND A.VERIFI_STATUS = #{verifiStatus}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveStatus)">
+	  	   AND A.REGIST_STATUS = #{achiveStatus}
+			</if>
+			<if test="view == 'integrated'">
+				<choose>
+					<when test="@com.insilicogen.gdkm.MybatisHelper@isRawData(dataType)">
+		   AND (A.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsSql" />) 
+		        OR A.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsOfProcessedSql" />))
+			  		</when>
+			  		<when test="@com.insilicogen.gdkm.MybatisHelper@isProcessedData(dataType)">
+	  	   AND A.REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />)
+					</when>
+			  		<otherwise>
+		   AND (A.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsSql" />) 
+		        OR A.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsOfProcessedSql" />)
+		        OR A.REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />))
+			  		</otherwise>
+			  	</choose>
+			</if>		  	
+			<if test="view != 'integrated'">
+				<choose>
+					<when test="@com.insilicogen.gdkm.MybatisHelper@isRawData(dataType)">
+	  	   AND A.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsSql" />)
+			  		</when>
+			  		<when test="@com.insilicogen.gdkm.MybatisHelper@isProcessedData(dataType)">
+	  	   AND A.REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />)
+					</when>
+					<otherwise>
+	  	   AND (A.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsSql" />) 
+	  	        OR A.REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />)) 
+					</otherwise>
+				</choose>
+			</if>
+		</trim>
+	</sql>
+	
+	<insert id="insert" parameterType="ngsDataAchive">
+		
+		<selectKey resultType="int" keyProperty="id" order="BEFORE">
+		SELECT (CASE 
+			WHEN 0 &lt; #{id} 
+			THEN IFNULL(#{id}, IFNULL(MAX(ACHIVE_ID), 0) + 1)
+			ELSE IFNULL(MAX(ACHIVE_ID), 0) + 1
+			END) AS ID
+		FROM T_NGS_DATA_ACHIVE
+		</selectKey>
+		
+		INSERT INTO T_NGS_DATA_ACHIVE (
+			ACHIVE_ID,
+			REGIST_ID,
+			REGIST_NO,
+			FILE_NAME,
+			FILE_TYPE,
+			FILE_SIZE,
+			FILE_CHECKSUM,
+			VERIFI_STATUS,
+			VERIFI_ERROR,
+			REGIST_STATUS,
+			REGIST_USER,
+			REGIST_DATE,
+			UPDATE_USER,
+			UPDATE_DATE
+		) VALUES (
+			#{id},
+			#{dataRegist.id},
+			(SELECT CONCAT(#{dataRegist.registNo}, '-', LPAD(CAST(CAST(IFNULL(MAX(SUBSTR(SUB.REGIST_NO, -3, 3)), 0) AS UNSIGNED)+1 AS CHAR), 3, '0')) AS registNo
+			  FROM T_NGS_DATA_ACHIVE SUB
+			 WHERE REGIST_ID=#{dataRegist.id}),
+			#{fileName},
+			#{fileType},
+			#{fileSize},
+			#{checksum},
+			#{verifiStatus},
+			#{verifiError},
+			#{registStatus},
+			HEX(AES_ENCRYPT(#{registUser.userId},'raison')),
+			NOW(),
+			HEX(AES_ENCRYPT(#{registUser.userId},'raison')),
+			NOW()
+		)
+	</insert>
+	
+	<update id="update" parameterType="ngsDataAchive">
+		UPDATE T_NGS_DATA_ACHIVE 
+		   SET FILE_NAME       = #{fileName},
+		       FILE_TYPE       = #{fileType},
+		       FILE_SIZE       = #{fileSize},
+		       FILE_CHECKSUM   = #{checksum},
+		       VERIFI_STATUS   = #{verifiStatus},
+		       VERIFI_ERROR    = #{verifiError},
+		       REGIST_STATUS   = #{registStatus},
+		       UPDATE_USER     = HEX(AES_ENCRYPT(#{updateUser.userId},'raison')),
+		       UPDATE_DATE     = NOW()
+		 WHERE ACHIVE_ID       = #{id}
+	</update>
+	
+	<select id="get" resultMap="NgsDataAchive">
+		<include refid="selectSql" />
+	  	 LIMIT 0, 1
+	</select>
+	
+	<select id="getBasic" resultMap="BasicNgsDataAchive">
+		<include refid="selectSql" />
+	  	 LIMIT 0, 1
+	</select>
+	
+	<select id="getTiny" resultMap="TinyNgsDataAchive">
+		<include refid="selectSql" />
+	  	 LIMIT 0, 1
+	</select>
+	
+	<select id="select" resultMap="NgsDataAchive">
+		<include refid="selectSql" />
+		 ORDER BY REGIST_NO DESC
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+	  	 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="selectAchiveNode" resultMap="NgsDataAchiveNode">
+		SELECT A.ACHIVE_ID,
+		       A.REGIST_ID,
+		       A.REGIST_NO,
+		       A.FILE_NAME,
+		       A.FILE_TYPE,
+		       A.FILE_SIZE,
+		       A.FILE_CHECKSUM,
+		       A.VERIFI_STATUS,
+		       A.VERIFI_ERROR,
+		       A.REGIST_STATUS,
+		       AES_DECRYPT(UNHEX(A.REGIST_USER),'raison') AS REGIST_USER,
+		       A.REGIST_DATE,
+		       AES_DECRYPT(UNHEX(A.UPDATE_USER),'raison') AS UPDATE_USER,
+		       A.UPDATE_DATE
+		  FROM T_NGS_DATA_ACHIVE A, T_NGS_DATA_REGIST T
+		 WHERE A.REGIST_ID = T.REGIST_ID
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registId)">
+		   AND T.REGIST_ID = #{registId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(gene)">
+	       AND A.ACHIVE_ID IN (<include refid="NgsDataAchive.selectIdsRelatedFeatures" />)
+		</if>
+		<if test="view == 'integrated'">
+			<choose>
+				<when test="@com.insilicogen.gdkm.MybatisHelper@isRawData(dataType)">
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isEmpty(onlyLinked)">
+		   AND A.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsSql" />)
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(onlyLinked)">
+		   AND A.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsOfProcessedSql" />)
+					</if>
+		  		</when>
+		  		<when test="@com.insilicogen.gdkm.MybatisHelper@isProcessedData(dataType)">
+	  	   AND A.REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />)
+				</when>
+		  		<otherwise>
+		   AND (A.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsSql" />) 
+		     OR A.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsOfProcessedSql" />)
+		     OR A.REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />))
+		  		</otherwise>
+		  	</choose>
+		</if>		  	
+		<if test="view != 'integrated'">
+			<choose>
+				<when test="@com.insilicogen.gdkm.MybatisHelper@isRawData(dataType)">
+	  	   AND A.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsSql" />)
+		  		</when>
+		  		<when test="@com.insilicogen.gdkm.MybatisHelper@isProcessedData(dataType)">
+	  	   AND A.REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />)
+				</when>
+				<otherwise>
+	  	   AND (A.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsSql" />) 
+	  	     OR A.REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />)) 
+				</otherwise>
+			</choose>
+		</if>
+	</select>
+	
+	<resultMap id="NgsDataAchiveNode" type="egovMap">
+		<result property="id" column="ACHIVE_ID"/>
+		<result property="registNo" column="REGIST_NO"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="fileType" column="FILE_TYPE"/>
+		<result property="fileSize" column="FILE_SIZE"/>
+		<result property="checksum" column="FILE_CHECKSUM"/>
+		<result property="verifiStatus" column="VERIFI_STATUS"/>
+		<result property="verifiError" column="VERIFI_ERROR"/>
+		<result property="registStatus" column="REGIST_STATUS"/>
+		<result property="registDate" column="REGIST_DATE"/>
+		<result property="updateDate" column="UPDATE_DATE"/>
+		
+		<association property="dataRegist" column="{registId=REGIST_ID}" javaType="ngsDataRegist" select="NgsDataRegist.getBasic"/>
+		<association property="registUser" column="{userId=REGIST_USER}" javaType="user" select="User.getBasicUser"/>
+		<association property="updateUser" column="{userId=UPDATE_USER}" javaType="user" select="User.getBasicUser"/>
+	</resultMap>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(*) FROM (<include refid="selectSql" />) T
+	</select>
+	
+	<delete id="delete">
+		DELETE FROM T_NGS_DATA_ACHIVE WHERE ACHIVE_ID = #{achiveId}
+	</delete>
+
+</mapper>

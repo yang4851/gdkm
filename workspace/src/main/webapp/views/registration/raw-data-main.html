@@ -1,0 +1,38 @@
+ 
+<div class="container" ng-controller="depositController" ng-init="init('rawdata')">
+	<!-- page-title -->
+	<div class="content_top">
+		<h1 class="title_page">
+			<a href="#" class="active">Raw Data</a>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a href="#!/home">Home</a></li>
+			<li><a href="#!/registration/rawData">Registration</a></li>
+			<li class="active">Raw Data</li>
+		</ol>
+	</div>
+
+	<!-- Tab panel -->
+	<div role="tabpanel">
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs">
+			<li class="active"><a class="pointer" data-target="#tabConSubmission" data-toggle="tab" ng-click="displayChange('raw-data-verify')">File verification</a></li>
+			<li><a class="pointer" data-target="#tabConReview" data-toggle="tab" ng-click="displayChange('raw-data-review')">Submission review</a></li>
+		</ul>
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div class="tab-pane active" id="tabConSubmission" ng-controller="depositListController" ng-init="init('rawdata', 'regist')">
+				<form ng-include="'./views/registration/raw-data-regist.html'"></form>
+			</div>
+			<div class="tab-pane" id="tabConReview" ng-controller="depositListController" ng-init="init('rawdata', 'review')">
+				<form ng-include="'./views/registration/raw-data-review.html'"></form>
+			</div>
+		</div>
+	</div>
+	<!-- /Tab panel -->
+	<div ng-include="'./views/popup/raw-data-create-popup.html'"></div>
+	<div ng-include="'./views/popup/raw-data-detail-popup.html'"></div>
+	<div ng-include="'./views/popup/raw-data-edit-popup.html'"></div>
+	<div ng-include="'./views/popup/taxonomy-search-popup.html'" 
+		ng-controller="taxonomyController as taxon" ng-init="init()"></div>
+</div>

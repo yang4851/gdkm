@@ -1,0 +1,40 @@
+
+<div class="modal fade" id="gbk-sequence-popup" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myModalLabel">Modal title</h5>
+				<button type="button" class="close" ng-click="closePopup()">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="table-word-break">
+					<table class="data_tbl">
+						<caption>Basic information</caption>
+						<colgroup>
+							<col style="width:30%;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>No.</th>
+								<th>{{ detailHeader }}</th>
+							</tr>
+							<tr ng-repeat="featureHeader in featureHeaderList">
+								<td>{{ $index+1 }}</td>
+								<td ng-if="detailHeader=='Locus tag'">{{ featureHeader.locus }}</td>
+								<td ng-if="detailHeader=='Organism'">{{ featureHeader.organism}}</td>
+								<td ng-if="detailHeader=='Strain'">{{ featureHeader.strain }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" ng-click="closePopup()">
+					Close</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,245 @@
+<div class="panel_options">
+   	<button class="btn btn_dark toggle_panels" ng-class="toggle_panels_css()" ng-click="toggleAccordions()"></button>
+</div>
+
+<uib-accordion close-others="false"> 
+
+	<!-- Submitter and sample information --> 
+	<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[0]">
+		<uib-accordion-heading>Submitter and sample information</uib-accordion-heading>
+		<div class="panel-collapse collapse in">
+			<div class="accordion-panel">
+				<table class="data_tbl table-word-break">
+					<colgroup>
+						<col style="width: 15%;">
+						<col style="width: 15%;">
+					</colgroup>
+					<tbody>
+						<tr>
+							<th colspan="2">Annotation data ID</th>
+							<td>{{ model.registNo }}</td>
+						</tr>
+						<tr>
+							<th rowspan="5">Submitter information</th>
+							<th >Submitter</th>
+							<td>{{ model.processedData.submitter }}</td>
+						</tr>
+						<tr>
+							<th>Submitter organization</th>
+							<td>{{ model.processedData.submitOrgan }}</td>
+						</tr>
+						<tr>
+							<th>Project</th>
+							<td>{{ model.processedData.project }}</td>
+						</tr>
+						<tr>
+							<th>Project type</th>
+							<td>{{ model.processedData.projectType }}</td>
+						</tr>
+						<tr>
+							<th>Comment</th>
+							<td>{{ model.processedData.submitComment }}</td>
+						</tr>
+						<tr>
+							<th colspan="2">Registration date</th>
+							<td>{{ model.registDate | date:'yyyy-MM-dd' }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Sequencing and Library information -->
+	<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[1]">
+		<uib-accordion-heading>Sequence and reference  information</uib-accordion-heading>
+		<div class="panel-collapse collapse in">
+			<div class="accordion-panel table-word-break">
+				<table class="data_tbl">
+					<colgroup>
+						<col style="width: 15%;">
+						<col style="width: 15%;">
+					</colgroup>
+					<tbody>
+						<tr>
+							<th rowspan="5">Sequencing</th>
+							<th>Assembly methods</th>
+							<td>{{ model.processedData.assemblyMethod }}</td>
+						</tr>
+						<tr>
+							<th>Assembly level</th>
+							<td>{{ model.processedData.assemblyLevel.name }}</td>
+						</tr>
+						<tr>
+							<th>Genome type</th>
+							<td>{{ model.processedData.genomeType.name }}</td>
+						</tr>
+						<tr>
+							<th>Genome coverage</th>
+							<td>{{ model.processedData.genomeCoverage }}</td>
+						</tr>
+						<tr>
+							<th>Comment</th>
+							<td>{{ model.processedData.seqComment }}</td>
+						</tr>
+						<tr>
+							<th rowspan="3">Reference</th>
+							<th>Reference title</th>
+							<td>{{ model.processedData.refTitle }}</td>
+						</tr>
+						<tr>
+							<th>Publishing status</th>
+							<td>{{ model.processedData.refPubStatus }}</td>
+						</tr>
+						<tr>
+							<th>Comment</th>
+							<td>{{ model.processedData.refComment }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Linked raw data information -->
+	<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[2]">
+		<uib-accordion-heading>Linked Raw data Information</uib-accordion-heading>
+		<div class="panel-collapse collapse in">
+			<div class="accordion-panel table-word-break">
+				<table class="data_tbl">
+					<colgroup>
+						<col style="width: 15%;">
+						<col style="width: 15%;">
+					</colgroup>
+					<tbody>
+						<tr>
+							<th colspan="2">Strain</th>
+							<td>{{ model.strain }}</td>
+						</tr>
+						<tr>
+							<th rowspan="2">NCBI <br/> Taxonomy</th>
+							<th>Species name</th>
+							<td>{{ model.taxonomy.name }}</td>
+						</tr>
+						<tr>
+							<th>Taxonomy ID</th>
+							<td>{{ model.taxonomy.ncbiTaxonId }}</td>
+						</tr>
+					</tbody>
+				</table>
+				<br/>
+				<table class="data_tbl" ng-hide="linkedHandler.size() == 0">
+					<colgroup>
+						<col style="width:30%;">
+					</colgroup>
+					<tbody>
+						<tr>
+							<th rowspan="{{linkedHandler.size() + 1}}">Linked raw data</th>
+							<th>Raw data ID</th>
+							<th>Experiment type</th>
+							<th>Sequencing platform</th>
+						</tr>
+						<tr ng-repeat="item in linkedHandler.getItems()">
+							<td class="text-center">{{ item.registNo }}</td>
+							<td>{{ item.rawData.exprType.name }}</td>
+							<td>{{ item.rawData.platform.name }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Annotation file information -->
+	<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[3]" ng-hide="isHideAchiveList()">
+		<uib-accordion-heading>Annotation file information</uib-accordion-heading>
+	   	<div class="panel-collapse collapse in">
+			<div class="accordion-panel table-word-break">
+				<table class="data_tbl">
+					<colgroup>
+						<col style="width:40%;">
+						<col style="width:40%; text-align: center;">
+						<col style="width:100px; text-align: right;">
+						<col style="width:125px; text-align: center;">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>Annotation data file name</th>
+							<th>MD5 checksum</th>
+							<th>File size</th>
+							<th>Download</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in achiveHandler.getItems()">
+							<td>
+								<i class="fa fa-exclamation-triangle" title="{{ item.verifiError }}" 
+									data-toggle="tooltip"
+									ng-hide="item.verifiStatus != 'failed'" >
+									{{ item.fileName }}
+								</i>
+								<span ng-hide="item.verifiStatus == 'failed'">{{ item.fileName }}</span>
+							</td>
+							<td>{{ item.checksum }}</td>
+							<td>{{ item.fileSize | bytes }}</td>
+							<td>
+								<button class="btn btn_secondary" ng-click="downloadAchiveFile(item)">
+									<i class="fa fa-download"></i> Download
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="panel-body table-word-break">
+				<table class="data_tbl" ng-show="isReviewSection()">
+					<colgroup>
+						<col style="width: 15%;">
+						<col style="width: 15%;">
+					</colgroup>
+					<tbody>
+						<tr>
+							<th rowspan="10"> [  All  ] Sequence information</th>
+						</tr>
+						<tr>
+							<td>Sequence read count</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Sequence total size (bp)</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Sequence average length (bp)</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>GC contents (%)</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>'A' sequence count</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>'T' sequence count</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>'G' sequence count</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>'C' sequence count</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>'N' sequence count</td>
+							<td></td>
+						</tr>
+			   		</tbody>
+			   </table>
+		   </div>
+	  	</div>
+	</div>
+</uib-accordion>

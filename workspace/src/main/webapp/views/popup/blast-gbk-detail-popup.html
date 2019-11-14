@@ -1,0 +1,222 @@
+
+<div class="modal fade overflow-y" id="blast-gbk-detail-popup"
+	tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<!-- modal-header -->
+			<div class="modal-header">
+				<h3 class="modal-title">{{modal.subjectId}}</h3>
+				<button type="button" class="close" data-dismiss="modal">
+					<span>&times;</span>
+				</button>
+			</div>
+			<!-- /modal-header -->
+
+			<!-- modal-body -->
+			<div class="modal-body">
+				<h2 class="title_con">Gene location and features</h2>
+				<div class="row toolbar" style="padding-bottom: 10px;">
+					<div class="col-xs-3">
+						<p class="form-control-static">
+							All <strong class="num">{{ pageHandler.getTotal() |	number }}</strong>
+						</p>
+					</div>
+					<div class="col-xs-9 form-inline text-right">
+<!-- 						<button type="submit" class="btn btn-default" -->
+<!-- 							ng-click="downloadFile('fasta')">Download as fasta</button> -->
+						<button type="submit" class="btn btn-default" ng-disabled="features.length==0"
+							ng-click="downloadFile('gbk')">Download as gbk format</button>
+						<div class="form-group">
+							<select class="form-control picker"
+								ng-options="code.id as code.name for code in rowSizeCodeList"
+								ng-model="pageHandler.numberOfRows" ng-change="reload()"></select>
+						</div>
+					</div>
+				</div>
+
+				<div class="table-responsive">
+					<table class="list_tbl panel_g">
+						<thead class="thead-light text-center">
+							<tr>
+								<th class="th_check sorting_disabled" style="width: 39.5px;">
+									<input class="form-check-input" type="checkbox"
+									ng-model="modal.checkAll" ng-click="handleAutoSelectClick()">
+								</th>
+								<th>Features</th>
+								<th>Start</th>
+								<th>End</th>
+								<th>Length</th>
+								<th>Strand</th>
+								<th>Gene name</th>
+								<th style="width: 30px">
+									<button type="button" class="btn toggle_panel position-initial"
+										ng-class="toggle_panel_css()"
+										ng-click="toggleActiveFeaturesRows(features)" />
+								</th>
+							</tr>
+						</thead>
+						<tbody class="text-center" ng-show="features.length!=0" ng-repeat="feature in features">
+							<tr class="panel_h" ng-class="panel_h_css_features(feature.featuresId)">
+								<td class="text-center">
+								<input class="form-check-input"	type="checkbox" ng-model="feature._checked" ng-change="changeCheckBox()"></td>
+								<td>{{feature.type}}</td>
+								<td>{{feature.start}}</td>
+								<td>{{feature.end}}</td>
+								<td>{{feature.length}}</td>
+								<td>{{feature.strand=='POSITIVE'?'+':'-'}}</td>
+								<td>{{feature.gene!=null?feature.gene:(feature.locusTag!=null?feature.locusTag:feature.proteinId)}}</td>
+								<td class="text-center">
+									<button type="button" class="btn toggle_panel position-initial"
+										ng-class="panel_h_css_features(feature.featuresId)"
+										ng-click="activeFeaturesRows(feature.featuresId)"></button>
+								</td>
+							</tr>
+							<tr class="panel-collapse"
+								ng-class="panel_collapse_css_features(feature.featuresId)">
+								<td colspan="8">
+									<table class="table">
+										<tr>
+											<th>Gene</th>
+											<td>{{feature.gene==null?'-':feature.gene}}</td>
+										</tr>
+										<tr>
+											<th>Locus_tag</th>
+											<td>{{feature.locusTag}}</td>
+										</tr>
+										<tr>
+										<tr>
+											<th>Product</th>
+											<td>{{feature.product}}</td>
+										</tr>
+										<tr>
+											<th>Protein_id</th>
+											<td>{{feature.proteinId}}</td>
+										</tr>
+										<tr>
+											<th>Translation</th>
+											<td class="w-br">{{feature.sequence}}</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+						<tbody ng-show="features.length==0">
+							<tr class="panel_h">
+								<td colspan="8" class="text-center"><i>No data</i></td>
+							</tr>
+						</tbody>
+					</table>
+
+					<!-- pagination -->
+					<nav class="text-center">
+						<ul class="pagination">
+							<li ng-hide="pageHandler.isPrevDisabled()"><a
+								aria-label="Previous" ng-click="pageHandler.prev()"> <i
+									class="fa fa-chevron-left" aria-hidden="true"></i>
+							</a></li>
+							<li ng-repeat="page in pageHandler.getPages()"
+								ng-class="(pageHandler.getCurrentPage() == page) ? 'active' : 'pointer'">
+								<a ng-click="pageHandler.setCurrentPage(page, true)">{{ page }}</a>
+							</li>
+
+							<li ng-hide="pageHandler.isNextDisabled()"><a
+								aria-label="Next" ng-click="pageHandler.next()"> <i
+									class="fa fa-chevron-right" aria-hidden="true"></i>
+							</a></li>
+						</ul>
+					</nav>
+				</div>
+
+				<h2 class="title_con">Sequence information</h2>
+				<div class="table-responsive">
+					<table class="panel_g table-word-break b-t-n ">
+						<colgroup>
+							<col style="width: 100px">
+							<col>
+							<col style="width: 100px">
+						</colgroup>
+						<tbody>
+							<tr>
+								<td class="align-top text-left">{{modal.subjectStart}}</td>
+								<td class="td-data">
+									<div class="progress-wrap p-t-5">
+										<div class="progress m-b-10">        
+											<div class="progress-bar bg-light" role="progressbar"
+												style="width: 100%" aria-valuenow="100" aria-valuemin="0"
+												aria-valuemax="100"></div>
+										</div>
+										<div ng-if="features.length != 0" class="progress m-b-15">
+											<div ng-if="modal.geneStartPercent != 0" aria-valuemax="100" aria-valuemin="0"
+												aria-valuenow="15" class="progress-bar" role="progressbar" ng-style="{ width: modal.geneStartPercent + '%' }"
+												></div>
+											<div ng-if="modal.geneStartPercent == 0"aria-valuemax="100" aria-valuemin="0"
+												aria-valuenow="30" class="progress-bar" ng-style="{ width: modal.geneEndPercent + '%' }"
+												role="progressbar"></div>
+<!-- 											<div _ngcontent-c8="" aria-valuemax="100" aria-valuemin="0" -->
+<!-- 												aria-valuenow="20" class="progress-bar bg-info" -->
+<!-- 												role="progressbar" style="width: 20%"></div> -->
+										</div>
+										<div ng-if="features.length == 0" class="progress m-b-15">
+											<div class="progress-bar bg-light" role="progressbar"
+												style="width: 100%" aria-valuenow="100" aria-valuemin="0"
+												aria-valuemax="100"></div>
+										</div>
+										<p _ngcontent-c8="" class="graph-index m-b-15 text-right ng-star-inserted" style="">
+											<span _ngcontent-c8="" class="index bg-primary m-r-5"></span>
+											<span _ngcontent-c8="">Gene</span>
+											<span _ngcontent-c8="" class="index bg-secondaryLight m-l-10 m-r-5"></span>
+											<span _ngcontent-c8="">Exon</span>
+											<span _ngcontent-c8="" class="index bg-danger m-l-10 m-r-5"></span>
+											<span _ngcontent-c8="">CDS</span>
+											<span _ngcontent-c8="" class="index bg-secondary m-l-10 m-r-5"></span>
+											<span _ngcontent-c8="">5' UTR</span>
+											<span _ngcontent-c8="" class="index bg-primaryDarker m-l-10 m-r-5"></span>
+											<span _ngcontent-c8="">3' UTR</span></p>
+									</div>
+									
+									<div class="data-wrap">
+										<table class="table-reset table-layout table-sequence">
+											<colgroup>
+												<col style="width: 66px">
+												<col>
+											</colgroup>
+											<tbody>
+												<!-- 행번호 있는 바디 -->
+												<tr ng-repeat="body in modal.sequenceGroup">
+													<th>{{ modal.subjectStart + ($index*50) }}</th>
+													<td class="character-justify wt-650">
+														{{ body }}
+													</td>
+												</tr>
+												<!-- 다운로드 -->
+												<tr>
+													<td colspan="2" class="text-right">
+														<a class="btn btn_brand" ng-click="downloadSequence()">
+															<i class="fa fa-download" aria-hidden="true"></i>Fasta
+														</a>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</td>
+								<td class="align-top text-right">{{modal.subjectEnd}}</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+			<!-- /modal-body -->
+
+			<!-- modal-footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+			<!-- /modal-footer -->
+
+		</div>
+	</div>
+
+</div>

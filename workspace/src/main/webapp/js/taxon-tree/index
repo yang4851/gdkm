@@ -1,0 +1,9 @@
+ivh 사용정보
+
+20180607
+트리노드의 체크박스 필요성이 없으므로 라이브러리 주석처리
+ivh-treeview.js (1428번째줄)
+'<span class="ivh-treeview-checkbox-wrapper" ng-if="trvw.useCheckboxes()"',
+    'ivh-treeview-checkbox>',
+'</span>',
+ 

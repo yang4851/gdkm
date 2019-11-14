@@ -1,0 +1,78 @@
+<div class="modal fade overflow-y" id="research-attachment-popup" data-backdrop="static" 
+	ng-controller="ResearchAttachmentController" ng-init="init()">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+		
+			<!-- modal-header -->
+			<div class="modal-header">
+				<h3 class="modal-title">Attachment of research</h3>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+			</div>
+			<!-- /modal-header -->
+			
+			<!-- modal-body -->
+			<div class="modal-body">
+				
+				<div class="form-horizontal" style="padding: 10px;">
+					<div class="form-group">
+						<label class="col-xs-4 control-label required">Research</label>
+						<div class="col-xs-8 control-label abbreviate" title="{{ research.title }}">{{ research.registNo }}</div>
+					</div>
+					<div class="form-group" ng-hide="!isRegistered()">
+						<label class="col-xs-4 control-label required">Attachment ID</label>
+						<label class="col-xs-8 control-label">{{ model.registNo }}</label>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 control-label required">File</label>
+						<div class="col-xs-8 control-label" style="word-break:break-all;" ng-hide="!isRegistered()">
+							<a role="button" ng-click="download(model)">{{ model.name }}</a>
+							<span>({{ model.size | bytes }})</span>
+						</div>
+						<div class="col-xs-8" ng-hide="isRegistered()">
+							<label class="btn btn_secondary" ng-hide="!isUploadable()">
+								<i class="fa fa-upload"></i> Upload
+								<input type="file" ng-model="uploadHandler.files"
+									ng-change="uploadHandler.upload()" ngf-multiple="false"
+									ng-hide="true" ngf-select />
+							</label>
+							<div class="col-xs-12 control-label" style="word-break:break-all;" ng-hide="!isUploaded()">
+								<a role="button" ng-click="download(model)">{{ model.name }}</a> ({{ model.size | bytes }})
+								<a role="button" ng-click="removeFile(model)"><i class="fa fa-trash" title="Delete"></i></a>
+							</div>
+							<uib-progressbar class="progress-striped active" value="uploadFile.file.progress" ng-hide="!isUploading()">
+								{{ uploadFile.file.progress }} %
+							</uib-progressbar>
+							
+						</div>
+					</div>
+					<div class="form-group" ng-hide="!isUploaded()">
+						<label class="col-xs-4 control-label required">Type</label>
+						<label class="col-xs-8 control-label">{{ model.type }}</label>
+					</div>
+					<div class="form-group" ng-hide="!model.description">
+						<label class="col-xs-4 control-label">Caption</label>
+						<div class="col-xs-8" ng-hide="!isEditable()">
+							<input type="text" class="form-control" ng-disabled="isUploading()" ng-model="model.description" />
+						</div>
+						<div class="col-xs-8" style="white-space: pre-wrap;" ng-hide="isEditable()">{{ model.description }}</div>
+					</div>					
+				</div>
+			</div>
+			<!-- /modal-body -->
+			
+			<!-- modal-footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" 
+					ng-hide="isEditable()">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal"
+					ng-hide="!isEditable()">Cancel</button>
+				<button type="button" class="btn btn-default" ng-click="reset()" 
+					ng-hide="!isEditable()" ng-disabled="isSubmitDisabled()">Initialization</button>
+				<button type="button" class="btn btn_brand" ng-click="submit()" 
+					ng-hide="!isEditable()" ng-disabled="isSubmitDisabled()">Submit</button>
+			</div>
+			<!-- /modal-footer -->
+			
+		</div>
+	</div>
+</div>

@@ -1,0 +1,220 @@
+<div class="modal fade overflow-y" id="research-detail-popup" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+		
+			<!-- modal-header -->
+			<div class="modal-header">
+				<h3 class="modal-title">Details of research</h3>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+			</div>
+			<!-- /modal-header -->
+			
+			<!-- modal-body -->
+			<div class="modal-body">
+				
+				<div class="panel_options">
+				   	<button class="btn btn_dark toggle_panels" ng-class="toggle_panels_css()" ng-click="toggleAccordions()"></button>
+				</div>
+				
+				<uib-accordion close-others="false"> 
+				
+					<!-- Submitter and sample information --> 
+					<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[0]">
+						<uib-accordion-heading>Submitter and research information</uib-accordion-heading>
+						<div class="panel-collapse collapse in">
+							<div class="accordion-panel">
+								<table class="data_tbl table-word-break">
+									<colgroup>
+										<col style="width: 30%;">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th>Research ID</th>
+											<td>{{ model.registNo }}</td>
+										</tr>
+										<tr>
+											<th>Title</th>
+											<td>{{ model.title }}</td>
+										</tr>
+										<tr>
+											<th>Journal</th>
+											<td>{{ model.journal }}</td>
+										</tr>
+										<tr>
+											<th>Volume, Issue, Pages</th>
+											<td>
+												<span ng-hide="!model.volume">Vol. {{ model.volume }}</span>
+												<span ng-hide="!model.issue">, Issue. {{ model.issue }}</span>
+												<span ng-hide="!model.pages">, Pages. {{ model.pages }}</span>
+											</td>
+										</tr>
+										<tr ng-hide="!model.published">
+											<th>Published</th>
+											<td>{{ model.published }}</td>
+										</tr>
+										<tr>
+											<th>Submitter</th>
+											<td>{{ model.submitter }}</td>
+										</tr>
+										<tr>
+											<th>Submit organization</th>
+											<td>{{ model.submitOrgan }}</td>
+										</tr>
+										<tr ng-hide="!model.fullTextLink">
+											<th>Full text link</th>
+											<td><a href="{{ model.fulTextLink }}" target="_blank">{{ model.fullTextLink }}</a></td>
+										</tr>
+										<tr>
+											<td colspan="2" style="white-space: pre-wrap;">{{ model.content }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+										
+					<!-- Attachment file information -->
+					<div ng-controller="ResearchAttachmentListController" ng-hide="pageHandler.getTotal() == 0">
+					<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[1]">
+						<uib-accordion-heading>Attachment information</uib-accordion-heading>
+					   	<div class="panel-collapse collapse in">
+							<div class="accordion-panel table-word-break" ng-init="init()">
+								
+								<div class="row toolbar" style="padding-bottom: 5px;">
+									<div class="col-xs-3">
+										<p class="form-control-static">
+											All <strong class="num">{{ pageHandler.getTotal() | number }}</strong>
+										</p>
+									</div>
+								</div>
+								
+								<table class="data_tbl">
+									<thead>
+										<tr>
+											<th style="width: 45px">No</th>
+											<th style="width: 155px;">Attachment ID</th>
+											<th style="width: 110px;">Type</th>
+											<th>Name</th>
+											<th style="width: 110px;">Size</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="item in modelHandler.getItems()">
+											<td class="text-center">{{ $index+1 }}</td>
+											<td class="text-center"><a role="button" ng-click="openAttachmentPopup(item)">{{ item.registNo }}</a></td>
+											<td class="text-center">{{ item.type }}</td>
+											<td class="cell-ellipse" data-toggle="tooltip" data-placement="bottom" title="{{ tooltip(item.name, 30) }}">
+												<a role="button" ng-click="download(item)">{{ item.name }}</a>
+											</td>
+											<td class="text-center">{{ item.size | bytes }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+					  	</div>
+					</div>
+					</div>
+					
+					<!-- Omics file information -->
+					<div ng-controller="ResearchOmicsListController" ng-hide="pageHandler.getTotal() == 0">
+					<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[2]">
+						<uib-accordion-heading>Omics information</uib-accordion-heading>
+					   	<div class="panel-collapse collapse in">
+							<div class="accordion-panel table-word-break" ng-init="init()">
+								
+								<div class="row toolbar" style="padding-bottom: 5px;">
+									<div class="col-xs-3">
+										<p class="form-control-static">
+											All <strong class="num">{{ pageHandler.getTotal() | number }}</strong>
+										</p>
+									</div>
+								</div>
+								
+								<table class="data_tbl">
+									<thead>
+										<tr>
+											<th style="width: 45px">No</th>
+											<th style="width: 155px;">Omics ID</th>
+											<th style="width: 120px;">Category</th>
+											<th>Name</th>
+											<th style="width: 110px;">Size</th>
+											<th>Description</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="item in modelHandler.getItems()">
+											<td class="text-center">{{ $index+1 }}</td>
+											<td class="text-center"><a role="button" ng-click="openOmicsPopup(item)">{{ item.registNo }}</a></td>
+											<td class="text-center">{{ item.category.name }}</td>
+											<td class="cell-ellipse" data-toggle="tooltip" data-placement="bottom" title="{{ tooltip(item.name, 35) }}">
+												<a role="button" ng-click="download(item)">{{ item.name }}</a>
+											</td>
+											<td class="text-center">{{ item.size | bytes }}</td>
+											<td class="cell-ellipse" data-toggle="tooltip" data-placement="bottom" title="{{ tooltip(item.description, 35) }}">{{ item.description }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+					  	</div>
+					</div>
+					</div>
+					
+					<!-- Annotation data information -->
+					<div ng-controller="ResearchNgsListController" ng-hide="pageHandler.getTotal() == 0">
+					<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[3]">
+						<uib-accordion-heading>Annotation data information</uib-accordion-heading>
+					   	<div class="panel-collapse collapse in">
+							<div class="accordion-panel table-word-break" ng-init="init()">
+								
+								<div class="row toolbar" style="padding-bottom: 5px;">
+									<div class="col-xs-3">
+										<p class="form-control-static">
+											All <strong class="num">{{ pageHandler.getTotal() | number }}</strong>
+										</p>
+									</div>
+								</div>
+								
+								<table class="data_tbl">
+									<thead>
+										<tr>
+											<th style="width: 45px">No</th>
+											<th style="width: 150px;">Annotation data ID</th>
+											<th>NCBI Taxonomy</th>
+											<th style="width: 150px;">Strain</th>
+											<th>Project</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="item in modelHandler.getItems()">
+											<td class="text-center">{{ $index+1 }}</td>
+											<td class="text-center">
+												<a role="button" ng-click="openNgsDataDetailPopup(item)">{{ item.registNo }}</a>
+											</td>
+											<td class="cell-ellipse" data-toggle="tooltip" data-placement="bottom" 
+												title="{{ tooltip(item.taxonomy.name, 25) }}">{{ item.taxonomy.name }}</td>
+											<td class="text-center cell-ellipse" data-toggle="tooltip" data-placement="bottom" 
+												title="{{ tooltip(item.strain, 20) }}">{{ item.strain }}</td>
+											<td class="cell-ellipse" data-toggle="tooltip" data-placement="bottom" 
+												title="{{ tooltip(item.processedData.project, 25) }}">{{ item.processedData.project }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+					  	</div>
+					</div>
+					</div>
+					
+				</uib-accordion>
+				
+			</div>
+			<!-- /modal-body -->
+			
+			<!-- modal-footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+			<!-- /modal-footer -->
+			
+		</div>
+	</div>
+</div>

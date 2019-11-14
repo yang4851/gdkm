@@ -1,0 +1,31 @@
+{
+   "names" : {
+      "type" : "Hash",
+      "url" : "names/"
+   },
+   "formatVersion" : 1,
+   "tracks" : [
+      {
+         "seqType" : "dna",
+         "storeClass" : "JBrowse/Store/Sequence/StaticChunked",
+         "type" : "SequenceTrack",
+         "category" : "Reference sequence",
+         "chunkSize" : 20000,
+         "urlTemplate" : "seq/{refseq_dirpath}/{refseq}-",
+         "label" : "DNA",
+         "key" : "Reference sequence"
+      },
+      {
+         "label" : "GDKM-BA-A-0001-001",
+         "key" : "GDKM-BA-A-0001-001",
+         "compress" : 0,
+         "style" : {
+            "className" : "feature"
+         },
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "type" : "FeatureTrack",
+         "trackType" : null,
+         "urlTemplate" : "tracks/GDKM-BA-A-0001-001/{refseq}/trackData.json"
+      }
+   ]
+}

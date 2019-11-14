@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd" >
+	
+	<!-- 
+	Exception 후처리(Exception Handling을 위한 AOP설정)
+	(참고 : https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:exception_handling)
+	Exception 발생시 AOP pointcut “After-throwing” 걸려 ExceptionTransfer 클래스의 transfer 가 실행된다.
+	 -->
+	<aop:config>
+		<aop:pointcut id="serviceMethod" expression="execution(* com.insilicogen..impl.*Impl.*(..))" />
+		<aop:aspect ref="exceptionTransfer">
+			<aop:after-throwing throwing="exception" pointcut-ref="serviceMethod" method="transfer" />
+		</aop:aspect>
+	</aop:config>
+	
+	<!-- 
+	ExceptionTransfer의  property로 존재하는 exceptionHandlerService는 다수의 HandlerManager를 등록 가능하도록 되어있다.
+	-->
+	<bean id="exceptionTransfer" class="egovframework.rte.fdl.cmmn.aspect.ExceptionTransfer">
+		<property name="exceptionHandlerService">
+			<list>
+				<ref bean="defaultExceptionHandleManager" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 
+	defaultExceptionHandleManager에 등록된 pattern정보를 이용해
+	Exception발생 클래스와의 비교로 true인 경우 handlers에 등록된 handler를 실행한다.
+	패턴 검사시 사용되는 pathMatcher는 AntPathMatcher를 이용하고 있다.
+	특정 pattern 그룹군을 만든후 patterns 에 등록하고 그에 해당하는 후처리 로직을 정의하여 등록할 수 있는 구조이다. 
+	
+	ExceptionHandleManager 에서는 occur 메소드를 실행한다. 
+	Handler 구현체는 반드시 (필수사항) ExceptionHandler Interface를 갖는다.
+	 -->
+	<bean id="defaultExceptionHandleManager"
+		class="egovframework.rte.fdl.cmmn.exception.manager.DefaultExceptionHandleManager">
+		<property name="reqExpMatcher">
+			<ref bean="antPathMater"/>
+		</property>
+		<property name="patterns">
+			<list>
+				<value>**service.impl.*</value>
+			</list>
+		</property>
+	</bean>
+	
+</beans>

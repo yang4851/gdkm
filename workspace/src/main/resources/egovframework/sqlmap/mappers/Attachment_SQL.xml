@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Attachment">
+
+	<insert id="insert" parameterType="attachment">
+		INSERT INTO T_COM_ATTACHMENT VALUES
+		(
+			#{id}
+			,#{name}
+			,#{type}
+			,#{size}
+			,HEX(AES_ENCRYPT(#{registUser.userId},'raison'))
+			,NOW()
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="string">
+		DELETE FROM T_COM_ATTACHMENT
+		WHERE ATTACHMENT_ID IN
+		<foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+</mapper>

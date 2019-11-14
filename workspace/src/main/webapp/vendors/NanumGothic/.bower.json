@@ -1,0 +1,34 @@
+{
+  "name": "NanumGothic",
+  "homepage": "https://github.com/demun/NanumGothic",
+  "authors": [
+    "demun <hjm01@naver.com>"
+  ],
+  "description": "나눔고딕 웹폰트, sass less 추가",
+  "main": "NanumGothic.css",
+  "keywords": [
+    "NanumGothic",
+    "nanumgothic",
+    "nanumgothicwebfont",
+    "나눔고딕웹폰트",
+    "나눔고딕"
+  ],
+  "license": "SIL OPEN FONT LICENSE",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "dce7dfebb1",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "dce7dfebb1bd3020be65b169db27188dea26d1f3"
+  },
+  "_source": "https://github.com/demun/NanumGothic.git",
+  "_target": "*",
+  "_originalSource": "NanumGothic",
+  "_direct": true
+}

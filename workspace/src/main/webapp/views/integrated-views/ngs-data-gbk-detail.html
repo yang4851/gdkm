@@ -1,0 +1,132 @@
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+	<li class="active"><a class="pointer" data-target="#tabGbkData" data-toggle="tab">Annotation information</a></li>
+	<li><a class="pointer" data-target="#tabGbkText" data-toggle="tab">Genbank(gbk) information</a></li>
+</ul>
+<!-- Tab panes -->
+<div class="tab-content">
+	<!-- Tab 1 - Annotation information -->
+	<div class="tab-pane active table-word-break" id="tabGbkData">
+		<div class="title_box">
+			<h2 class="title_con">Basic information</h2>
+		</div>
+		<div class="table-word-break">
+			<table class="data_tbl">
+				<caption>Basic information</caption>
+				<colgroup>
+					<col style="width:30%;">
+				</colgroup>
+				<tbody>
+					<tr>
+						<th>Annotation ID</th>
+						<td><b>{{ model.registNo }}</b></td>
+					</tr>
+					<tr>
+						<th>Annotation file ID</th>
+						<td>{{ model.dataRegist.registNo }}</td>
+					</tr>
+					<tr>
+						<th>Annotation file name</th>
+						<td>{{ model.fileName }}</td>
+					</tr>
+					<tr>
+						<th>Locus tag</th>
+						<td ng-if="featureHeaderList.length == 1">{{ featureHeaderList[0].locus }}</td>
+						<td ng-if="featureHeaderList.length > 1"><a class="pointer" ng-click="popupOpen('Locus tag')">Detail view about Locus tag</a></td>
+					</tr>
+					<tr>
+						<th>Organism</th>
+						<td ng-if="featureHeaderList.length == 1">{{ featureHeaderList[0].organism}}</td>
+						<td ng-if="featureHeaderList.length > 1"><a class="pointer" ng-click="popupOpen('Organism')">Detail view about Organism</a></td>
+					</tr>
+					<tr>
+						<th>Strain</th>
+						<td>{{ featureHeaderList[0].strain }}</td>
+					</tr>
+					<tr>
+						<th>Registration Date</th>
+						<td>{{ model.registDate | date:'yyyy-MM-dd' }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="table-word-break">
+	   	 	<div class="title_box" style="padding-top: 20px; padding-bottom: 10px;">
+			   <h2 class="title_con">Gene location and features</h2>
+			</div>
+			<div class="row toolbar" style="padding-bottom: 10px;">
+				<div class="col-xs-3">
+					<p class="form-control-static">
+						All <strong class="num">{{ pageHandler.getTotal() | number }}</strong>
+					</p>
+				</div>
+				<div class="col-xs-9 form-inline text-right">
+					<div class="form-group">
+						<select class="form-control picker"
+							ng-options="code.id as code.name for code in rowSizeCodeList"
+							ng-model="pageHandler.numberOfRows" ng-change="reloadFeatureTable()"></select>
+					</div>
+					<button type="button" class="btn btn-default" ng-click="reloadFeatureTable()">
+						<i class="fa fa-undo"></i><span class="sr-only">Refresh</span>
+					</button>
+				</div>
+			</div>
+			
+			<table class="data_tbl">
+				<caption>Gene location and features</caption>
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>Features</th>
+						<th>Start</th>
+						<th>End</th>
+						<th>Strand</th>
+						<th>Gene name</th>
+						<th>Product</th>
+						<th>Sequence</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="feature in featureList" >
+						<td align="center">{{ $index + 1 + (pageHandler.getCurrentPage()>1?pageHandler.getCurrentPage()*10 : 0) }}</td>
+						<td class="cell-ellipse" align="center" data-toggle="tooltip" data-placement="bottom" title="{{ feature.type }}">{{ feature.type }}</td>
+						<td class="cell-ellipse" align="center" data-toggle="tooltip" data-placement="bottom" title="{{ feature.start }}">{{ feature.start }}</td>
+						<td class="cell-ellipse" align="center" data-toggle="tooltip" data-placement="bottom" title="{{ feature.end }}">{{ feature.end }}</td>
+						<td class="cell-ellipse" align="center" data-toggle="tooltip" data-placement="bottom" title="{{ feature.strand }}">{{ feature.strand=='NEGATIVE'? '-':'+' }}</td>
+						<td class="cell-ellipse" align="center" data-toggle="tooltip" data-placement="bottom" title="{{ feature.gene }}">{{ feature.gene }}</td>
+						<td class="cell-ellipse" data-toggle="tooltip" data-placement="bottom" title="{{ feature.product }}">{{ feature.product}}</td>
+						<td class="cell-ellipse" data-toggle="tooltip" data-placement="bottom" title="{{ feature.sequence }}">{{ feature.sequence }}</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<!-- pagination -->
+			<nav class="text-center">
+				<ul class="pagination">
+					<li ng-hide="pageHandler.isPrevDisabled()">
+						<a aria-label="Previous" ng-click="pageHandler.prev()">
+							<i class="fa fa-chevron-left" aria-hidden="true"></i>
+						</a>
+					</li>
+					<li ng-repeat="page in pageHandler.getPages()"
+						ng-class="(pageHandler.getCurrentPage() == page) ? 'active' : 'pointer'">
+						<a ng-click="pageHandler.setCurrentPage(page, true)">{{ page }}</a>
+					</li>
+					
+					<li ng-hide="pageHandler.isNextDisabled()">
+						<a aria-label="Next" ng-click="pageHandler.next()">
+							<i class="fa fa-chevron-right" aria-hidden="true"></i>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+
+	<!-- Tab 2 - Genbank(GBK) information -->
+	<div class="tab-pane" id="tabGbkText">
+		<pre>{{ featureText }}</pre>
+	</div>
+</div>
+<div ng-include="'./views/popup/gbk-sequence-popup.html'"></div>

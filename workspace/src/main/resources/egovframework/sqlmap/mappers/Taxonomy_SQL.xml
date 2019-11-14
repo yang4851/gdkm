@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Taxonomy">
+
+	<resultMap id="Taxonomy" type="taxonomy">
+		<result property="taxonId" column="TAXON_ID" />
+		<result property="ncbiTaxonId" column="NCBI_TAXON_ID" />
+		<result property="parentId" column="PARENT_TAXON_ID" />
+		<result property="rank" column="NODE_RANK" />
+		
+		<association property="name" column="{taxonId=TAXON_ID}" javaType="string" select="Taxonomy.name" />
+		<association property="numberOfChild" column="{parentId=TAXON_ID}" javaType="int" select="Taxonomy.count" />
+	</resultMap>
+	
+	<sql id="condition">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(taxonId)">
+	  	   AND TAXON_ID = #{taxonId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(parentId)">
+	  	   AND PARENT_TAXON_ID = #{parentId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(ncbiTaxonId)">
+	  	   AND NCBI_TAXON_ID = #{taxonId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(rank)">
+	  	   AND NODE_RANK = #{rank}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(name)">
+	  	   AND TAXON_ID IN (SELECT DISTINCT(TAXON_ID) FROM T_TAXON_NAME WHERE UPPER(NAME) LIKE CONCAT('%',UPPER(#{name}),'%'))
+			</if>
+			
+			<!-- LIKE 검색용  -->
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(keyword)">
+				<choose>
+					<when test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(field, 'ncbiTaxonId')">
+	  	   AND NCBI_TAXON_ID LIKE CONCAT('%',#{keyword},'%')
+					</when>
+					<when test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(field, 'name')">
+	  	   AND TAXON_ID IN (SELECT DISTINCT(TAXON_ID) FROM T_TAXON_NAME WHERE UPPER(NAME) LIKE CONCAT('%',UPPER(#{keyword}),'%'))	
+					</when>
+					<otherwise>
+	  	   AND (
+	  	       TAXON_ID IN (SELECT DISTINCT(TAXON_ID) FROM T_TAXON_NAME WHERE UPPER(NAME) LIKE CONCAT('%',UPPER(#{keyword}),'%'))
+	  	       OR 
+	  	       NCBI_TAXON_ID LIKE CONCAT('%',#{keyword},'%')
+	  	   )
+					</otherwise>
+				</choose>
+			</if>
+		
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registered, dataType)">
+		   AND TAXON_ID IN (
+		       SELECT DISTINCT(TAXON_ID) 
+		         FROM T_NGS_DATA_REGIST
+				<trim prefix="WHERE" prefixOverrides="AND|OR">
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(dataType)">
+		          AND DATA_TYPE = #{dataType} 
+					</if>
+				</trim>
+		   )
+			</if>
+    	</trim>
+	</sql>
+	
+	<select id="get" resultMap="Taxonomy">
+		SELECT TAXON_ID, 
+		       NCBI_TAXON_ID,
+		       PARENT_TAXON_ID,
+		       NODE_RANK
+		  FROM T_TAXON
+		<include refid="condition" />
+	  	 LIMIT 0, 1
+	</select>
+
+	<select id="select" resultMap="Taxonomy">
+		SELECT TAXON_ID, 
+		       NCBI_TAXON_ID,
+		       PARENT_TAXON_ID,
+		       NODE_RANK
+		  FROM T_TAXON
+		<include refid="condition" />
+		 ORDER BY NCBI_TAXON_ID		 
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+	  	 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+
+	<select id="name" resultType="string">
+		SELECT NAME 
+		  FROM T_TAXON_NAME
+		 WHERE TAXON_ID=#{taxonId}
+		   AND NAME_CLASS='scientific name'
+	</select>
+
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(*)
+		  FROM T_TAXON
+		<include refid="condition" />
+	</select>
+	
+	<select id="selectTreeNode" resultMap="Taxonomy">
+		SELECT T.TAXON_ID, T.NCBI_TAXON_ID, TN.NAME
+		  FROM T_TAXON T, T_TAXON_NAME TN
+		 WHERE T.TAXON_ID=TN.TAXON_ID
+		   AND TN.NAME_CLASS = 'scientific name'
+		   AND T.TAXON_ID IN (
+		           SELECT DISTINCT(TAXON_ID) 
+                    FROM T_NGS_DATA_REGIST NDR
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="view == 'integrated'">
+				<choose>
+					<when test="@com.insilicogen.gdkm.MybatisHelper@isRawData(dataType)">
+		             AND NDR.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsSql" />) 
+			  		</when>
+			  		<when test="@com.insilicogen.gdkm.MybatisHelper@isProcessedData(dataType)">
+		             AND (NDR.REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />) 
+		               OR NDR.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsOfProcessedSql" />))
+					</when>
+			  		<otherwise>
+		             AND (NDR.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsSql" />) 
+		               OR NDR.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsOfProcessedSql" />)
+		               OR NDR.REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />))
+			  		</otherwise>
+			  	</choose>
+			</if>		  	
+			<if test="view != 'integrated'">
+				<choose>
+					<when test="@com.insilicogen.gdkm.MybatisHelper@isRawData(dataType)">
+		             AND NDR.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsSql" />)
+			  		</when>
+			  		<when test="@com.insilicogen.gdkm.MybatisHelper@isProcessedData(dataType)">
+		             AND NDR.REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />)
+					</when>
+					<otherwise>
+		             AND (NDR.REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsSql" />) 
+		               OR NDR.REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />)) 
+					</otherwise>
+				</choose>
+			</if>
+		</trim>
+		)
+		 ORDER BY TN.NAME
+	</select> 
+	
+</mapper>

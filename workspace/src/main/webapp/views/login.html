@@ -1,0 +1,49 @@
+<div id="loginModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md"> <!-- size options: modal-sm, defaul(미선택시), modal-lg -->
+        <div class="modal-content">
+            <!-- Modal-header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Login</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <!-- Modal-body -->
+            <div class="modal-body">
+                <section class="account_wrap text-center">
+                    <h1 class="sr-only">Login Form</h1>
+                    <img src="images/logo-login.png" alt="logo" style="">
+
+                    <form class="form-horizontal" ng-submit="login()" validate-form>
+                        <div class="form-group">
+                            <label for="inputId" class="sr-only">ID</label>
+                            <input type="text" ng-model="$parent.userId" placeholder="Id" class="form-control col-xs-12"
+                            required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="sr-only">Password</label>
+                            <input type="password" ng-model="$parent.password" placeholder="Password" class="col-xs-12"
+                            required>
+                        </div>
+                        <div class="form-group text-right">
+                            <div class="icheck_custom">
+                                <label for="datatype_all" class="checkbox-inline">
+                                    <input type="checkbox" class="minimal" id="datatype_all" ng-model="cookie" ng-change="checkCookieLoginId(cookie)" i-check /> Save User ID
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group button_wrap">
+                            <button type="submit" class="btn btn_secondary" type="submit">
+                           		<span class="btn_text">Log in</span>
+                            </button>
+                            <br/>
+                        </div>
+                    </form>
+                </section>
+            </div>
+            <!-- Modal-footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+

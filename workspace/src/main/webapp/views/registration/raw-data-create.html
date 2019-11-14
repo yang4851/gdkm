@@ -1,0 +1,252 @@
+<div class="panel_options">
+	<b class="label_required">* Required</b>
+   	<button class="btn btn_dark toggle_panels" ng-class="toggle_panels_css()" ng-click="toggleAccordions()"></button>
+</div>
+
+<uib-accordion close-others="false">
+
+	<!-- Experiment information --> 
+	<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[0]">
+		<uib-accordion-heading>Experiment information</uib-accordion-heading>
+		<div class="panel-collapse collapse in">
+			<div class="panel-accordion" style="padding-top: 0px;">
+				<div class="form-horizontal">
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Experiment type</label>
+						<div class="col-xs-9">
+							<select class="form-control picker" ng-model="model.rawData.exprType"
+							 ng-options="code.name for code in reCodeList track by code.code"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Taxonomy</label>
+						<div class="col-xs-9">
+							<select class="form-control picker" ng-model="model.rawData.domain"
+							 ng-options="code.name for code in rtCodeList track by code.code"></select>
+						</div>
+					</div>
+					
+					<p class="form_ttl">Experiment condition</p>
+					
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Culture condition</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.rawData.cultureCondition" 
+							 placeholder="ex) Strain culture / 1week"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Treatment</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.rawData.treatment" 
+							 placeholder="ex) Non-antibiotic treatment" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Replicate</label>
+						<div class="col-xs-9">
+							<select class="form-control picker" 
+							 ng-model="model.rawData.replicate"
+							 ng-options="code.name for code in rrCodeList track by code.code">
+							 </select>
+						</div>
+					</div>
+					
+					<p class="form_ttl">Sample</p>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Sample name</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.rawData.sampleName" 
+							 placeholder="ex) Natrinema  thermophila CBA1119T"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Strain</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.strain" 
+							 placeholder="ex) CBA1119T"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Organism type</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.rawData.organismType" 
+							 placeholder="ex) prokaryote"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Bio sample type</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.rawData.sampleType" 
+							 placeholder="ex) solar salt"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Geographic location</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.rawData.geographLocation" 
+							 placeholder="ex) South Korea"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Source</label>
+						<div class="col-xs-9">
+							<select class="form-control picker" ng-model="model.rawData.sampleSource"
+							 ng-options="code.name for code in rsCodeList track by code.code"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Comment</label>
+						<div class="col-xs-9">
+							<textarea class="form-control" cols="30" rows="10" ng-model="model.rawData.sampleComment"></textarea>
+						</div>
+					</div>
+					
+					<p class="form_ttl">NCBI Taxonomy</p>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Species name</label>
+						<div class="col-xs-9">
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Search for..."
+								 ng-model="model.taxonomy.name" ng-disabled="true" />
+								<span class="input-group-btn" style="padding-left: 5px;">
+									<button type="button" class="btn btn_secondary" data-toggle="modal" data-target="#taxonomy-search-popup">Taxonomy search</button>
+								</span>							
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Taxonomy ID</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.taxonomy.ncbiTaxonId" ng-disabled="true" />
+						</div>
+					</div>
+					
+					<div class="form-group" ng-hide="hierarchyList.length == 0">
+						<p class="col-xs-3 control-label">Taxonomy</p>
+						<div class="col-xs-9">
+							<table class="tbl">
+								<thead>
+									<tr>
+										<th style="text-align:left">Rank</th>
+										<th>Name</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="taxon in hierarchyList">
+										<th>{{ taxon.rank | taxonRank }}</th>
+										<td><input type="text" class="form-control" ng-model="taxon.name" ng-disabled="true"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Sequencing and Library information -->
+	<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[1]">
+		<uib-accordion-heading>Sequencing and Library information</uib-accordion-heading>
+	   	<div class="panel-collapse collapse in">
+			<div class="accordion-panel">
+				<div class="form-horizontal">
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Sequencing platform</label>
+						<div class="col-xs-9">
+							<select class="form-control picker" ng-model="model.rawData.platform"
+							 ng-options="code.name for code in rpCodeList track by code.code"></select>
+						</div>
+					</div>
+					
+					<p class="form_ttl">NGS library</p>
+					
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Construction</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.rawData.construction" 
+							 placeholder="ex) NEBNext Ultral II DNA Library"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Selection</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.rawData.selection" 
+							 placeholder="ex) RANDOM(Randome Selection by shearing or other method"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label  class="col-xs-3 control-label required">Instrument model</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.rawData.sequencer" 
+							 placeholder="ex) illumina Genome Analyzer"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Strategy</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.rawData.strategy" 
+							 placeholder="ex) WGS(Randome sequencing of ther whole genome)"/>
+						</div>
+					</div>
+					
+					<p class="form_ttl">Library of sequence raw data</p>
+					
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Read length</label>
+						<div class="col-xs-9">
+							<input type="number" class="form-control" ng-model="model.rawData.readLength" 
+							 placeholder="ex) 150"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Insert size</label>
+						<div class="col-xs-9">
+							<input type="number" class="form-control" ng-model="model.rawData.insertSize" 
+							 placeholder="ex) 250"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Read</label>
+						<div class="col-xs-9">
+							<select class="form-control picker" ng-model="model.rawData.readType"
+							 ng-options="code.name for code in rnCodeList track by code.code"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Adapter sequence</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.rawData.adapterSeq"
+							 placeholder="ex) 5`-GTTCAGAGTTCACAGTCCGACGATC / 3`-TGGAATTCTCGGGTGCCAAGG" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Quality Score Version</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.rawData.qualityScoreVersion"
+							 placeholder="ex) illumina 1.5+Phred+64" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Base calling Program</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.rawData.baseCallingProgram"
+							 placeholder="ex) Phred" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Comment</label>
+						<div class="col-xs-9">
+							<textarea class="form-control" cols="30" rows="10" ng-model="model.rawData.libraryComment"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</uib-accordion>

@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NgsDataRegist">
+
+	<resultMap id="NgsDataRegist" type="ngsDataRegist">
+		<result property="id"  column="REGIST_ID" />
+		<result property="registNo" column="REGIST_NO" />
+		<result property="dataType" column="DATA_TYPE" />
+		<result property="strain" column="STRAIN" />
+		<result property="openYn" column="OPEN_YN" />
+		<result property="openDate" column="OPEN_DATE" />
+		<result property="approvalStatus" column="APPROVAL_STATUS" />
+		<result property="approvalDate" column="APPROVAL_DATE" />
+		<result property="registStatus" column="REGIST_STATUS" />
+		<result property="registDate" column="REGIST_DATE" />
+		<result property="updateDate" column="UPDATE_DATE" />
+		
+		<association property="taxonomy" column="{taxonId=TAXON_ID}" javaType="taxonomy" select="Taxonomy.get" />
+		<association property="rawData" column="{registId=REGIST_ID}" javaType="ngsRawData" select="NgsRawData.get" />
+		<association property="processedData" column="{registId=REGIST_ID}" javaType="ngsProcessedData" select="NgsProcessedData.get" />
+		<association property="approvalUser" column="{userId=APPROVAL_USER}" javaType="user" select="User.getBasicUser" />
+		<association property="registUser" column="{userId=REGIST_USER}" javaType="user" select="User.getBasicUser" />
+		<association property="updateUser" column="{userId=UPDATE_USER}" javaType="user" select="User.getBasicUser" />
+	</resultMap>
+	
+	<resultMap id="BasicNgsDataRegist" type="ngsDataRegist">
+		<result property="id"  column="REGIST_ID" />
+		<result property="registNo" column="REGIST_NO" />
+		<result property="dataType" column="DATA_TYPE" />
+		<result property="strain" column="STRAIN" />
+		<result property="openYn" column="OPEN_YN" />
+		<result property="approvalStatus" column="APPROVAL_STATUS" />
+		<result property="registStatus" column="REGIST_STATUS" />
+		
+		<association property="taxonomy" column="{taxonId=TAXON_ID}" javaType="taxonomy" select="Taxonomy.get" />
+		<association property="rawData" column="{registId=REGIST_ID}" javaType="ngsRawData" select="NgsRawData.get" />
+		<association property="processedData" column="{registId=REGIST_ID}" javaType="ngsProcessedData" select="NgsProcessedData.get" />
+	</resultMap>
+	
+	<sql id="selectIdsRelatedFeatures">
+		SELECT DISTINCT(A.REGIST_ID)
+		  FROM T_NGS_DATA_ACHIVE A, T_NGS_DATA_FEATURES F, T_ACHIVE_FEATURES_XREF X
+		 WHERE A.ACHIVE_ID = X.ACHIVE_ID
+		   AND F.FEATURES_ID = X.FEATURES_ID
+		<choose>
+			<when test="@com.insilicogen.gdkm.MybatisHelper@isExactMatch(match)">
+		   AND (UPPER(F.GENE)=UPPER(#{gene}) OR UPPER(F.PRODUCT)=UPPER(#{gene}))
+			</when>
+			<otherwise>
+		   AND (UPPER(F.GENE) LIKE CONCAT('%',UPPER(#{gene}),'%') OR UPPER(F.PRODUCT) LIKE CONCAT('%',UPPER(#{gene}),'%'))
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<sql id="registSearchSql">
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registId)">
+	  	   AND D.REGIST_ID = #{registId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(gene)">
+	       AND D.REGIST_ID IN (<include refid="NgsDataRegist.selectIdsRelatedFeatures" />)
+		</if>
+		
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(taxonId)">
+	  	   AND D.TAXON_ID = #{taxonId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(openYn)">
+	  	   AND D.OPEN_YN = #{openYn}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(approvalStatus)">
+	  	   AND D.APPROVAL_STATUS = #{approvalStatus}
+		</if>
+		<!-- 데이터 목록을 조회할 때 등록단계와 승인단계에 따른 조회를 위한 조건 -->
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(section)">
+			<if test="section == 'regist'">
+	  	   AND D.REGIST_STATUS NOT IN ('submit')
+			</if>
+			<if test="section == 'review'">
+	  	   AND D.REGIST_STATUS IN ('submit', 'failed', 'success')
+			</if>
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registStatus)">
+	  	   AND D.REGIST_STATUS = #{registStatus}
+		</if>
+		<!-- 가공데이터와 연결된 원시데이터 목록 호출 -->
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(processedRegistId)">
+	  	   AND D.REGIST_ID IN (SELECT DISTINCT(RAW_REGIST_ID) FROM T_NGS_DATA_LINK WHERE PROCESSED_REGIST_ID=#{processedRegistId})
+		</if>
+		<!-- 원시데이터와 연결된 가공데이터 목록 호출 -->
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(rawRegistId)">
+	  	   AND D.REGIST_ID IN (SELECT DISTINCT(PROCESSED_REGIST_ID) FROM T_NGS_DATA_LINK WHERE RAW_REGIST_ID=#{rawRegistId})
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registFrom)">	
+	  	   AND D.REGIST_DATE &gt;= DATE_FORMAT(CONCAT(#{registFrom}, ' 00:00:00'), '%Y-%m-%d %T')
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registTo)">
+	  	   AND D.REGIST_DATE &lt;= DATE_FORMAT(CONCAT(#{registTo}, ' 23:59:59'), '%Y-%m-%d %T')
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(species, strain)">
+			<trim prefixOverrides="OR|AND" prefix="AND (" suffix=")">
+				<choose>
+					<when test="@com.insilicogen.gdkm.MybatisHelper@isExactMatch(match)">
+						<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(species)">
+		       OR D.TAXON_ID IN (SELECT DISTINCT(TAXON_ID) FROM T_TAXON_NAME WHERE UPPER(NAME) = UPPER(#{species}) OR TAXON_ID=#{species})
+			  			</if>
+			  			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(strain)">
+		       OR UPPER(D.STRAIN) = UPPER(#{strain})
+			  			</if>
+			  		</when>
+			  		<otherwise>
+			  			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(species)">
+		       OR D.TAXON_ID IN (SELECT DISTINCT(TAXON_ID) FROM T_TAXON_NAME WHERE UPPER(NAME) LIKE CONCAT('%',UPPER(#{species}),'%') OR TAXON_ID=#{species})
+			  			</if>
+			  			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(strain)">
+		       OR UPPER(D.STRAIN) LIKE CONCAT('%',UPPER(#{strain}),'%')
+			  			</if>
+			  		</otherwise>
+			  	</choose>
+			</trim>
+		</if>
+	</sql>
+	
+	<sql id="rawdataSearchSqlByKeyword">
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(keyword)">
+			<trim prefix="(" prefixOverrides="OR|AND" suffix=")">
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isExactMatch(match)">
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'registNo')">
+			    OR UPPER(D.REGIST_NO) = UPPER(#{keyword})
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'sampleSource')">
+		        OR R.SAMPLE_SOURCE_CD IN (SELECT DISTINCT(CODE) FROM T_COM_CODE WHERE UPPER(NAME) = UPPER(#{keyword}))
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'sampleName')">
+		        OR UPPER(R.SAMPLE_NAME) = UPPER(#{keyword})
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'organismType')">
+		        OR UPPER(R.ORGANISM_TYPE) = UPPER(#{keyword})
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'species')">
+		        OR D.TAXON_ID IN (SELECT DISTINCT(TAXON_ID) FROM T_TAXON_NAME WHERE UPPER(NAME) = UPPER(#{keyword}))
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'ncbiTaxonId')">
+		        OR D.TAXON_ID IN (SELECT DISTINCT(TAXON_ID) FROM T_TAXON WHERE NCBI_TAXON_ID = #{keyword})
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'platform')">
+		        OR R.PLATFORM_CD IN (SELECT DISTINCT(CODE) FROM T_COM_CODE WHERE UPPER(NAME) = UPPER(#{keyword}))
+					</if>
+				</if>
+				<if test="!@com.insilicogen.gdkm.MybatisHelper@isExactMatch(match)">
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'registNo')">
+			    OR UPPER(D.REGIST_NO) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'sampleSource')">
+		        OR R.SAMPLE_SOURCE_CD IN (SELECT DISTINCT(CODE) FROM T_COM_CODE WHERE UPPER(NAME) LIKE CONCAT('%',UPPER(#{keyword}),'%'))
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'sampleName')">
+		        OR UPPER(R.SAMPLE_NAME)  LIKE CONCAT('%',UPPER(#{keyword}),'%')
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'organismType')">
+		        OR UPPER(R.ORGANISM_TYPE)  LIKE CONCAT('%',UPPER(#{keyword}),'%')
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'species')">
+		        OR D.TAXON_ID IN (SELECT DISTINCT(TAXON_ID) FROM T_TAXON_NAME WHERE UPPER(NAME) LIKE CONCAT('%',UPPER(#{keyword}),'%'))
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'ncbiTaxonId')">
+		        OR D.TAXON_ID IN (SELECT DISTINCT(TAXON_ID) FROM T_TAXON WHERE NCBI_TAXON_ID LIKE CONCAT('%',#{keyword},'%'))
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'platform')">
+		        OR R.PLATFORM_CD IN (SELECT DISTINCT(CODE) FROM T_COM_CODE WHERE UPPER(NAME) LIKE CONCAT('%',UPPER(#{keyword}),'%'))
+					</if>
+				</if>
+			</trim>
+		</if>	
+	</sql>
+	
+	<sql id="processedSearchSqlByKeyword">
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(keyword)">
+			<trim prefix="(" prefixOverrides="OR|AND" suffix=")">
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isExactMatch(match)">
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'registNo')">
+			    OR UPPER(D.REGIST_NO) = UPPER(#{keyword})
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'submitter')">
+		        OR P.SUBMITTER IN (SELECT DISTINCT(CODE) FROM T_COM_CODE WHERE UPPER(NAME) = UPPER(#{keyword}))
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'project')">
+		        OR UPPER(P.PROJECT) = UPPER(#{keyword})
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'projectType')">
+		        OR UPPER(P.PROJECT_TYPE) = UPPER(#{keyword})
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'assemblyMethod')">
+		        OR UPPER(P.ASSEMBLY_METHOD) = UPPER(#{keyword})
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'refTitle')">
+		        OR UPPER(P.REF_TITLE) = UPPER(#{keyword})
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'parentNo')">
+		        OR D.REGIST_ID IN (SELECT DISTINCT(SL.PROCESSED_REGIST_ID) 
+		                             FROM T_NGS_DATA_REGIST SD, T_NGS_DATA_LINK SL 
+		                            WHERE SD.REGIST_ID = SL.RAW_REGIST_ID 
+		                              AND UPPER(REGIST_NO) = UPPER(#{keyword}))
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'species')">
+		        OR D.TAXON_ID IN (SELECT DISTINCT(TAXON_ID) FROM T_TAXON_NAME WHERE UPPER(NAME) = UPPER(#{keyword}))
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'ncbiTaxonId')">
+		        OR D.TAXON_ID IN (SELECT DISTINCT(TAXON_ID) FROM T_TAXON WHERE NCBI_TAXON_ID = #{keyword})
+					</if>
+				</if>
+				<if test="!@com.insilicogen.gdkm.MybatisHelper@isExactMatch(match)">
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'registNo')">
+			    OR UPPER(D.REGIST_NO) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'submitter')">
+		        OR P.SUBMITTER IN (SELECT DISTINCT(CODE) FROM T_COM_CODE WHERE UPPER(NAME) LIKE CONCAT('%',UPPER(#{keyword}),'%'))
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'project')">
+		        OR UPPER(P.PROJECT) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'projectType')">
+		        OR UPPER(P.PROJECT_TYPE) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'assemblyMethod')">
+		        OR UPPER(P.ASSEMBLY_METHOD) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'refTitle')">
+		        OR UPPER(P.REF_TITLE) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'parentNo')">
+		        OR D.REGIST_ID IN (SELECT DISTINCT(SL.PROCESSED_REGIST_ID) 
+		                             FROM T_NGS_DATA_REGIST SD, T_NGS_DATA_LINK SL 
+		                            WHERE SD.REGIST_ID = SL.RAW_REGIST_ID 
+		                              AND UPPER(REGIST_NO) LIKE CONCAT('%',UPPER(#{keyword}),'%'))
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'species')">
+		        OR D.TAXON_ID IN (SELECT DISTINCT(TAXON_ID) FROM T_TAXON_NAME WHERE UPPER(NAME) LIKE CONCAT('%',UPPER(#{keyword}),'%'))
+					</if>
+					<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'ncbiTaxonId')">
+		        OR D.TAXON_ID IN (SELECT DISTINCT(TAXON_ID) FROM T_TAXON WHERE NCBI_TAXON_ID LIKE CONCAT('%',#{keyword},'%'))
+					</if>
+				</if>
+			</trim>
+		</if>	
+	</sql>
+	
+	<!-- 원시데이터에 대한 키워드 검색을 위한 질의어 -->
+	<sql id="selectRawdataIdsSql">
+		SELECT DISTINCT(D.REGIST_ID)
+		  FROM T_NGS_RAW_DATA R, T_NGS_DATA_REGIST D
+		 WHERE R.REGIST_ID = D.REGIST_ID
+		   AND D.DATA_TYPE = 'rawdata'
+		<include refid="NgsDataRegist.registSearchSql" />
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(keyword)">
+		   AND <include refid="NgsDataRegist.rawdataSearchSqlByKeyword" />
+		</if>
+	</sql>
+	
+	
+	<!-- 가공데이터에 대한 키워드 검색을 위한 질의어 -->
+	<sql id="selectProcessedIdsSql">
+		SELECT DISTINCT(D.REGIST_ID)
+		  FROM T_NGS_PROCESSED_DATA P, T_NGS_DATA_REGIST D
+		 WHERE P.REGIST_ID = D.REGIST_ID
+	  	   AND D.DATA_TYPE = 'processed'
+		<include refid="NgsDataRegist.registSearchSql" />
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(keyword)">
+		   AND <include refid="NgsDataRegist.processedSearchSqlByKeyword" />
+		</if>
+	</sql>
+	
+	<sql id="selectRawdataIdsOfProcessedSql">
+		SELECT DISTINCT(L.RAW_REGIST_ID)
+		  FROM T_NGS_DATA_LINK L
+		 WHERE L.PROCESSED_REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />)
+	</sql>
+	
+	<sql id="select">
+		SELECT REGIST_ID,
+		       REGIST_NO,
+		       DATA_TYPE,
+		       TAXON_ID,
+		       STRAIN,
+		       OPEN_YN,
+		       OPEN_DATE,
+		       APPROVAL_STATUS,
+		       AES_DECRYPT(UNHEX(APPROVAL_USER),'raison') AS APPROVAL_USER,
+		       APPROVAL_DATE,
+		       REGIST_STATUS,
+		       AES_DECRYPT(UNHEX(REGIST_USER),'raison') AS REGIST_USER,
+		       REGIST_DATE,
+		       AES_DECRYPT(UNHEX(UPDATE_USER),'raison') AS UPDATE_USER,
+		       UPDATE_DATE
+	  	  FROM T_NGS_DATA_REGIST
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="view == 'integrated'">
+				<choose>
+					<when test="@com.insilicogen.gdkm.MybatisHelper@isRawData(dataType)">
+		   AND REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsSql" />) 
+		        
+			  		</when>
+			  		<when test="@com.insilicogen.gdkm.MybatisHelper@isProcessedData(dataType)">
+	  	   AND (REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />)
+	  	     OR REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsOfProcessedSql" />))
+					</when>
+			  		<otherwise>
+		   AND (REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsSql" />) 
+		     OR REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsOfProcessedSql" />)
+		     OR REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />))
+			  		</otherwise>
+			  	</choose>
+			</if>		  	
+			<if test="view != 'integrated'">
+				<choose>
+					<when test="@com.insilicogen.gdkm.MybatisHelper@isRawData(dataType)">
+	  	   AND REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsSql" />)
+			  		</when>
+			  		<when test="@com.insilicogen.gdkm.MybatisHelper@isProcessedData(dataType)">
+	  	   AND REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />)
+					</when>
+					<otherwise>
+	  	   AND (REGIST_ID IN (<include refid="NgsDataRegist.selectRawdataIdsSql" />) 
+	  	     OR REGIST_ID IN (<include refid="NgsDataRegist.selectProcessedIdsSql" />)) 
+					</otherwise>
+				</choose>
+			</if>
+		</trim>
+	</sql>
+	
+	<insert id="insert" parameterType="ngsDataRegist">
+		<selectKey resultType="int" keyProperty="id" order="BEFORE">
+		SELECT (CASE WHEN 0 &lt; #{id}
+		             THEN IFNULL(#{id}, IFNULL(MAX(REGIST_ID), 0) + 1)
+		             ELSE IFNULL(MAX(REGIST_ID), 0) + 1
+		             END) AS id
+		 FROM T_NGS_DATA_REGIST
+   		</selectKey>
+   		 
+		INSERT INTO T_NGS_DATA_REGIST(
+			REGIST_ID,
+			REGIST_NO,
+			TAXON_ID,
+			DATA_TYPE,
+			STRAIN,
+			OPEN_YN,
+			OPEN_DATE,
+			APPROVAL_STATUS,
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(approvalUser)">
+			APPROVAL_USER,
+		</if>
+			APPROVAL_DATE,
+			REGIST_STATUS,
+			REGIST_USER,
+			REGIST_DATE,
+			UPDATE_USER,
+			UPDATE_DATE
+		) VALUES (
+			#{id},
+			(SELECT CONCAT(IF(#{dataType}='RawData','GDKM-BA-N-','GDKM-BA-A-'), 
+			              LPAD(CAST(CAST(IFNULL(MAX(SUBSTR(REGIST_NO, -4, 4)), 0) AS UNSIGNED)+1 AS CHAR), 4, '0')) AS registNo
+			   FROM T_NGS_DATA_REGIST sub
+			  WHERE REGIST_NO LIKE CONCAT(IF(#{dataType}='RawData','GDKM-BA-N-','GDKM-BA-A-'),'%')),
+			#{taxonomy.taxonId},
+			#{dataType},
+			#{strain},
+			#{openYn},
+			#{openDate},
+			#{approvalStatus},
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(approvalUser)">
+			HEX(AES_ENCRYPT(#{approvalUser.userId},'raison')),
+		</if>
+			#{approvalDate},
+			#{registStatus},
+			HEX(AES_ENCRYPT(#{registUser.userId},'raison')),
+			NOW(),
+			HEX(AES_ENCRYPT(#{registUser.userId},'raison')),
+			NOW()
+		)
+	</insert>
+	
+	<select id="get" resultMap="NgsDataRegist">
+		<include refid="NgsDataRegist.select" />
+	  	 LIMIT 0, 1
+	</select>
+	
+	<select id="getBasic" resultMap="BasicNgsDataRegist">
+		<include refid="NgsDataRegist.select" />
+	  	 LIMIT 0, 1
+	</select>
+	
+	<select id="select" resultMap="NgsDataRegist">
+		<include refid="NgsDataRegist.select" />
+	  	 ORDER BY REGIST_DATE DESC
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+	  	 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(A.REGIST_ID) FROM (<include refid="NgsDataRegist.select" />) A
+	</select>
+	
+	<update id="update" parameterType="ngsDataRegist">
+		UPDATE T_NGS_DATA_REGIST 
+		   SET TAXON_ID        = #{taxonomy.taxonId},
+		       STRAIN          = #{strain},
+		       OPEN_YN         = #{openYn},
+		       OPEN_DATE       = #{openDate},
+		       APPROVAL_STATUS = #{approvalStatus},
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(approvalUser)">
+		       APPROVAL_USER   = HEX(AES_ENCRYPT(#{approvalUser.userId},'raison')),
+		</if> 
+		       APPROVAL_DATE   = #{approvalDate},
+		       REGIST_STATUS   = #{registStatus},
+		       UPDATE_USER     = HEX(AES_ENCRYPT(#{updateUser.userId},'raison')),
+		       UPDATE_DATE     = NOW()
+		 WHERE REGIST_ID       = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM T_NGS_DATA_REGIST WHERE REGIST_ID = #{registId}
+	</delete>
+</mapper>

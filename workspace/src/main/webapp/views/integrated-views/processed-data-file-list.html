@@ -1,0 +1,147 @@
+<!-- list-toolbar -->
+<div class="row toolbar" style="padding-bottom: 10px;">
+	<div class="col-xs-3">
+		<p class="form-control-static">
+			All <strong class="num">{{ pageHandler.getTotal() | number }}</strong>
+		</p>
+	</div>
+	<div class="col-xs-9 form-inline text-right">
+		<button type="button" class="btn btn-default"
+			ng-disabled="disabledLinearBtn()"
+			ng-click="openLinearBrowser()">Linear view</button>
+			
+		<button type="button" class="btn btn-default"
+			ng-disabled="disabledDownloadExcelBtn()"
+			ng-click="downloadExcel('processed', 'Y')">
+			<i class="far fa-file-excel"><span>Download</span></i></button>
+			
+		<div class="form-group">
+			<select class="form-control picker" ng-disabled="!loginCheck()"
+				ng-options="code.id as code.name for code in openYnCodeList"
+				ng-model="params.openYn" ng-change="reload()"></select>
+		</div>
+		<button type="button" class="btn btn-default" ng-click="reload()">
+			<i class="fa fa-undo"></i><span class="sr-only">Refresh</span>
+		</button>
+	</div>
+</div>
+	
+<!-- search-list -->
+<div id="processedDataFileResultTable">
+<table class="list_tbl panel_g">
+	<thead>
+		<tr>
+			<th class="th_check sorting_disabled" style="width: 39.5px;">
+				<input type="checkbox" i-check ng-model="modelHandler.checkedAll" 
+				 ng-change="modelHandler.selectAll()" ng-disabled="modelHandler.size() == 0" />
+			</th>
+			<th style="width: 160px;">Annotation data ID</th>
+			<th style="width: 180px;">Annotation data file ID</th>
+			<th style="width: 250px;">Species</th>
+			<th style="width: 150px;">Strain</th>
+			<th style="width: 100px;">Type</th>
+			<th>Annotation data file name</th>
+			<th style="width: 30px">
+				<button type="button" class="btn toggle_panel"
+					ng-class="toggle_panel_css()" ng-click="toggleActiveRows()" />
+			</th>
+		</tr>
+	</thead>
+	<tbody ng-repeat="item in modelHandler.getItems()">
+		<tr class="panel_h" ng-class="panel_h_css(item.id)">
+			<td class="text-center text-center">
+				<input type="checkbox" checklist-model="modelHandler.selectedIdList"
+					checklist-value="item.id" ng-change="modelHandler.select(item)" i-check/>
+			</td>
+			<td class="text-center list-event-col">
+				<a class="pointer" ng-click="onClickRegistDataDetail(item.dataRegist)">{{ item.dataRegist.registNo }}</a>
+			</td>
+			<td class="text-center list-event-col"><a role="button" ng-click="onClickNgsFileDetail(item)">{{ item.registNo }}</a></td>
+			<td class="cell-ellipse" data-toggle="tooltip" title="{{ tooltip(item.dataRegist.taxonomy.name, 30) }}" >{{ item.dataRegist.taxonomy.name }}</td>
+			<td class="text-center">{{ item.dataRegist.strain }}</td>
+			<td class="text-center">{{ item.fileType }}</td>
+			<td class="cell-ellipse" data-toggle="tooltip" title="{{ tooltip(item.fileName, 30) }}" >
+				<a role="button" ng-click="downloadAchiveFile(item)">{{ item.fileName }}</a></td>
+			<td class="text-center">
+				<button type="button" class="btn toggle_panel" ng-class="panel_h_css(item.id)" ng-click="activeRow(item.id)"></button>
+			</td>
+		</tr>
+		<tr class="panel-collapse" ng-class="panel_collapse_css(item.id)">
+			<td colspan="8">
+				<table class="table">
+					<caption>상세내역</caption>
+					<tbody>
+						<tr>
+							<th scope="row">File name</th>
+							<td>{{ item.fileName }} ({{ item.fileSize | bytes }})</td>
+						</tr>
+						<tr>
+							<th scope="row">File type</th>
+							<td>{{ item.fileType }}</td>
+						</tr>
+						<tr ng-hide="!item.dataRegist.processedData.submitter">
+							<th scope="row">Submitter</th>
+							<td>{{ item.dataRegist.processedData.submitter }}</td>
+						</tr>
+						<tr ng-hide="!item.dataRegist.processedData.submitOrgan">
+							<th scope="row">Submitting organization</th>
+							<td>{{ item.dataRegist.processedData.submitOrgan }}</td>
+						</tr>
+						<tr ng-hide="!item.dataRegist.processedData.project">
+							<th scope="row">Project</th>
+							<td>{{ item.dataRegist.processedData.project }}</td>
+						</tr>
+						<tr ng-hide="!item.dataRegist.processedData.assemblyMethod">
+							<th scope="row">Assembly methods</th>
+							<td>{{ item.dataRegist.processedData.assemblyMethod }}</td>
+						</tr>
+						<tr ng-hide="!item.dataRegist.processedData.refTitle">
+							<th scope="row">Reference title</th>
+							<td>{{ item.dataRegist.processedData.refTitle }}</td>
+						</tr>
+						<tr>
+							<th scope="row">Species</th>
+							<td><a href="https://www.ncbi.nlm.nih.gov/taxonomy/?term={{ item.dataRegist.taxonomy.ncbiTaxonId }}" target="_blank">{{ item.dataRegist.taxonomy.name }}</a></td>
+						</tr>
+						<tr>
+							<th scope="row">Strain</th>
+							<td>{{ item.dataRegist.strain }}</td>
+						</tr>
+						<tr>
+							<th scope="row">Registration date</th>
+							<td>{{ item.registDate | date: 'yyyy-MM-dd' }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</tbody>
+	<tbody ng-if="modelHandler.getItems()==''">
+		<tr class="panel_h" >
+			<td colspan="8" class="text-center"> <i>No data</i></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<!-- pagination -->
+<nav class="text-center">
+	<ul class="pagination">
+		<li ng-hide="pageHandler.isPrevDisabled()">
+			<a aria-label="Previous" ng-click="pageHandler.prev()">
+				<i class="fa fa-chevron-left" aria-hidden="true"></i>
+			</a>
+		</li>
+		<li ng-repeat="page in pageHandler.getPages()"
+			ng-class="(pageHandler.getCurrentPage() == page) ? 'active' : 'pointer'">
+			<a ng-click="pageHandler.setCurrentPage(page, true)">{{ page }}</a>
+		</li>
+		
+		<li ng-hide="pageHandler.isNextDisabled()">
+			<a aria-label="Next" ng-click="pageHandler.next()">
+				<i class="fa fa-chevron-right" aria-hidden="true"></i>
+			</a>
+		</li>
+	</ul>
+</nav>
+<!--/ raw data list -->

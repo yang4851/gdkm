@@ -1,0 +1,226 @@
+<div class="container" ng-init="init();">
+	<!-- page-title -->
+	<div class="content_top">
+		<h1 class="title_page">
+			<a href="#" class="active">Data status</a>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a href="#!/home">Home</a></li>
+			<li><a href="#!/statistics">Statistics</a></li>
+			<li class="active">Data status</li>
+		</ol>
+	</div>
+	<!-- /page-title -->
+	
+	<h2 class="title_con">Data status</h2>
+	<!-- Tab panel -->
+	<div role="tabpanel">
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs">
+			<li class="pointer active"><a data-target="#tabStatistics" data-toggle="tab">Registration data</a></li>
+			<li class="pointer"><a data-target="#tabCategory" data-toggle="tab">Category</a></li>
+		</ul>
+		
+		<!-- Tab panes -->
+		<div class="tab-content">
+		<!-- tab1 -  Registeration Data -->
+			<div class="tab-pane active" id="tabStatistics">
+				<form>
+					<!-- search-form -->
+					<div class="search_form_tbl">
+						<div class="form-horizontal col_tbl">
+							<div class="form-group">
+								<label class="col-xs-3 control-label">Search for period (year)</label>
+								<div class="col-xs-9 input-group addon_custom">
+									<select class="form-control picker" ng-model="statParams.fromYear">
+										<option value="">All</option>
+										<option ng-repeat="year in registYearList" value="{{ year }}">{{ year }}</option>
+									</select>
+									<div class="input-group-addon">~</div>
+									<select class="form-control picker" ng-model="statParams.toYear">
+										<option value="">All</option>
+										<option ng-repeat="year in registYearList" value="{{ year }}">{{ year }}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col_tbl">
+							<button type="submit" class="btn btn_brand" ng-click="search()">Search</button>
+						</div>
+					</div>
+					
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div style="padding-bottom: 10px;">
+							<ul class="nav nav-tabs tab_level3">
+								<li class="pointer active"><a data-target="#tabYear" data-toggle="tab">Year</a></li>
+								<li class="pointer"><a data-target="#tabMonth" data-toggle="tab">Month</a></li>
+							</ul>
+						</div>
+						
+						<!-- tab1-1-1 - table -->
+						<div class="tab-pane active" id="tabYear">
+							<table class="data_tbl">
+								<caption>Year Table</caption>
+								<colgroup>
+									<col width="25%">
+								</colgroup>
+								<thead>
+									<tr>
+										<th></th>
+										<th>Raw data</th>
+										<th>Annotation data</th>
+										<th>Total</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="stat in yearStatList">
+										<th>{{ stat.period }}</th>
+										<td>{{ stat.rawCount | number }}</td>
+										<td>{{ stat.processedCount | number }}</td>
+										<td><b>{{ stat.fileCount | number }}</b></td>
+									</tr>
+									<tr>
+										<th>Total</th>
+										<td>{{ sumOfStat(yearStatList, 'rawCount') | number }}</td>
+										<td>{{ sumOfStat(yearStatList, 'processedCount') | number }}</td>
+										<td>{{ sumOfStat(yearStatList, 'fileCount') | number }}</td>
+									</tr>
+								</tbody>
+							</table>
+							
+							<h2 class="title_con">Chart</h2>
+							<table class="data_tbl">
+								<caption>Year Table</caption>
+								<tbody>
+									<tr>
+										<td>
+											<div google-chart chart="yearChart"></div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<!-- tab1-1-2 - table -->
+						
+						<div class="tab-pane" id="tabMonth">
+							<table class="data_tbl">
+								<caption>Chart Table</caption>
+								<colgroup>
+									<col width="25%">
+								</colgroup>
+								<thead>
+									<tr>
+										<th></th>
+										<th>Raw data</th>
+										<th>Annotation data</th>
+										<th>Total</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="stat in monthStatList">
+										<th>{{ stat.period }}</th>
+										<td>{{ stat.rawCount | number }}</td>
+										<td>{{ stat.processedCount | number }}</td>
+										<td><b>{{ stat.fileCount | number }}</b></td>
+									</tr>
+									<tr>
+										<th>Total</th>
+										<td>{{ sumOfStat(monthStatList, 'rawCount') | number }}</td>
+										<td>{{ sumOfStat(monthStatList, 'processedCount') | number }}</td>
+										<td>{{ sumOfStat(monthStatList, 'fileCount') | number }}</td>
+									</tr>
+								</tbody>
+							</table>
+							
+							<h2 class="title_con">Chart</h2>
+							<table class="data_tbl">
+								<caption>Month Table</caption>
+								<tbody>
+									<tr>
+										<td>
+											<div google-chart chart="monthChart"></div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							
+						</div>
+					</div>	
+				</form>
+			</div>
+			<!-- /tab-pane -->
+			
+			<!-- tab2 - Category -->
+			<div class="tab-pane" id="tabCategory">
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="row" style="padding-bottom: 10px;">
+							<h3 class="title col-xs-5" style="margin: 0;">Experiment (NGS)</h3>
+							<div class="col-xs-7 text-right">
+								<button type="button" name="button" class="btn btn_secondary"
+									ng-disabled="disabledDownloadExcelBtn()"
+									ng-click="pngDownload()">
+									<i class="far fa-file-image" aria-hidden="true" style="padding-right: 5px;"></i>PNG download
+								</button>
+								<button type="button" name="button" class="btn btn_secondary"
+									ng-disabled="disabledDownloadExcelBtn()"
+									ng-click="excelDownload('#experiment','Experiment(NGS)')">
+									<i class="far fa-file-excel" aria-hidden="true" style="padding-right: 5px;"></i>Excel download
+								</button>
+							</div>
+						</div>
+						<div class="row" style="padding: 0px;">
+							<div id="experiment" class="col-xs-12">
+								<div google-chart chart="areaChart" style="border: 1px solid #ccc;" agc-on-ready="initChartURI(chartWrapper)"></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="row" style="padding-bottom: 10px;">
+							<h3 class="col-xs-8" style="margin: 0;">Species (NCBI Taxonomy)</h3>
+							<div class="col-xs-4 text-right">
+								<button type="button" name="button" class="btn btn_secondary"
+									ng-disabled="disabledDownloadExcelBtn()"
+									ng-click="excelDownload('#speciesTable','Species(NCBI Taxonomy)')">
+									<i class="fa fa-download" aria-hidden="true" style="padding-right: 5px;"></i>download
+								</button>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div id="speciesTable" class="col-xs-12" >
+								<table class="data_tbl">
+									<caption>Species Table</caption>
+									<colgroup>
+										<col width="*">
+										<col width="20%;">
+									</colgroup>
+									<thead>
+										<tr>
+											<th>Species</th>
+											<th class="text-center">Count</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="stat in taxonStatList">
+											<td>{{ stat.taxonomy.name }}</td>
+											<td class="text-center">{{ stat.fileCount | number }}</td>
+										</tr>
+										<tr>
+											<td><b>Total</b></td>
+											<td class="text-center">{{ sumOfStat(taxonStatList, 'fileCount') | number }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /tab-pane -->
+			
+		</div>
+	</div>
+	<!-- /Tab panel -->	
+</div>

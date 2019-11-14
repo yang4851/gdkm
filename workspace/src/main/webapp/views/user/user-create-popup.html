@@ -1,0 +1,138 @@
+<script>
+	$("#createUserForm").parsley();
+</script>
+<!--========== 1. MODAL - modal-search ==========-->
+<div class="modal fade" id="user-create-popup">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <!-- Modal-header -->
+            <div class="modal-header">
+                <h4 class="modal-title">개인정보</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <!-- Modal-body -->
+             <form class="form-horizontal" id="createUserForm"
+            ng-submit="createForm.submit()" data-validate="parsley">
+	            <div class="modal-body">
+	            	<table class="data_tbl">
+						<colgroup>
+							<col style="width: 30%;">
+							<col style="width: 70%;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">사용자ID</th>
+								<td>
+									<input type="text" id="userId" class="form-control"
+									data-parsley-minlength="5"
+									data-parsley-maxlength="20"
+									ng-model="createForm.model.userId" 
+									data-parsley-priority-enabled="false"
+									data-parsley-remote="{{ idCheckUrl }}"
+									required/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">비밀번호</th>
+								<td>
+									<input type="password" class="form-control" id="createPw1"
+									placeholder="문자, 숫자, 특수문자 조합으로 최소 6자리에서 최대 12자로 지정"
+									data-parsley-minlength="6"
+									data-parsley-maxlength="12"
+									ng-model="createForm.model.password"
+									required/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">비밀번호 확인</th>
+								<td>
+									<input type="password" class="form-control" id="createPw2"
+									placeholder="문자, 숫자, 특수문자 조합으로 최소 6자리에서 최대 12자로 지정"
+									data-parsley-minlength="6"
+									data-parsley-maxlength="12"
+									data-parsley-equalto="#createPw1"
+									ng-model="createForm.model.pw2"
+									required/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">이름</th>
+								<td>
+									<input type="text" class="form-control"
+									data-parsley-minlength="1"
+									data-parsley-maxlength="5"
+									ng-model="createForm.model.name"
+									required/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">E-mail</th>
+								<td>
+									<input type="text" class="form-control"
+									data-parsley-type="email" 
+									data-parsley-remote-reverse="false"
+									data-parsley-minlength="1"
+									data-parsley-maxlength="45"
+									placeholder="sample@gmail.com"
+									ng-model="createForm.model.email"
+									required/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">소속기관명</th>
+								<td>
+									<input type="text" class="form-control"
+									data-parsley-minlength="1"
+									data-parsley-maxlength="20"
+									ng-model="createForm.model.institute"
+									required/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">부서</th>
+								<td>
+									<input type="text" class="form-control"
+									data-parsley-minlength="1"
+									data-parsley-maxlength="20"
+									ng-model="createForm.model.department"
+									required/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">연락처</th>
+								<td>
+									<input type="text" class="form-control"
+									placeholder="000-0000-0000"
+									data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$"
+									ng-model="createForm.model.phone"
+									required/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">권한</th>
+								<td>
+									<select type="text" class="form-control picker"
+									ng-model="createForm.model.authority"
+									required>
+										<option value="admin" ng-selected="true">admin</option>
+										<option value="member">member</option>
+										<!-- <option ng-repeat="x in selectUserAuthority" value="{{x.value}}">
+											{{x.value}}
+										</option> -->
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+	            </div>
+	            <!-- Modal-footer -->
+	            <div class="modal-footer">
+	                <button type="submit" class="btn btn_brand">Registration</button>
+	                <button type="button" class="btn btn-default" ng-click="createForm.reset()">Initialization</button>
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--========== /MODAL ==========-->

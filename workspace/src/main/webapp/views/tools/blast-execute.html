@@ -1,0 +1,111 @@
+<div class="container" ng-controller="blastExecuteController" ng-init="init();">
+<div class="content_top">
+	<h1 class="title_page">
+		<a href="#!/tools/blast" class="active">Blast</a>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#!/home">Home</a></li>
+		<li><a href="#!/tools/blast">Tools</a></li>
+		<li class="active">Blast</li>
+	</ol>
+</div>		
+
+<h2 class="title_con">Search</h2>
+<div class="row">
+	<Label for="" class="label-lg required col-md-3">Query Sequence(FASTA format)</Label>
+	<div class="col-md-9">
+		<textarea name="textAreaName" id="" cols="30" rows="7" class="form-control" maxlength="1048576" 
+				ng-model="blastEvent.uploadString"></textarea>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-3"></div>
+	<label class="col-md-4 column ui-sortable">Or, upload fasta file (Size Limits 1MB)</label>
+	<div class="col-md-5 column ui-sortable">
+		<label class="btn btn_secondary">
+			<i class="fa fa-upload"></i> Upload
+			<input type="file" class="" 
+			 ng-model="uploadFiles"
+			 ng-change="onclickUploadFile($uploadFiles)" 
+			 ngf-multiple="false" 
+			 ng-hide="true" ngf-select />
+		</label>
+		<button class="btn btn-default" ng-click="onclickTestBtn()">testSet</button>
+	</div>
+</div>
+
+<div class="row">
+	<Label for="" class="col-md-3 label-lg required">Molecular type</Label>
+	<div class="col-md-4">
+		<div class="inline-block">
+			<input class="form-check-input" type="radio" name="inlineRadioOptions1" id="inlineRadio1" ng-model="typeRadio" value="dna" ng-change="changeRadioButton()" >
+			<label class="form-check-label padding-right-60" for="inlineRadio1">DNA</label>
+		</div>
+		<div class="inline-block">
+			<input class="form-check-input" type="radio" name="inlineRadioOptions1" id="inlineRadio2" ng-model="typeRadio" value="protein" ng-change="changeRadioButton()">
+			<label class="form-check-label" for="inlineRadio2">Protein</label>
+		</div>
+	</div>
+	<div class="col-md-5"></div>
+</div>
+
+<div class="row">
+	<Label for="" class="col-md-3 label-lg required">Database</Label>
+	<div class="col-md-3">
+		<div class="inline-block">
+			<input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio3" ng-model="dbRadio" value="dna" ng-change="changeRadioButton()" >
+			<label class="form-check-label padding-right-60" for="inlineRadio3">DNA</label>
+		</div>
+		<div class="inline-block">
+			<input class="form-check-input " type="radio" name="inlineRadioOptions2" id="inlineRadio4" ng-model="dbRadio" value="protein" ng-change="changeRadioButton()">
+			<label class="form-check-label" for="inlineRadio4">Protein</label>
+		</div>
+	</div>
+	<div class="inline-block col-md-3">
+<!-- 		<button class="btn btn-default" ng-click="onclickDbList()">db list</button> -->
+<!-- 		<div ng-repeat="selectDb in selectDbList"> -->
+<!-- 			<label class="form-check-label">{{selectDb.name}}</label> -->
+<!-- 		</div> -->
+		<select name="filterSelect" id="" class="form-control" ng-model="blastEvent.dbNames">
+			<option ng-repeat="dbName in dbNames" ng-value="dbName">{{dbName}}</option>
+		</select>
+	</div>
+	<div class="col-md-3"></div>
+</div>
+<div class="row">
+	<Label for="" class="col-md-3 label-lg required">Program</Label>
+	<div class="col-md-3">
+		<select name="toolSelect" id="" class="form-control" ng-model="blastEvent.toolName">
+			<option ng-repeat="blastTool in blastTools" ng-value="blastTool">{{blastTool}}</option>
+		</select>
+	</div>
+	<div class="col-md-6"></div>
+</div>
+<div class="row">
+	<Label for="" class="label-lg required col-md-3">Expect threshold</Label>
+	<div class="col-md-3">
+		<select name="expectSelect" id="" class="form-control" ng-model="blastEvent.expect">
+			<option ng-repeat="expect in expects" ng-value="expect">{{expect}}</option>
+		</select>
+	</div>
+	<div class="col-md-6"></div>
+</div>
+
+<div class="row">
+	<Label for="" class="label-lg required col-md-3">Filter query sequence</Label>
+	<div class="col-md-3">
+		<select name="filterSelect" id="" class="form-control" ng-model="blastEvent.filter">
+			<option ng-repeat="filter in filters" ng-value="filter">{{filter}}</option>
+		</select>
+	</div>
+	<div class="col-md-6"></div>
+</div>
+
+<div class="row">
+	<div class="div-md">
+		<button type="button" class="btn btn-default " style="padding: 5px 30px;" ng-click="reset()">Reset</button>
+		<button type="submit" class="btn btn_brand" style="padding: 5px 30px;" ng-click="submit()">Run</button>
+	</div>
+</div>
+<div ng-include="'./views/popup/blast-db-list-popup.html'"></div>
+</div>

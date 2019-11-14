@@ -1,0 +1,277 @@
+<div class="panel_options">
+	<b class="label_required">* Required</b>
+   	<button class="btn btn_dark toggle_panels" ng-class="toggle_panels_css()" ng-click="toggleAccordions()"></button>
+</div>
+
+<uib-accordion close-others="false">
+
+	<!-- Submitter and sample information --> 
+	<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[0]">
+		<uib-accordion-heading>Submitter and sample information</uib-accordion-heading>
+		<div class="panel-collapse collapse in">
+			<div class="panel-accordion">
+				<div class="form-horizontal">
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Submitter</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.processedData.submitter" 
+							 placeholder="Input submitter name"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Submitting organization</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.processedData.submitOrgan"
+							 placeholder="ex) World Institute of Kimch"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Project</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.processedData.project" 
+							 placeholder="ex) Genome sequences of Nattrinema thermophila CBA1119T"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Project type</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.processedData.projectType" 
+							 placeholder="ex) whole genome shotgun sequencing"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Comment</label>
+						<div class="col-xs-9">
+							<textarea class="form-control" cols="30" rows="10" ng-model="model.processedData.submitComment"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Sequencing and Library information -->
+	<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[1]">
+		<uib-accordion-heading>Sequence and reference  information</uib-accordion-heading>
+       	<div class="panel-collapse collapse in">
+			<div class="accordion-panel">
+				<div class="form-horizontal">
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Assembly methods</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.processedData.assemblyMethod" 
+							 placeholder="ex) PacBio SMRT Analysis 2.3.0"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Assembly level</label>
+						<div class="col-xs-9">
+							<select class="form-control picker" ng-model="model.processedData.assemblyLevel"
+							 ng-options="code.name for code in paCodeList track by code.code"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Genome type</label>
+						<div class="col-xs-9">
+							<select class="form-control picker" ng-model="model.processedData.genomeType"
+							 ng-options="code.name for code in pgCodeList track by code.code"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Genome coverage</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.processedData.genomeCoverage" 
+							 placeholder="ex) 278.85"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Comment</label>
+						<div class="col-xs-9">
+							<textarea class="form-control" cols="30" rows="10" ng-model="model.processedData.seqComment"></textarea>
+						</div>
+					</div>
+					
+					<p class="form_ttl">Reference</p>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Reference title</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.processedData.refTitle" 
+							 placeholder="ex) Genome sequences of Natrinema thermophila CBA1119T"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Publishing status</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.processedData.refPubStatus" 
+							 placeholder="ex) unpublished"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Comment</label>
+						<div class="col-xs-9">
+							<textarea class="form-control" cols="30" rows="10" ng-model="model.processedData.refComment"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Raw data file information -->
+	<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[2]">
+		<uib-accordion-heading>Raw data information</uib-accordion-heading>
+	    <div class="panel-collapse collapse in">
+			<div class="accordion-panel">
+				<div class="form-horizontal">
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Strain</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.strain" 
+							 placeholder="ex) CBA1119T" ng-disabled="linkedHandler.size() > 0"/>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Species name</label>
+						<div class="col-xs-9">
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Search for..."
+								 ng-model="model.taxonomy.name" ng-disabled="true" />
+								<span class="input-group-btn" style="padding-left: 5px;">
+									<button type="button" class="btn btn_secondary"
+									 data-toggle="modal" data-target="#taxonomy-search-popup"
+									 ng-disabled="linkedHandler.size() > 0">Taxonomy search</button>
+								</span>							
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Taxonomy ID</label>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" ng-model="model.taxonomy.ncbiTaxonId" ng-disabled="true" />
+						</div>
+					</div>
+					
+					<p class="form_ttl">Linked raw data</p>
+					
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Linked Raw data</label>
+						<div class="col-xs-9">
+							<table class="list_tbl mtb10">
+								<thead>
+									<tr>
+										<th class="w40 text-center">
+											<input type="checkbox" i-check
+												ng-model="linkedHandler.checkedAll"
+												ng-change="linkedHandler.selectAll()"
+												ng-disabled="linkedHandler.size() == 0" />
+										</th>
+										<th>Raw data ID</th>
+										<th>Experiment type</th>
+										<th>Sequencing platform</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="item in linkedHandler.getItems()">
+										<td class="text-center">
+											<input type="checkbox" i-check
+												checklist-model="linkedHandler.selectedIdList"
+												checklist-value="item.id"
+												ng-change="linkedHandler.select(item)" />
+										</td>
+										<td class="text-center">{{ item.registNo }}</td>
+										<td class="text-center">{{ item.rawData.exprType.name }}</td>
+										<td class="text-center">{{ item.rawData.platform.name }}</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="btn-toolbar">
+								<button type="button" class="btn btn_secondary"
+									data-toggle="modal" data-target="#rawdata-search-popup">Add</button>
+								<button type="button" class="btn btn-default"
+									ng-disabled="!linkedHandler.hasSelectedItems()"
+									ng-click="linkedHandler.removeSelectedItems()">Delete</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Processed data file information -->
+	<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[3]">
+		<uib-accordion-heading>Annotation file information</uib-accordion-heading>
+		<div class="panel-collapse collapse in">
+			<div class="accordion-panel table-word-break">
+				<div class="form-horizontal">
+					<div class="form-group">
+						<label class="col-xs-3 control-label required">Annotation file(s)</label>
+						<div class="col-xs-9">
+							<div class="btn-toolbar">
+								<label class="btn btn_secondary">
+									<i class="fa fa-upload"></i> Upload
+									<input type="file" class="" 
+									 ng-model="uploadHandler.files" 
+									 ng-change="uploadHandler.upload()" 
+									 ngf-multiple="true" 
+									 ng-hide="true" ngf-select />
+								</label>
+							</div>
+							<table class="list_tbl mtb10">
+								<thead>
+									<tr>
+										<th class="w40 text-center">
+											<input type="checkbox" i-check
+											 ng-model="achiveHandler.checkedAll" 
+											 ng-change="achiveHandler.selectAll()" 
+											 ng-disabled="achiveHandler.size() == 0" />
+										<th>Annotation file name</th>
+										<th>MD5 checksum</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="item in achiveHandler.getItems()">
+										<td class="text-center">
+											<input type="checkbox" i-check 
+											 checklist-model="achiveHandler.selectedIdList"
+											 checklist-value="item.id" 
+											 ng-change="achiveHandler.select(item)" />
+										</td>
+										<td>
+											<i class="fa fa-exclamation-triangle" title="{{ item.verifiError }}"
+												data-toggle="tooltip"
+												ng-hide="item.verifiStatus != 'failed'" >
+												{{ item.fileName }}
+											</i>
+											<span ng-hide="item.verifiStatus == 'failed'">{{ item.fileName }}</span>
+										</td>
+										<td>{{ item.checksum }}</td>
+									</tr>
+									<tr ng-repeat="item in pendingList">
+										<td class="text-center">
+											<input type="checkbox" ng-model="item.checked" i-check disabled />
+										</td>
+										<td>{{ item.fileName }}</td>
+										<td>
+											<uib-progressbar class="progress-striped active" value="item.file.progress">
+												{{ item.file.progress }} %
+											</uib-progressbar>											
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="btn-toolbar">
+								<button type="button" class="btn btn-default" 
+								 ng-disabled="!achiveHandler.hasSelectedItems()" 
+								 ng-click="deleteAchiveFiles()">Delete</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</uib-accordion>

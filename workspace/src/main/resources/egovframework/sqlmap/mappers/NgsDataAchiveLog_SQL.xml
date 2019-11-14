@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NgsDataAchiveLog">
+	<resultMap id="NgsDataAchiveLog" type="ngsDataAchiveLog">
+		<result property="id" column="LOG_ID"/>
+		<result property="achiveId" column="ACHIVE_ID"/>
+		<result property="processType" column="PROCESS_TYPE"/>
+		<result property="processStatus" column="PROCESS_STAUTS"/>
+		<result property="processLog" column="PROCESS_LOG"/>
+		<result property="registDate" column="REGIST_DATE"/>
+		
+		<association property="registUser" column="{userId=REGIST_USER}" javaType="user" select="User.getBasicUser"/>
+	</resultMap>
+	
+	<sql id="selectSql">
+		SELECT LOG_ID,
+		       ACHIVE_ID,
+		       PROCESS_TYPE,
+		       PROCESS_STATUS,
+		       PROCESS_LOG,
+		       AES_DECRYPT(UNHEX(REGIST_USER),'raison') AS REGIST_USER,
+		       REGIST_DATE
+		  FROM T_NGS_DATA_ACHIVE_LOG
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(id)">
+		   AND LOG_ID = #{id}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(logId)">
+		   AND LOG_ID = #{logId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveId)">
+		   AND ACHIVE_ID = #{achiveId}
+			</if>
+		</trim>
+		 ORDER BY REGIST_DATE DESC
+	</sql>
+	
+	<insert id="insert" parameterType="ngsDataAchiveLog">
+	
+		<selectKey resultType="int" keyProperty="id" order="BEFORE">
+		SELECT (CASE 
+			WHEN 0 &lt; #{id} 
+			THEN IFNULL(#{id}, IFNULL(MAX(LOG_ID), 0) + 1)
+			ELSE IFNULL(MAX(LOG_ID), 0) + 1
+			END) AS ID
+		FROM T_NGS_DATA_ACHIVE_LOG
+		</selectKey>
+		
+		INSERT INTO T_NGS_DATA_ACHIVE_LOG (
+			LOG_ID,
+			ACHIVE_ID,
+			PROCESS_TYPE,
+			PROCESS_STATUS,
+			PROCESS_LOG,
+			REGIST_USER,
+			REGIST_DATE
+		) VALUES (
+			#{id},
+			#{achiveId},
+			#{processType},
+			#{processStatus},
+			#{processLog},
+			HEX(AES_ENCRYPT(#{registUser.userId},'raison')),
+			NOW()
+		)
+	</insert>
+	
+	<select id="get" resultMap="NgsDataAchiveLog">
+		<include refid="selectSql" />
+	  	 LIMIT 0, 1
+	</select>
+	
+	<select id="select" resultMap="NgsDataAchiveLog">
+		<include refid="selectSql" />
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+	  	 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(*) FROM (<include refid="selectSql" />) T
+	</select>
+	
+	<delete id="delete">
+		DELETE FROM T_NGS_DATA_ACHIVE_LOG
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(logId)">
+		   AND LOG_ID = #{logId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(logIds)">
+		   AND LOG_ID IN
+				<foreach collection="logIds" item="logId" open="(" separator="," close=")">
+					#{logId}
+				</foreach> 
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveId)">
+		   AND ACHIVE_ID = #{achiveId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveIds)">
+		   AND ACHIVE_ID IN
+				<foreach collection="achiveIds" item="achiveId" open="(" separator="," close=")">
+					#{achiveId}
+				</foreach> 
+			</if>
+		</trim>
+	</delete>
+	
+</mapper>

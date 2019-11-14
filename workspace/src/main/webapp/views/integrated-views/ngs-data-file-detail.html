@@ -1,0 +1,135 @@
+<ul class="nav nav-tabs">
+    <li class="active pointer"><a data-target="#ngsFileBasicTab" data-toggle="tab">{{ dataLabel }} information</a></li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane active table-word-break" id="ngsFileBasicTab">
+        <div class="title_box">
+            <h2 class="title_con">{{ dataLabel }} file information</h2>
+        </div>
+        <div>
+            <table class="data_tbl">
+	            <caption>{{ dataLabel }} file information</caption>
+	            <colgroup>
+	                <col style="width:30%;">
+	            </colgroup>
+	            <tbody>
+	                <tr>
+	                    <th>{{ dataLabel }} ID</th>
+	                    <td>
+	                    	<b>{{ model.dataRegist.registNo }}</b>
+                    	</td>
+	                </tr>
+	                <tr>
+	                    <th>{{ dataLabel }} file ID</th>
+	                    <td>{{ model.registNo }}</td>
+	                </tr>
+	            </tbody>
+	        </table>
+        </div>
+        
+        <div style="padding-top: 40px;">
+            <table class="data_tbl">
+                <caption>{{ dataLabel }} file information</caption>
+                <colgroup>
+                    <col style="width:30%;">
+                </colgroup>
+                <tbody>
+                	<tr>
+                		<th>File format</th>
+                		<td colspan="3">
+                			{{ model.fileType }}
+                			<a class="pointer" style="margin-left: 20px;" ng-click="openFastQcReport(model)" ng-hide="!hasSeqQc()">
+                				( QC information <i class="fa fa-link"></i> )
+                			</a>
+                		</td>
+                	</tr>
+                    <tr>
+                        <th>{{ dataLabel }} file name</th>
+                        <th>MD5 checksum</th>
+                        <th>File size</th>
+                        <th>Download</th>
+                    </tr>
+                    <tr>
+                        <td>{{ model.fileName }}</td>
+                        <td>
+                        	{{ model.checksum }}
+                       	</td>
+                        <td>{{ model.fileSize | bytes }}</td>
+                        <td class="text-center">
+                        	<button class="btn btn_secondary" ng-click="downloadAchiveFile(model)">
+                        		<i class="fa fa-download"></i> Download
+                        	</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div style="padding-top: 40px;" ng-hide="!hasSeqQuantity()">
+            <table class="data_tbl">
+                <colgroup>
+                    <col style="width:15%;">
+                    <col style="width:15%;">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th scope="row" rowspan="9">Sequence information</th>
+                        <th>Sequence read count</th>
+                        <td>{{ quantity.readCount | number }}</td>
+                    </tr>
+                    <tr>
+                        <th>Sequence total size (bp)</th>
+                        <td>{{ quantity.totalLength | number }}</td>
+                    </tr>
+                    <tr>
+                        <th>Sequence average length (bp)</th>
+                        <td>{{ quantity.averageLength | number }}</td>
+                    </tr>
+                    <tr>
+                        <th>GC contents (%)</th>
+                        <td>{{ calcGcContents(quantity) | number:2 }} %</td>
+                    </tr>
+                    <tr>
+                        <th>'A' sequence count</th>
+                        <td>{{ quantity.numberOfA | number }}</td>
+                    </tr>
+                    <tr>
+                        <th>'T' sequence count</th>
+                        <td>{{ quantity.numberOfT | number }}</td>
+                    </tr>
+                    <tr>
+                        <th>'G' sequence count</th>
+                        <td>{{ quantity.numberOfG | number }}</td>
+                    </tr>
+                    <tr>
+                        <th>'C' sequence count</th>
+                        <td>{{ quantity.numberOfC | number }}</td>
+                    </tr>
+                    <tr>
+                        <th>'N' sequence count</th>
+                        <td>{{ quantity.numberOfN | number }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Tab 2 - QC report -->
+    <div class="tab-pane" id="ngsFileQcTab" ng-hide="!hasSeqQc()">
+        <div class="title_box">
+            <h2 class="title_con">Quality control(QC) report</h2>
+        </div>
+        <table class="data_tbl">
+            <caption>Quality Control(QC) report table</caption>
+            <colgroup>
+                <col style="width:30%;">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <th>{{ dataLabel }} file ID</th>
+                    <td>{{ model.registNo }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="container" ng-init="init()">
+	<div class="col-left col-xs-3">
+	    <div ng-include="'./views/admin/left.html'"></div>
+	</div>
+  	<!-- col-left -->
+	<div class="col-right col-xs-9">
+     	<!-- page-title -->
+		<div class="content_top">
+		    <h1 class="title_page">
+		        <a href="#" class="active">사용자 관리</a>
+		        <!-- <a href="#">Annotation</a> -->
+		    </h1>
+		    <ol class="breadcrumb">
+		        <li><a href="#!/home">Home</a></li>
+		        <li><a href="#!/user">사용자 관리</a></li>
+		        <li class="active">그룹 관리</li>
+		    </ol>
+		</div>
+		<!-- /page-title -->
+	    <div>
+    		<div role="tabpanel">
+    			<!-- Nav tabs -->
+                <ul class="nav nav-tabs">
+                    <li class="active" ng-click="showUserInfo()"><a class="pointer" data-target="#tabPersonInfo" data-toggle="tab">개인정보</a></li>
+                    <li ng-click="showUserList()"><a class="pointer" data-target="#tabMemberManage" data-toggle="tab">회원관리</a></li>
+<!--                     <li><a data-target="#tabGroupManage" data-toggle="tab" ng-click="showUserGroupList()">그룹관리</a></li> -->
+                </ul>
+               	<!-- Tab panes -->
+                <div class="tab-content">
+                	<!-- tab1 -  개인정보 -->
+                    <div class="tab-pane active" id="tabPersonInfo">
+                    	<div ng-include="'./views/user/detail.html'"></div>
+                    </div>
+                   	<!-- tab2 - 회원관리 -->
+                    <div class="tab-pane" id="tabMemberManage">
+                    	<div ng-include="'./views/user/list.html'"></div>
+                    </div>
+<!--                     <div class="tab-pane" id="tabGroupManage"> -->
+<!--                     	<div ng-include="'./views/user/group-list.html'"></div> -->
+<!--                     </div> -->
+                </div>
+    		</div>
+	    </div>
+	</div>
+<!-- /col-right -->
+	<div ng-include="'./views/user/user-create-popup.html'"></div>
+	<div ng-include="'./views/user/user-edit-popup.html'"></div>
+<!-- 	<div ng-include="'./views/user/group-create-popup.html'"></div> -->
+<!-- 	<div ng-include="'./views/user/group-edit-popup.html'"></div> -->
+</div>

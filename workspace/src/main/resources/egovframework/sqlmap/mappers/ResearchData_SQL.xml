@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Research">
+ 
+	<resultMap id="Research" type="research">
+		<result property="id" column="RESEARCH_ID"/>
+		<result property="registNo" column="REGIST_NO"/>
+		<result property="title" column="TITLE"/>
+		<result property="journal" column="JOURNAL"/>
+		<result property="volume" column="VOLUME"/>
+		<result property="issue" column="ISSUE"/>
+		<result property="pages" column="PAGES"/>
+		<result property="published" column="PUBLISHED"/>
+		<result property="submitter" column="SUBMITTER"/>
+		<result property="submitOrgan" column="SUBMIT_ORGAN"/>
+		<result property="fullTextLink" column="FULL_TEXT_LINK"/>
+		<result property="content" column="CONTENT"/>		
+		<result property="openYn" column="OPEN_YN"/>
+		<result property="openDate" column="OPEN_DATE"/>
+		<result property="registStatus" column="REGIST_STATUS" />
+		<result property="registDate" column="REGIST_DATE" />
+		<result property="updateDate" column="UPDATE_DATE" />
+		
+		<association property="registUser" column="{userId=REGIST_USER}" javaType="user" select="User.getBasicUser" />
+		<association property="updateUser" column="{userId=UPDATE_USER}" javaType="user" select="User.getBasicUser" />
+	</resultMap>
+	
+	<resultMap id="BasicResearch" type="research">
+		<result property="id" column="RESEARCH_ID"/>
+		<result property="registNo" column="REGIST_NO"/>
+		<result property="title" column="TITLE"/>
+		<result property="journal" column="JOURNAL"/>
+		<result property="volume" column="VOLUME"/>
+		<result property="issue" column="ISSUE"/>
+		<result property="pages" column="PAGES"/>
+		<result property="published" column="PUBLISHED"/>
+		<result property="submitter" column="SUBMITTER"/>
+		<result property="submitOrgan" column="SUBMIT_ORGAN"/>
+		<result property="fullTextLink" column="FULL_TEXT_LINK"/>
+	</resultMap>
+	
+	<resultMap id="TinyResearch" type="research">
+		<result property="id" column="RESEARCH_ID"/>
+		<result property="registNo" column="REGIST_NO"/>
+	</resultMap>
+	
+	<sql id="searchByKeyword">
+		<trim prefix="AND (" prefixOverrides="OR|AND" suffix=")">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(keyword)">
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'registNo')"> 
+		   OR UPPER(REGIST_NO) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'title')">
+		   OR UPPER(TITLE) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'journal')">
+		   OR UPPER(JOURNAL) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'submitter')">
+		   OR UPPER(SUBMITTER) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'submitOrgan')">
+		   OR UPPER(SUBMIT_ORGAN) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isEmpty(fields)">
+		   OR UPPER(REGIST_NO) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+		   OR UPPER(TITLE) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+		   OR UPPER(JOURNAL) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+		   OR UPPER(SUBMITTER) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+		   OR UPPER(SUBMIT_ORGAN) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+		   OR UPPER(CONTENT) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="whereSQL">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(keyword)">
+				<include refid="Research.searchByKeyword" />
+			</if>
+			
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(id)">
+	  	   AND RESEARCH_ID = #{id}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(researchId)">
+	  	   AND RESEARCH_ID = #{researchId}
+			</if>
+			
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(openYn)">	
+	  	   AND UPPER(OPEN_YN) = UPPER(#{openYn})
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(openFrom)">	
+	  	   AND OPEN_DATE &gt;= DATE_FORMAT(CONCAT(#{openFrom}, ' 00:00:00'), '%Y-%m-%d %T')
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(openTo)">
+	  	   AND OPEN_DATE &lt;= DATE_FORMAT(CONCAT(#{openTo}, ' 23:59:59'), '%Y-%m-%d %T')
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registStatus)">
+	  	   AND REGIST_STATUS = #{registStatus}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registFrom)">	
+	  	   AND REGIST_DATE &gt;= DATE_FORMAT(CONCAT(#{registFrom}, ' 00:00:00'), '%Y-%m-%d %T')
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registTo)">
+	  	   AND REGIST_DATE &lt;= DATE_FORMAT(CONCAT(#{registTo}, ' 23:59:59'), '%Y-%m-%d %T')
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registUserId)">
+	  	   AND AES_DECRYPT(UNHEX(REGIST_USER),'raison') = #{registUserId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registUser)">
+	  	   AND AES_DECRYPT(UNHEX(REGIST_USER),'raison') = #{registUser.userId}
+			</if>
+			
+			<!-- NGS 데이터와 연계된 성과물(논문) 목록을 호출하는 경우 조건문 -->
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registId)">
+	  	   AND RESEARCH_ID IN (SELECT DISTINCT(RESEARCH_ID) FROM T_RESEARCH_NGS_DATA WHERE REGIST_ID=#{registId});
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="select">
+		SELECT RESEARCH_ID,
+		       REGIST_NO,
+		       TITLE,
+		       JOURNAL,
+		       VOLUME,
+		       ISSUE,
+		       PAGES,
+		       PUBLISHED,
+		       SUBMITTER,
+		       SUBMIT_ORGAN,
+		       FULL_TEXT_LINK,
+		       CONTENT,
+		       OPEN_YN,
+		       OPEN_DATE,
+		       REGIST_STATUS,
+		       AES_DECRYPT(UNHEX(REGIST_USER),'raison') AS REGIST_USER,
+		       REGIST_DATE,
+		       AES_DECRYPT(UNHEX(UPDATE_USER),'raison') AS UPDATE_USER,
+		       UPDATE_DATE
+		  FROM T_RESEARCH_DATA
+    	<include refid="whereSQL" />
+	</sql>
+	
+	<sql id="selectBasic">
+		SELECT RESEARCH_ID,
+		       REGIST_NO,
+		       TITLE,
+		       JOURNAL,
+		       VOLUME,
+		       ISSUE,
+		       PAGES,
+		       PUBLISHED,
+		       SUBMITTER,
+		       SUBMIT_ORGAN,
+		       FULL_TEXT_LINK
+		  FROM T_RESEARCH_DATA
+    	<include refid="whereSQL" />
+	</sql>
+	
+	<sql id="selectTiny">
+		SELECT RESEARCH_ID,
+		       REGIST_NO
+		  FROM T_RESEARCH_DATA
+    	<include refid="whereSQL" />
+	</sql>
+	
+	<insert id="insert" parameterType="research">
+		<selectKey resultType="int" keyProperty="id" order="BEFORE">
+		SELECT (CASE WHEN 0 &lt; #{id}
+		             THEN IFNULL(#{id}, IFNULL(MAX(RESEARCH_ID), 0) + 1)
+		             ELSE IFNULL(MAX(RESEARCH_ID), 0) + 1
+		             END) AS id
+		 FROM T_RESEARCH_DATA
+   		</selectKey>
+   		
+		INSERT INTO T_RESEARCH_DATA(
+			RESEARCH_ID,
+			REGIST_NO,
+			TITLE,
+			JOURNAL,
+			VOLUME,
+			ISSUE,
+			PAGES,
+			PUBLISHED,
+			SUBMITTER,
+			SUBMIT_ORGAN,
+			FULL_TEXT_LINK,
+			CONTENT,
+			OPEN_YN,
+			OPEN_DATE,
+			REGIST_STATUS,
+			REGIST_USER,
+			REGIST_DATE,
+			UPDATE_USER,
+			UPDATE_DATE
+		) VALUES (
+			#{id},
+			(SELECT CONCAT('GDKM-R-', LPAD(CAST(CAST(IFNULL(MAX(SUBSTR(SUB.REGIST_NO, -4, 4)), 0) AS UNSIGNED)+1 AS CHAR), 4, '0')) AS registNo
+			   FROM T_RESEARCH_DATA SUB
+			  WHERE SUB.REGIST_NO LIKE CONCAT('GDKM-R-','%')),
+			#{title},
+			#{journal},
+			#{volume},
+			#{issue},
+			#{pages},
+			#{published},   
+			#{submitter},
+			#{submitOrgan},
+			#{fullTextLink},
+			#{content},
+			#{openYn},
+			#{openDate},
+			#{registStatus},
+			HEX(AES_ENCRYPT(#{registUser.userId},'raison')),
+			NOW(),
+			HEX(AES_ENCRYPT(#{registUser.userId},'raison')),
+			NOW()
+		)
+	</insert>
+	
+	<select id="get" resultMap="Research">
+		<include refid="select" />
+		 LIMIT 0, 1
+	</select>
+	
+	<select id="getBasic" resultMap="BasicResearch">
+		<include refid="selectBasic" />
+		 LIMIT 0, 1
+	</select>
+	
+	<select id="getTiny" resultMap="TinyResearch">
+		<include refid="selectTiny" />
+		 LIMIT 0, 1
+	</select>
+	
+	<select id="select" resultMap="Research">
+		<include refid="select" />
+		 ORDER BY REGIST_DATE DESC
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+		 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(*) 
+		  FROM T_RESEARCH_DATA
+		<include refid="whereSQL" />
+	</select>
+	
+	<update id="update" parameterType="research">
+		UPDATE T_RESEARCH_DATA 
+		   SET TITLE          = #{title},
+		       JOURNAL        = #{journal},
+		       VOLUME         = #{volume},
+		       ISSUE          = #{issue},
+		       PAGES          = #{pages},
+		       PUBLISHED      = #{published},
+		       SUBMITTER      = #{submitter},
+		       SUBMIT_ORGAN   = #{submitOrgan},
+		       FULL_TEXT_LINK = #{fullTextLink},
+		       CONTENT        = #{content},
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(openYn)">
+		       OPEN_YN        = #{openYn},
+		</if>
+		       OPEN_DATE      = #{openDate},
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registStatus)">
+		       REGIST_STATUS  = #{registStatus},
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(updateUser)">
+		       UPDATE_USER    = HEX(AES_ENCRYPT(#{updateUser.userId},'raison')),
+		</if>
+		       UPDATE_DATE    = NOW()
+		 WHERE RESEARCH_ID    = #{id}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM T_RESEARCH_DATA
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(id)">
+		   AND RESEARCH_ID = #{id}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(researchId)">
+		   AND RESEARCH_ID = #{researchId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registNo)">
+		   AND UPPER(REGIST_NO) = UPPER(#{registNo})
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registUserId)">
+		   AND AES_DECRYPT(UNHEX(REGIST_USER),'raison') = UPPER(#{registUserId})
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registUser)">
+		   AND AES_DECRYPT(UNHEX(REGIST_USER),'raison') = UPPER(#{registUser.userId})
+			</if>
+		</trim>
+	</delete>
+
+</mapper>

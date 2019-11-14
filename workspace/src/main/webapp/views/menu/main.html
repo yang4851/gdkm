@@ -1,0 +1,43 @@
+ <div class="container">
+
+        <div class="col-left col-xs-3">
+          <div ng-include="'./views/admin/left.html'"></div>
+        </div>
+        <!-- col-left -->
+        <div class="col-right col-xs-9">
+            <!-- page-title -->
+            <div class="content_top">
+                <h1 class="title_page">
+                    <a href="#" class="active">메뉴 관리</a>
+                    <!-- <a href="#">Annotation</a> -->
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#!/home">Home</a></li>
+                    <li><a href="#!/menu">메뉴 관리</a></li>
+                    <li class="active">그룹 관리</li>
+                </ol>
+            </div>
+            <!-- /page-title -->
+            <div>
+        	<!-- Tab panel -->
+	         	<div role="tabpanel">
+	             <!-- Nav tabs -->
+		             <ul class="nav nav-tabs">
+		                 <li class="active"><a data-target="#tabMenuManage" data-toggle="tab">메뉴관리</a></li>
+		                 <li><a data-target="#tabPageManage" data-toggle="tab">페이지관리</a></li>
+		             </ul>
+		             <!-- Tab panes -->
+		             <div class="tab-content">
+	                 <!-- tab1 -  개인정보 -->
+	                   <div class="tab-pane active" id="tabMenuManage">
+	                   		<div ng-include="'./views/menu/list.html'"></div>
+	                   </div>
+	                   <div class="tab-pane" id="tabPageManage">
+	                   		<div ng-include="'./views/menu/page-list.html'"></div>
+	                   </div>
+	               </div>
+	           	</div>
+	    	</div>
+        </div>
+        <!-- /col-right -->
+    </div>

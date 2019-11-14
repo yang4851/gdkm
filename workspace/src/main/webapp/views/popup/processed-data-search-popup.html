@@ -1,0 +1,151 @@
+<div class="modal fade overflow-y" id="processed-search-popup"
+	ng-controller="ProcessedSearchController" ng-init="init()">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- modal-header -->
+            <div class="modal-header">
+                <h3 class="modal-title">Annotation data search
+					<button type="button" class="btn-link"><span class="fa fa-search"></span></button>
+				</h3>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <!-- /modal-header -->
+
+            <!-- modal-body -->
+            <div class="modal-body">
+            
+            	<!-- search form -->
+                <div class="search_form_tbl">	
+					<div class="form-horizontal col_tbl">
+						
+						<div class="form-group">
+							<div class="col-xs-4" style="float: left;">
+								<select class="form-control picker" ng-model="params.registStatus"
+								 ng-options="code.id as code.name for code in registSttsCodeList"
+								 ng-disabled="true"></select>
+							</div>
+							<div class="col-xs-8 input-daterange">
+								<div class="input-group" moment-picker="params.registFrom" format="YYYY-MM-DD" start-view="month">
+									<input class="form-control" placeholder="Select a date"
+									 ng-model="params.registFrom" ng-model-options="{ updateOn: 'blur' }" />
+									<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+								</div>
+								<div class="dash">-</div>
+								<div class="input-group" moment-picker="params.registTo" format="YYYY-MM-DD" start-view="month">
+									<input class="form-control" placeholder="Select a date"
+									 ng-model="params.registTo" ng-model-options="{ updateOn: 'blur' }" />
+									<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<div class="col-xs-4" style="float: left;">
+								<select class="form-control picker" ng-model="params.fields"
+								 ng-options="code.id as code.name for code in registSttsCodeList"></select>
+							</div>
+							<div class="col-xs-8">
+								<input type="text" class="form-control" ng-model="params.keyword" ng-enter="search()" />
+							</div>
+						</div>
+					</div>
+					
+					<div class="col_tbl">
+						<button type="submit" class="btn btn_brand" ng-click="search()">Search</button>
+					</div>
+				</div>
+				<!--/ search form -->
+				
+				<!-- action button -->
+				<div class="row toolbar">
+					<div class="col-xs-3">
+						<p class="form-control-static">
+							All <strong class="num">{{ pageHandler.getTotal() | number }}</strong>
+						</p>
+					</div>
+					<div class="col-xs-9 form-inline">
+						<div class="form-group">
+							<select class="form-control picker"
+								ng-options="code.id as code.name for code in openYnCodeList"
+								ng-model="params.openYn" ng-change="search()"></select>
+						</div>
+						<div class="form-group">
+							<select class="form-control picker"
+								ng-options="code.id as code.name for code in rowSizeCodeList"
+								ng-model="pageHandler.numberOfRows" ng-change="search()"></select>
+						</div>
+						<button type="button" class="btn btn-default" ng-click="search()">
+							<i class="fa fa-undo"></i><span class="sr-only">Refresh</span>
+						</button>
+					</div>
+				</div>
+				<!--/ action button -->
+				
+            	<!-- raw data list -->
+				<table class="list_tbl panel_g">
+					<thead>
+						<tr>
+							<th class="th_check sorting_disabled" style="width: 39.5px;">
+								<input type="checkbox" i-check ng-model="modelHandler.checkedAll" 
+								 ng-change="modelHandler.selectAll()" ng-disabled="modelHandler.size() == 0" />
+							</th>
+							<th>Annotation data ID</th>
+							<th>NCBI taxonomy</th>
+							<th>Strain</th>
+							<th>Project</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="panel_h" ng-repeat="item in modelHandler.getItems()">
+							<td class="text-center">
+								<input type="checkbox" checklist-model="modelHandler.selectedIdList"
+								 checklist-value="item.id" ng-change="modelHandler.select(item)" i-check />
+							</td>
+							<td class="text-center">
+								<a role="button" ng-click="modelHandler.select(item)">{{ item.registNo }}</a>
+							</td>
+							<td class="cell-ellipse" data-toggle="tooltip" data-placement="bottom" 
+								title="{{ tooltip(item.taxonomy.name, 35) }}">{{ item.taxonomy.name }}</td>
+							<td class="text-center">{{ item.strain }}</td>
+							<td class="cell-ellipse" data-toggle="tooltip" data-placement="bottom" 
+								title="{{ tooltip(item.processedData.project, 35) }}">{{ item.processedData.project }}</td>
+						</tr>
+					</tbody>
+				</table>
+					
+				<!-- pagination -->
+				<nav class="text-center">
+					<ul class="pagination">
+						<li ng-hide="pageHandler.isPrevDisabled()">
+							<a aria-label="Previous" ng-click="pageHandler.prev()">
+								<i class="fa fa-chevron-left" aria-hidden="true"></i>
+							</a>
+						</li>
+						<li ng-repeat="page in pageHandler.getPages()"
+							ng-class="(pageHandler.getCurrentPage() == page) ? 'active' : 'pointer'">
+							<a ng-click="pageHandler.setCurrentPage(page, true)">{{ page }}</a>
+						</li>
+						
+						<li ng-hide="pageHandler.isNextDisabled()">
+							<a aria-label="Next" ng-click="pageHandler.next()">
+								<i class="fa fa-chevron-right" aria-hidden="true"></i>
+							</a>
+						</li>
+					</ul>
+				</nav>
+				<!--/ raw data list -->
+				
+            </div>
+            <!-- /modal-body -->
+            
+            <!-- modal-footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>				
+				<button type="button" class="btn btn_brand" ng-click="select()" ng-disabled="!modelHandler.hasSelectedItems()">Select</button>
+            </div>
+            <!-- /modal-footer -->
+
+        </div>
+    </div>
+</div>

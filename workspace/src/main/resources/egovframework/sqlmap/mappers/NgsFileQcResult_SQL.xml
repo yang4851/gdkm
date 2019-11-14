@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NgsFileQcResult">
+
+	<resultMap id="NgsFileQcResult" type="ngsFileQcResult">
+		<result property="id" column="RESULT_ID" />
+		<result property="fileName" column="FILE_NAME" />
+		<result property="filePath" column="FILE_PATH" />
+		<result property="fileSize" column="FILE_SIZE" />
+		<result property="fileType" column="FILE_TYPE" />
+		<result property="summary" column="QC_SUMMARY" />
+		<result property="status" column="QC_STATUS" />
+		<result property="registDate" column="REGIST_DATE" />
+		
+		<association property="achive" column="{achiveId=ACHIVE_ID}" javaType="ngsDataAchive" select="NgsDataAchive.getBasic" />
+		<association property="registUser" column="{userId=REGIST_USER}" javaType="user" select="User.getBasicUser" />
+	</resultMap>
+	
+	<sql id="select">
+		SELECT Q.RESULT_ID,
+		       Q.ACHIVE_ID,
+		       Q.FILE_NAME,
+		       Q.FILE_PATH,
+		       Q.FILE_SIZE,
+		       Q.FILE_TYPE,
+		       Q.QC_SUMMARY,
+		       Q.QC_STATUS,
+		       AES_DECRYPT(UNHEX(Q.REGIST_USER),'raison') AS REGIST_USER,
+		       Q.REGIST_DATE
+	  	  FROM T_NGS_FILE_QC_RESULT Q, T_NGS_DATA_ACHIVE A
+		 WHERE Q.ACHIVE_ID = A.ACHIVE_ID
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(fileType)">
+	  	   AND UPPER(Q.FILE_TYPE) = UPPER(#{fileType})
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(status)">
+	  	   AND UPPER(Q.QC_STATUS) = UPPER(#{status})
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveId)">
+	  	   AND Q.ACHIVE_ID = #{achiveId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isDataAchive(achive)">
+	  	   AND Q.ACHIVE_ID = #{achive.id}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registId)">
+	  	   AND A.REGIST_ID = #{registId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(resultId)">
+	  	   AND Q.RESULT_ID = #{resultId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(id)">
+	  	   AND Q.RESULT_ID = #{id}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(ids)">
+	  	   AND Q.RESULT_ID IN 
+			<foreach collection="ids" item="resultId" open="(" separator="," close=")">
+				#{resultId}
+			</foreach>
+		</if>
+	</sql>
+	
+	<insert id="insert" parameterType="ngsFileQcResult">
+		<selectKey resultType="int" keyProperty="id" order="BEFORE">
+		SELECT (CASE WHEN 0 &lt; #{id}
+		             THEN IFNULL(#{id}, IFNULL(MAX(RESULT_ID), 0) + 1)
+		             ELSE IFNULL(MAX(RESULT_ID), 0) + 1
+		             END) AS id
+		 FROM T_NGS_FILE_QC_RESULT
+   		</selectKey>
+   		 
+		INSERT INTO T_NGS_FILE_QC_RESULT(
+			RESULT_ID,
+			ACHIVE_ID,
+			FILE_NAME,
+			FILE_PATH,
+			FILE_SIZE,
+			FILE_TYPE,
+			QC_SUMMARY,
+			QC_STATUS,
+			REGIST_USER,
+			REGIST_DATE
+		) VALUES (
+			#{id},
+			#{achive.id},
+			#{fileName},
+			#{filePath},
+			#{fileSize},
+			#{fileType},
+			#{summary},
+			#{status},
+			HEX(AES_ENCRYPT(#{registUser.userId},'raison')),
+			NOW()
+		)
+	</insert>
+	
+	<select id="get" resultMap="NgsFileQcResult">
+		<include refid="select" />
+	  	 LIMIT 0, 1
+	</select>
+	
+	<select id="select" resultMap="NgsFileQcResult">
+		<include refid="select" />
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+	  	 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(*) FROM (<include refid="select" />) T
+	</select>
+	
+	<update id="update" parameterType="ngsFileQcResult">
+		UPDATE T_NGS_FILE_QC_RESULT 
+		   SET FILE_NAME   = #{fileName},
+		       FILE_PATH   = #{filePath},
+		       FILE_SIZE   = #{fileSize},
+		       FILE_TYPE   = #{fileType},
+		       QC_SUMMARY  = #{summary},
+		       QC_STATUS   = #{status}
+		 WHERE RESULT_ID   = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM T_NGS_FILE_QC_RESULT
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveId)">
+	  	   AND ACHIVE_ID = #{achiveId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registId)">
+	  	   AND ACHIVE_ID IN (SELECT DISTINCT(ACHIVE_ID) FROM T_NGS_DATA_ACHIVE WHERE REGIST_ID=#{registId})
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(resultId)">
+	  	   AND RESULT_ID = #{resultId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(id)">
+	  	   AND RESULT_ID = #{id}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(ids)">
+	  	   AND RESULT_ID IN 
+				<foreach collection="ids" item="resultId" open="(" separator="," close=")">
+					#{resultId}
+				</foreach>
+			</if>
+		</trim>
+	</delete>
+</mapper>

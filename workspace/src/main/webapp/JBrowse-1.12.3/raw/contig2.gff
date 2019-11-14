@@ -1,0 +1,100 @@
+##gff-version 3
+##sequence-region gnl|MG|Se3_2_1 1 47753
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	93	551	0	-	.	ID=Se3_2_00001;Parent=Se3_2_00001_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00001;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00001
+gnl|MG|Se3_2_1	prokka	gene	93	551	.	-	.	ID=Se3_2_00001_gene;locus_tag=Se3_2_00001
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	902	1951	0	+	.	ID=Se3_2_00002;Parent=Se3_2_00002_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00002;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00002
+gnl|MG|Se3_2_1	prokka	gene	902	1951	.	+	.	ID=Se3_2_00002_gene;locus_tag=Se3_2_00002
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	2083	2541	0	-	.	ID=Se3_2_00003;Parent=Se3_2_00003_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00003;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00003
+gnl|MG|Se3_2_1	prokka	gene	2083	2541	.	-	.	ID=Se3_2_00003_gene;locus_tag=Se3_2_00003
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	2949	3629	0	-	.	ID=Se3_2_00004;Parent=Se3_2_00004_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00004;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00004
+gnl|MG|Se3_2_1	prokka	gene	2949	3629	.	-	.	ID=Se3_2_00004_gene;locus_tag=Se3_2_00004
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	3767	5242	0	-	.	ID=Se3_2_00005;Parent=Se3_2_00005_gene;eC_number=3.2.1.1;Name=amyS;gene=amyS;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P06279;locus_tag=Se3_2_00005;product=Alpha-amylase;protein_id=gnl|MG|Se3_2_00005
+gnl|MG|Se3_2_1	prokka	gene	3767	5242	.	-	.	ID=Se3_2_00005_gene;Name=amyS;gene=amyS;locus_tag=Se3_2_00005
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	5725	6183	0	+	.	ID=Se3_2_00006;Parent=Se3_2_00006_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00006;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00006
+gnl|MG|Se3_2_1	prokka	gene	5725	6183	.	+	.	ID=Se3_2_00006_gene;locus_tag=Se3_2_00006
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	6431	6670	0	+	.	ID=Se3_2_00007;Parent=Se3_2_00007_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00007;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00007
+gnl|MG|Se3_2_1	prokka	gene	6431	6670	.	+	.	ID=Se3_2_00007_gene;locus_tag=Se3_2_00007
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	6743	6982	0	+	.	ID=Se3_2_00008;Parent=Se3_2_00008_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00008;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00008
+gnl|MG|Se3_2_1	prokka	gene	6743	6982	.	+	.	ID=Se3_2_00008_gene;locus_tag=Se3_2_00008
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	7102	7572	0	+	.	ID=Se3_2_00009;Parent=Se3_2_00009_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00009;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00009
+gnl|MG|Se3_2_1	prokka	gene	7102	7572	.	+	.	ID=Se3_2_00009_gene;locus_tag=Se3_2_00009
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	7791	8342	0	+	.	ID=Se3_2_00010;Parent=Se3_2_00010_gene;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:Q5XBW6;locus_tag=Se3_2_00010;product=Stress response regulator gls24 ;protein_id=gnl|MG|Se3_2_00010
+gnl|MG|Se3_2_1	prokka	gene	7791	8342	.	+	.	ID=Se3_2_00010_gene;locus_tag=Se3_2_00010
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	8827	9102	0	+	.	ID=Se3_2_00011;Parent=Se3_2_00011_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00011;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00011
+gnl|MG|Se3_2_1	prokka	gene	8827	9102	.	+	.	ID=Se3_2_00011_gene;locus_tag=Se3_2_00011
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	9237	9824	0	+	.	ID=Se3_2_00012;Parent=Se3_2_00012_gene;Name=bin3;gene=bin3;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P20384;locus_tag=Se3_2_00012;product=Putative transposon Tn552 DNA-invertase bin3;protein_id=gnl|MG|Se3_2_00012
+gnl|MG|Se3_2_1	prokka	gene	9237	9824	.	+	.	ID=Se3_2_00012_gene;Name=bin3;gene=bin3;locus_tag=Se3_2_00012
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	9933	10601	0	+	.	ID=Se3_2_00013;Parent=Se3_2_00013_gene;Name=arlR;gene=arlR;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:Q9KJN4;locus_tag=Se3_2_00013;product=Response regulator ArlR;protein_id=gnl|MG|Se3_2_00013
+gnl|MG|Se3_2_1	prokka	gene	9933	10601	.	+	.	ID=Se3_2_00013_gene;Name=arlR;gene=arlR;locus_tag=Se3_2_00013
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	10625	11983	0	+	.	ID=Se3_2_00014;Parent=Se3_2_00014_gene;eC_number=2.7.13.3;Name=resE;gene=resE;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P35164;locus_tag=Se3_2_00014;product=Sensor histidine kinase ResE;protein_id=gnl|MG|Se3_2_00014
+gnl|MG|Se3_2_1	prokka	gene	10625	11983	.	+	.	ID=Se3_2_00014_gene;Name=resE;gene=resE;locus_tag=Se3_2_00014
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	12165	12977	0	+	.	ID=Se3_2_00015;Parent=Se3_2_00015_gene;eC_number=2.4.99.-;Name=lgt;gene=lgt;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:O34752;locus_tag=Se3_2_00015;product=Prolipoprotein diacylglyceryl transferase;protein_id=gnl|MG|Se3_2_00015
+gnl|MG|Se3_2_1	prokka	gene	12165	12977	.	+	.	ID=Se3_2_00015_gene;Name=lgt;gene=lgt;locus_tag=Se3_2_00015
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	12977	13192	0	+	.	ID=Se3_2_00016;Parent=Se3_2_00016_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00016;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00016
+gnl|MG|Se3_2_1	prokka	gene	12977	13192	.	+	.	ID=Se3_2_00016_gene;locus_tag=Se3_2_00016
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	13490	14902	0	+	.	ID=Se3_2_00017;Parent=Se3_2_00017_gene;eC_number=1.-.-.-;Name=mco;gene=mco;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:Q69HT9;locus_tag=Se3_2_00017;product=Multicopper oxidase mco;protein_id=gnl|MG|Se3_2_00017
+gnl|MG|Se3_2_1	prokka	gene	13490	14902	.	+	.	ID=Se3_2_00017_gene;Name=mco;gene=mco;locus_tag=Se3_2_00017
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	15364	15654	0	+	.	ID=Se3_2_00018;Parent=Se3_2_00018_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00018;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00018
+gnl|MG|Se3_2_1	prokka	gene	15364	15654	.	+	.	ID=Se3_2_00018_gene;locus_tag=Se3_2_00018
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	15672	16238	0	+	.	ID=Se3_2_00019;Parent=Se3_2_00019_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00019;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00019
+gnl|MG|Se3_2_1	prokka	gene	15672	16238	.	+	.	ID=Se3_2_00019_gene;locus_tag=Se3_2_00019
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	16292	18397	0	-	.	ID=Se3_2_00020;Parent=Se3_2_00020_gene;eC_number=3.6.3.54;Name=copB;gene=copB;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P05425;locus_tag=Se3_2_00020;product=Copper-exporting P-type ATPase B;protein_id=gnl|MG|Se3_2_00020
+gnl|MG|Se3_2_1	prokka	gene	16292	18397	.	-	.	ID=Se3_2_00020_gene;Name=copB;gene=copB;locus_tag=Se3_2_00020
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	18798	19058	0	-	.	ID=Se3_2_00021;Parent=Se3_2_00021_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00021;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00021
+gnl|MG|Se3_2_1	prokka	gene	18798	19058	.	-	.	ID=Se3_2_00021_gene;locus_tag=Se3_2_00021
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	19072	19872	0	-	.	ID=Se3_2_00022;Parent=Se3_2_00022_gene;eC_number=3.6.-.-;Name=soj;gene=soj;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P37522;locus_tag=Se3_2_00022;product=Sporulation initiation inhibitor protein Soj;protein_id=gnl|MG|Se3_2_00022
+gnl|MG|Se3_2_1	prokka	gene	19072	19872	.	-	.	ID=Se3_2_00022_gene;Name=soj;gene=soj;locus_tag=Se3_2_00022
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	20243	21574	0	-	.	ID=Se3_2_00023;Parent=Se3_2_00023_gene;Name=repE;gene=repE;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P03856;locus_tag=Se3_2_00023;product=Replication initiation protein;protein_id=gnl|MG|Se3_2_00023
+gnl|MG|Se3_2_1	prokka	gene	20243	21574	.	-	.	ID=Se3_2_00023_gene;Name=repE;gene=repE;locus_tag=Se3_2_00023
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	21965	22951	0	+	.	ID=Se3_2_00024;Parent=Se3_2_00024_gene;eC_number=2.7.7.7;Name=dinB;gene=dinB;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:Q47155;locus_tag=Se3_2_00024;product=DNA polymerase IV;protein_id=gnl|MG|Se3_2_00024
+gnl|MG|Se3_2_1	prokka	gene	21965	22951	.	+	.	ID=Se3_2_00024_gene;Name=dinB;gene=dinB;locus_tag=Se3_2_00024
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	22973	23416	0	+	.	ID=Se3_2_00025;Parent=Se3_2_00025_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00025;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00025
+gnl|MG|Se3_2_1	prokka	gene	22973	23416	.	+	.	ID=Se3_2_00025_gene;locus_tag=Se3_2_00025
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	23413	23583	0	+	.	ID=Se3_2_00026;Parent=Se3_2_00026_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00026;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00026
+gnl|MG|Se3_2_1	prokka	gene	23413	23583	.	+	.	ID=Se3_2_00026_gene;locus_tag=Se3_2_00026
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	24609	24956	0	+	.	ID=Se3_2_00027;Parent=Se3_2_00027_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00027;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00027
+gnl|MG|Se3_2_1	prokka	gene	24609	24956	.	+	.	ID=Se3_2_00027_gene;locus_tag=Se3_2_00027
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	24972	26600	0	+	.	ID=Se3_2_00028;Parent=Se3_2_00028_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00028;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00028
+gnl|MG|Se3_2_1	prokka	gene	24972	26600	.	+	.	ID=Se3_2_00028_gene;locus_tag=Se3_2_00028
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	27256	28260	0	-	.	ID=Se3_2_00029;Parent=Se3_2_00029_gene;eC_number=5.1.3.21;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:Q03PA4;locus_tag=Se3_2_00029;product=Maltose epimerase;protein_id=gnl|MG|Se3_2_00029
+gnl|MG|Se3_2_1	prokka	gene	27256	28260	.	-	.	ID=Se3_2_00029_gene;locus_tag=Se3_2_00029
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	28323	28790	0	+	.	ID=Se3_2_00030;Parent=Se3_2_00030_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00030;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00030
+gnl|MG|Se3_2_1	prokka	gene	28323	28790	.	+	.	ID=Se3_2_00030_gene;locus_tag=Se3_2_00030
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	28901	29200	0	-	.	ID=Se3_2_00031;Parent=Se3_2_00031_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00031;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00031
+gnl|MG|Se3_2_1	prokka	gene	28901	29200	.	-	.	ID=Se3_2_00031_gene;locus_tag=Se3_2_00031
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	29218	29577	0	-	.	ID=Se3_2_00032;Parent=Se3_2_00032_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00032;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00032
+gnl|MG|Se3_2_1	prokka	gene	29218	29577	.	-	.	ID=Se3_2_00032_gene;locus_tag=Se3_2_00032
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	30127	32385	0	+	.	ID=Se3_2_00033;Parent=Se3_2_00033_gene;eC_number=2.4.1.8;Name=malP;gene=malP;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:E6ENP7;locus_tag=Se3_2_00033;product=Maltose phosphorylase;protein_id=gnl|MG|Se3_2_00033
+gnl|MG|Se3_2_1	prokka	gene	30127	32385	.	+	.	ID=Se3_2_00033_gene;Name=malP;gene=malP;locus_tag=Se3_2_00033
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	32387	33052	0	+	.	ID=Se3_2_00034;Parent=Se3_2_00034_gene;eC_number=5.4.2.6;Name=pgmB;gene=pgmB;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P71447;locus_tag=Se3_2_00034;product=Beta-phosphoglucomutase;protein_id=gnl|MG|Se3_2_00034
+gnl|MG|Se3_2_1	prokka	gene	32387	33052	.	+	.	ID=Se3_2_00034_gene;Name=pgmB;gene=pgmB;locus_tag=Se3_2_00034
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	33124	35286	0	+	.	ID=Se3_2_00035;Parent=Se3_2_00035_gene;eC_number=2.7.1.199;Name=ptsG;gene=ptsG;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P20166;locus_tag=Se3_2_00035;product=PTS system glucose-specific EIICBA component;protein_id=gnl|MG|Se3_2_00035
+gnl|MG|Se3_2_1	prokka	gene	33124	35286	.	+	.	ID=Se3_2_00035_gene;Name=ptsG;gene=ptsG;locus_tag=Se3_2_00035
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	35442	36323	0	+	.	ID=Se3_2_00036;Parent=Se3_2_00036_gene;eC_number=3.1.3.90;Name=mapP;gene=mapP;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:E6ENP9;locus_tag=Se3_2_00036;product=Maltose 6'-phosphate phosphatase;protein_id=gnl|MG|Se3_2_00036
+gnl|MG|Se3_2_1	prokka	gene	35442	36323	.	+	.	ID=Se3_2_00036_gene;Name=mapP;gene=mapP;locus_tag=Se3_2_00036
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	37155	37841	0	-	.	ID=Se3_2_00037;Parent=Se3_2_00037_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00037;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00037
+gnl|MG|Se3_2_1	prokka	gene	37155	37841	.	-	.	ID=Se3_2_00037_gene;locus_tag=Se3_2_00037
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	37919	38314	0	-	.	ID=Se3_2_00038;Parent=Se3_2_00038_gene;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:Q46604;locus_tag=Se3_2_00038;product=FMN-binding protein;protein_id=gnl|MG|Se3_2_00038
+gnl|MG|Se3_2_1	prokka	gene	37919	38314	.	-	.	ID=Se3_2_00038_gene;locus_tag=Se3_2_00038
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	38569	39504	0	-	.	ID=Se3_2_00039;Parent=Se3_2_00039_gene;eC_number=1.17.4.1;Name=nrdF;gene=nrdF;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P37146;locus_tag=Se3_2_00039;product=Ribonucleoside-diphosphate reductase 2 subunit beta;protein_id=gnl|MG|Se3_2_00039
+gnl|MG|Se3_2_1	prokka	gene	38569	39504	.	-	.	ID=Se3_2_00039_gene;Name=nrdF;gene=nrdF;locus_tag=Se3_2_00039
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	39603	39935	0	-	.	ID=Se3_2_00040;Parent=Se3_2_00040_gene;eC_number=1.11.1.-;Name=tpx_1;gene=tpx_1;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P31308;locus_tag=Se3_2_00040;product=putative thiol peroxidase;protein_id=gnl|MG|Se3_2_00040
+gnl|MG|Se3_2_1	prokka	gene	39603	39935	.	-	.	ID=Se3_2_00040_gene;Name=tpx_1;gene=tpx_1;locus_tag=Se3_2_00040
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	39948	40094	0	-	.	ID=Se3_2_00041;Parent=Se3_2_00041_gene;eC_number=1.11.1.-;Name=tpx_2;gene=tpx_2;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P31308;locus_tag=Se3_2_00041;product=putative thiol peroxidase;protein_id=gnl|MG|Se3_2_00041
+gnl|MG|Se3_2_1	prokka	gene	39948	40094	.	-	.	ID=Se3_2_00041_gene;Name=tpx_2;gene=tpx_2;locus_tag=Se3_2_00041
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	40455	41408	0	-	.	ID=Se3_2_00042;Parent=Se3_2_00042_gene;eC_number=1.17.4.1;Name=nrdF2;gene=nrdF2;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P9WH71;locus_tag=Se3_2_00042;product=Ribonucleoside-diphosphate reductase subunit beta nrdF2;protein_id=gnl|MG|Se3_2_00042
+gnl|MG|Se3_2_1	prokka	gene	40455	41408	.	-	.	ID=Se3_2_00042_gene;Name=nrdF2;gene=nrdF2;locus_tag=Se3_2_00042
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	41418	43574	0	-	.	ID=Se3_2_00043;Parent=Se3_2_00043_gene;eC_number=1.17.4.1;Name=nrdE1;gene=nrdE1;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P0CG99;locus_tag=Se3_2_00043;product=Ribonucleoside-diphosphate reductase subunit alpha 1;protein_id=gnl|MG|Se3_2_00043
+gnl|MG|Se3_2_1	prokka	gene	41418	43574	.	-	.	ID=Se3_2_00043_gene;Name=nrdE1;gene=nrdE1;locus_tag=Se3_2_00043
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	43609	44376	0	-	.	ID=Se3_2_00044;Parent=Se3_2_00044_gene;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:Q97T03;locus_tag=Se3_2_00044;product=Putative NrdI-like protein;protein_id=gnl|MG|Se3_2_00044
+gnl|MG|Se3_2_1	prokka	gene	43609	44376	.	-	.	ID=Se3_2_00044_gene;locus_tag=Se3_2_00044
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	44534	45205	0	+	.	ID=Se3_2_00045;Parent=Se3_2_00045_gene;Name=fixK;gene=fixK;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P29286;locus_tag=Se3_2_00045;product=Nitrogen fixation regulation protein FixK;protein_id=gnl|MG|Se3_2_00045
+gnl|MG|Se3_2_1	prokka	gene	44534	45205	.	+	.	ID=Se3_2_00045_gene;Name=fixK;gene=fixK;locus_tag=Se3_2_00045
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	45276	45596	0	-	.	ID=Se3_2_00046;Parent=Se3_2_00046_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00046;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00046
+gnl|MG|Se3_2_1	prokka	gene	45276	45596	.	-	.	ID=Se3_2_00046_gene;locus_tag=Se3_2_00046
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	45604	45960	0	-	.	ID=Se3_2_00047;Parent=Se3_2_00047_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00047;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00047
+gnl|MG|Se3_2_1	prokka	gene	45604	45960	.	-	.	ID=Se3_2_00047_gene;locus_tag=Se3_2_00047
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	46666	46998	0	+	.	ID=Se3_2_00048;Parent=Se3_2_00048_gene;inference=ab initio prediction:Prodigal:2.6;locus_tag=Se3_2_00048;product=hypothetical protein;protein_id=gnl|MG|Se3_2_00048
+gnl|MG|Se3_2_1	prokka	gene	46666	46998	.	+	.	ID=Se3_2_00048_gene;locus_tag=Se3_2_00048
+gnl|MG|Se3_2_1	Prodigal:2.6	CDS	47038	47706	0	-	.	ID=Se3_2_00049;Parent=Se3_2_00049_gene;eC_number=6.3.5.2;Name=guaA;gene=guaA;inference=ab initio prediction:Prodigal:2.6,similar to AA sequence:UniProtKB:P99105;locus_tag=Se3_2_00049;product=GMP synthase [glutamine-hydrolyzing];protein_id=gnl|MG|Se3_2_00049
+gnl|MG|Se3_2_1	prokka	gene	47038	47706	.	-	.	ID=Se3_2_00049_gene;Name=guaA;gene=guaA;locus_tag=Se3_2_00049

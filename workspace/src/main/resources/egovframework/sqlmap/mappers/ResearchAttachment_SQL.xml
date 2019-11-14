@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ResearchAttachment">
+
+	<resultMap id="ResearchAttachment" type="researchAttachment">
+		<result property="id" column="ATTACHMENT_ID"/>
+		<result property="registNo" column="REGIST_NO"/>
+		<result property="name" column="FILE_NAME"/>
+		<result property="size" column="FILE_SIZE"/>
+		<result property="type" column="FILE_TYPE"/>
+		<result property="description" column="DESCRIPTION"/>
+		<result property="registDate" column="REGIST_DATE" />
+		
+		<association property="registUser" column="{userId=REGIST_USER}" javaType="user" select="User.getBasicUser" />
+		<association property="research" column="{researchId=RESEARCH_ID}" javaType="research" select="Research.getTiny" />
+	</resultMap>
+		       
+	<resultMap id="BasicResearchAttachment" type="researchAttachment">
+		<result property="id" column="ATTACHMENT_ID"/>
+		<result property="registNo" column="REGIST_NO"/>
+		<result property="name" column="FILE_NAME"/>
+		<result property="size" column="FILE_SIZE"/>
+		<result property="type" column="FILE_TYPE"/>
+		<result property="description" column="DESCRIPTION"/>
+	</resultMap>
+	
+	<sql id="searchByKeyword">
+		<trim prefix="AND (" prefixOverrides="OR|AND" suffix=")">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(keyword)">
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'registNo')"> 
+		   OR UPPER(REGIST_NO) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'fileName')">
+		   OR UPPER(FILE_NAME) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'description')">
+		   OR UPPER(DESCRIPTION) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isEmpty(fields)">
+		   OR UPPER(REGIST_NO) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+		   OR UPPER(FILE_NAME) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+		   OR UPPER(DESCRIPTION) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="whereSQL">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(keyword)">
+				<include refid="searchByKeyword" />
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(id)">
+	  	   AND ATTACHMENT_ID = #{id}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(attachmentId)">
+	  	   AND ATTACHMENT_ID = #{attachmentId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(research)">
+	  	   AND RESEARCH_ID = #{research.id}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(researchId)">
+	  	   AND RESEARCH_ID = #{researchId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(fileType)">
+	  	   AND UPPER(FILE_TYPE) = UPPER(#{fileType})
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registFrom)">	
+	  	   AND REGIST_DATE &gt;= DATE_FORMAT(CONCAT(#{registFrom}, ' 00:00:00'), '%Y-%m-%d %T')
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registTo)">
+	  	   AND REGIST_DATE &lt;= DATE_FORMAT(CONCAT(#{registTo}, ' 23:59:59'), '%Y-%m-%d %T')
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registUser)">
+	  	   AND AES_DECRYPT(UNHEX(REGIST_USER),'raison') = #{registUser.userId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registUserId)">
+	  	   AND AES_DECRYPT(UNHEX(REGIST_USER),'raison') = #{registUserId}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="select">
+		SELECT ATTACHMENT_ID,
+		       REGIST_NO,
+		       RESEARCH_ID,
+		       FILE_NAME,
+		       FILE_SIZE,
+		       FILE_TYPE,
+		       DESCRIPTION,
+		       AES_DECRYPT(UNHEX(REGIST_USER),'raison') AS REGIST_USER,
+		       REGIST_DATE
+		  FROM T_RESEARCH_ATTACHMENT
+    	<include refid="whereSQL" />
+	</sql>
+	
+	<sql id="selectBasic">
+		SELECT ATTACHMENT_ID,
+		       REGIST_NO,
+		       FILE_NAME,
+		       FILE_SIZE,
+		       FILE_TYPE,
+		       DESCRIPTION
+		  FROM T_RESEARCH_ATTACHMENT
+    	<include refid="whereSQL" />
+	</sql>
+	
+	<insert id="insert" parameterType="researchAttachment">
+		<selectKey resultType="int" keyProperty="id" order="BEFORE">
+		SELECT (CASE WHEN 0 &lt; #{id}
+		             THEN IFNULL(#{id}, IFNULL(MAX(ATTACHMENT_ID), 0) + 1)
+		             ELSE IFNULL(MAX(ATTACHMENT_ID), 0) + 1
+		             END) AS id
+		 FROM T_RESEARCH_ATTACHMENT
+   		</selectKey>
+   		
+		INSERT INTO T_RESEARCH_ATTACHMENT(
+			ATTACHMENT_ID,
+			REGIST_NO,
+			RESEARCH_ID,
+			FILE_NAME,
+			FILE_SIZE,
+			FILE_TYPE,
+			DESCRIPTION,
+			REGIST_USER,
+			REGIST_DATE
+		) VALUES (
+			#{id},
+			(SELECT CONCAT(#{research.registNo}, '-A', LPAD(CAST(CAST(IFNULL(MAX(SUBSTR(SUB.REGIST_NO, -3, 3)), 0) AS UNSIGNED)+1 AS CHAR), 3, '0')) AS registNo
+			   FROM T_RESEARCH_ATTACHMENT SUB
+			  WHERE SUB.RESEARCH_ID=#{research.id}),
+			#{research.id},
+			#{name},
+			#{size},
+			#{type},
+			#{description},
+			HEX(AES_ENCRYPT(#{registUser.userId},'raison')),
+			NOW()
+		)
+	</insert>
+	
+	<select id="get" resultMap="ResearchAttachment">
+		<include refid="select" />
+		 LIMIT 0, 1
+	</select>
+	
+	<select id="getBasic" resultMap="BasicResearchAttachment">
+		<include refid="selectBasic" />
+		 LIMIT 0, 1
+	</select>
+	
+	<select id="select" resultMap="ResearchAttachment">
+		<include refid="select" />
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+		 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="selectBasic" resultMap="BasicResearchAttachment">
+		<include refid="selectBasic" />
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+		 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(*) 
+		  FROM T_RESEARCH_ATTACHMENT
+		<include refid="whereSQL" />
+	</select>
+	
+	<update id="update" parameterType="researchAttachment">
+		UPDATE T_RESEARCH_ATTACHMENT 
+		   SET FILE_NAME     = #{name},
+		       FILE_TYPE     = #{type},
+		       FILE_SIZE     = #{size},
+		       DESCRIPTION   = #{description}
+		 WHERE ATTACHMENT_ID = #{id}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM T_RESEARCH_ATTACHMENT <include refid="whereSQL" />
+	</delete>
+
+</mapper>

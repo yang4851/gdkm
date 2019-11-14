@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html ng-app="gdkmApp">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+		<title>GDKM(Genome Database of Kimchi-associated Microbes)</title>
+		 
+		<!-- Global Styles -->
+		<link rel="stylesheet" type="text/css" href="./vendors/NanumGothic/NanumGothic.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/font-awesome-5/web-fonts-with-css/css/fontawesome-all.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/bootstrap-select/dist/css/bootstrap-select.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/pnotify/dist/pnotify.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/pnotify/dist/pnotify.buttons.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/blueimp-file-upload/css/jquery.fileupload.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/angular-moment-picker/dist/angular-moment-picker.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/iCheck/skins/all.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/parsleyjs/src/parsley.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/mocha/mocha.css" />
+		
+		<!-- Custom Style -->  
+		<link rel="stylesheet" type="text/css" href="./lib/css/vendors.min.css" />
+		<link rel="stylesheet" type="text/css" href="./css/custom.css" />
+		<link rel="stylesheet" type="text/css" href="./css/home.css" />
+		
+		
+		<script type="text/javascript" src="./vendors/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="./vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="./vendors/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+		<script type="text/javascript" src="./vendors/bootstrap-waitingfor/build/bootstrap-waitingfor.min.js"></script>
+		<script type="text/javascript" src="./vendors/pnotify/dist/pnotify.js"></script>
+		<script type="text/javascript" src="./vendors/pnotify/dist/pnotify.confirm.js"></script>
+		<script type="text/javascript" src="./vendors/pnotify/dist/pnotify.buttons.js"></script>
+		<script type="text/javascript" src="./vendors/parsleyjs/dist/parsley.min.js"></script>
+		<script type="text/javascript" src="./vendors/mocha/mocha.js"></script>
+		<script type="text/javascript" src="./vendors/moment/min/moment-with-locales.js"></script>
+		
+		<!-- angularjs Plugins-->
+		<script type="text/javascript" src="./vendors/angular/angular.js"></script>
+		<script type="text/javascript" src="./vendors/angular-animate/angular-animate.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-route/angular-route.js"></script>
+		<script type="text/javascript" src="./vendors/angular-aria/angular-aria.js"></script>
+		<script type="text/javascript" src="./vendors/angular-sanitize/angular-sanitize.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-messages/angular-messages.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-material/angular-material.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-resource/angular-resource.js"></script>
+		<script type="text/javascript" src="./vendors/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+		<script type="text/javascript" src="./vendors/angular-moment-picker/dist/angular-moment-picker.js"></script>
+		<script type="text/javascript" src="./vendors/angular-bootstrap-select/build/angular-bootstrap-select.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-google-chart/ng-google-chart.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-pnotify/src/angular-pnotify.js"></script>
+		<script type="text/javascript" src="./vendors/ng-file-upload/ng-file-upload.js"></script>
+		<script type="text/javascript" src="./vendors/ng-file-upload/ng-file-upload-shim.js"></script>
+		<script type="text/javascript" src="./vendors/checklist-model/checklist-model.js"></script>		
+		<script type="text/javascript" src="./vendors/iCheck/icheck.js"></script>
+		<script type="text/javascript" src="./vendors/angular-bootstrap-grid-tree/src/tree-grid-directive.js"></script>
+		
+		<!-- Page Level Plugins -->
+		
+		<script type="text/javascript" src="./vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+		
+	</head>
+	<body ng-controller="gbkParsingController" ng-init="init()">
+		<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+    <li class="active"><a data-target="#tabGbkData" data-toggle="tab">Annotation data information</a></li>
+    <li><a data-target="#tabGbk" data-toggle="tab">Genbank(gbk) information</a></li>
+</ul>
+<!-- Tab panes -->
+<div class="tab-content">
+    <!-- Tab 1 - Annotation information -->
+    <div class="tab-pane active" id="tabGbkData">
+        <div class="title_box">
+            <h2 class="title_con">Basic information</h2>
+            <p><b class="label_required">* Required</b></p>
+        </div>
+        <div>
+            <table class="data_tbl">
+	            <caption>Basic information</caption>
+	            <colgroup>
+	                <col style="width:30%;">
+	            </colgroup>
+	            <tbody>
+	                <tr>
+	                    <th>Annotation data ID</th>
+	                    <td><b>{{annotationDataFileModel.annotationDataId}}</b></td>
+	                </tr>
+	                <tr>
+	                    <th>Annotation data file ID</th>
+	                    <td>{{annotationDataFileModel.annotationDataFileId}}</td>
+	                </tr>
+	                <tr>
+	                    <th>Annotation data file name</th>
+	                    <td>{{annotationDataFileModel.name}}</td>
+	                </tr>
+	                <tr>
+	                    <th>Locus tag</th>
+	                    <td>{{annotationDataFileModel.locus}}</td>
+	                </tr>
+	                <tr>
+	                    <th>Organism</th>
+	                    <td>{{annotationDataFileModel.organism}}</td>
+	                </tr>
+	                <tr>
+	                    <th>Strain</th>
+	                    <td>{{annotationDataFileModel.strain}}</td>
+	                </tr>
+	                <tr>
+	                    <th>Registration Date</th>
+	                    <td>{{annotationDataFileModel.registDate}}</td>
+	                </tr>
+	            </tbody>
+        	</table>
+        </div>
+        <br/>
+        <div>
+       	 	<div class="title_box">
+	           <h2 class="title_con">Gene location and features</h2>
+	        </div>
+            <div class="feature_tablebox">
+            	<table class='data_tbl'>
+            		<caption>Gene location and features</caption>
+            		<thead>
+            			<tr>
+            				<th>No.</th>
+            				<th>Features</th>
+            				<th>Start</th>
+            				<th>End</th>
+            				<th>Strand</th>
+            				<th>Gene name</th>
+            				<th>Product</th>
+            				<th>Sequence</th>
+            			</tr>
+            		</thead>
+            		<tbody>
+            			<tr ng-repeat="x in names">
+            				<td>{{ $index+1 }}</td>
+            				<td>{{x.type}}</td>
+            				<td>{{x.start}}</td>
+            				<td>{{x.end}}</td>
+            				<td>{{x.strand=="POSITIVE"?"+":"-"}}</td>
+            				<td>{{x.geneName}}</td>
+            				<td>{{x.product}}</td>
+            				<td class='cell-ellipse'>{{x.sequence}}</td>
+            			</tr>
+            		</tbody>
+            	</table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 2 - Genbank(GBK) information -->
+    <div class="tab-pane" id="tabGbk">
+        <div class="getGbkFile_box">
+        	<pre>
+        	{{ fileContent }}
+        	</pre>
+        </div>
+    </div>
+</div>
+<div ng-include="'./views/popup/gbk-sequence-popup.html'"></div>
+   		<script type="text/javascript" src="./js/custom.js"></script>
+
+		<!-- Page Level Scripts -->
+		
+		<script type="text/javascript" src="./js/app.js"></script>
+		<script type="text/javascript" src="./js/app-common.js"></script>
+		<script type="text/javascript" src="./js/app-object.js"></script>
+		<script type="text/javascript" src="./js/app-filter.js"></script>
+		<script type="text/javascript" src="./js/app-route.js"></script>
+		
+		<script type="text/javascript" src="./js/factory/login-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/user-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/code-group-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/code-factory.js"></script>
+		
+		<script type="text/javascript">
+		gdkmApp.controller('gbkParsingController',function($scope, $log, $http){
+			sequence = [];
+			
+			$scope.hello = 'hello~';
+            
+                    
+			$scope.init = function() {
+				var params = {};
+				params['query'] = this.query || '';
+				params['title'] = window.location.search.slice(1).split("=")[1];
+				
+				$http.get(Utils.getContextPath() + "/gbk/features", {params : params}).then(
+					function(res){
+						$scope.names = res.data;
+						console.log(res.data);
+				},
+				function(err) {
+						$scope.hello = err.data;
+				});
+				
+				$http.get(Utils.getContextPath() + "/gbk/file", {params : params}).then(
+						function(res){
+							result = res.data;
+							$.each(result, function(i, line){
+								$scope.fileContent += line+"\n";
+							});
+						});
+			}
+		});	
+		</script>
+	</body>
+</html>

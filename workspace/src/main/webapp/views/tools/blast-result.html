@@ -1,0 +1,150 @@
+<div class="container" ng-controller="blastResultController" ng-init="init();">
+
+<div class="content_top">
+	<h1 class="title_page">
+		<a href="#!/tools/blast" class="active">Blast</a>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#!/home">Home</a></li>
+		<li><a href="#!/tools/blast">Tools</a></li>
+		<li class="active">Blast</li>
+	</ol>
+</div>
+
+<div class="wrap-blast-scroll">
+	<div class="sublists-cards bg-skyBlue">
+		<div class="card border-0">
+			<div class="card-header">
+				<h2 class="title_con">Summary</h2>
+			</div>
+			<div id="collapse1-2" class="search_form_tbl">
+				<div class="card-body">
+					<table class="table-reset">
+						<tbody>
+							<tr>
+								<th class="wt-300">Query Sequence Count</th>
+								<td>{{summary.queryCount}}</td>
+							</tr>
+							<tr>
+								<th class="wt-300">Molecule Type</th>
+								<td>{{summary.dbType=='dna'?'Nucleic acid':'Protein'}}</td>
+							</tr>
+							<tr>
+								<th class="wt-300">Blast DB Name</th>
+								<td><span ng-repeat="dbName in summary.dbNames track by $index">{{dbName}}</span></td>
+							</tr>
+							<tr>
+								<th class="wt-300">Search Program</th>
+								<td>{{summary.toolName}}</td>
+							</tr>
+							<tr>
+								<th class="wt-300">Expect</th>
+								<td>{{summary.expect}}</td>
+							</tr>
+							<tr>
+								<th class="wt-300">Filter</th>
+								<td>{{summary.filter}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- /card -->
+	</div>
+
+	<!-- === Option bar === -->
+	<div class="row toolbar ng-scope" style="padding-bottom: 10px;">
+		<div class="col-xs-3">
+			<p class="form-control-static">
+				All <strong class="num">{{blastTabResults.length}}</strong>
+			</p>
+		</div>
+		<div class="col-xs-9 form-inline text-right"></div>
+	</div>
+	<!-- /Option bar -->
+
+	<!--
+              # 테이블에 스크롤 넣고 싶으면, 테이블을 div class="table-responsive" 로 감싸줍니다.
+              # 가로세로 스크롤을 원할 경우 class="overflow-auto" 로 감싸줍니다.
+            -->
+	<div class="table-responsive" overflow-y: auto;">
+		<table class="list_tbl panel_g">
+			<thead class="thead-light text-center">
+				<tr>
+					<th>Annotation data ID</th>
+					<th>Organism / Strain</th>
+					<th>Length</th>
+					<th>Number of matches</th>
+					<th>Download</th>
+					<th style="width: 30px">
+						<button type="button" class="btn toggle_panel"
+							ng-class="toggle_panel_css()" ng-click="toggleActiveBlastRows(blastTabResults)" />
+					</th>
+				</tr>
+			</thead>
+			<tbody class="text-center" ng-repeat="blastTabResult in blastTabResults">
+				<tr class="panel_h" ng-class="panel_h_css(blastTabResult.achive.id)">
+					<td><a class="pointer" ng-click="onClickRegistDataDetail(blastTabResult.achive.dataRegist)">{{blastTabResult.achive.dataRegist.registNo}}</a></td>
+					<td>{{blastTabResult.achive.dataRegist.taxonomy.name}} / {{blastTabResult.achive.dataRegist.strain}}</td>
+					<td>{{blastTabResult.achive.fileSize}}</td>
+					<td>{{blastTabResult.results.length}}</td>
+					<td>
+						<span class="badge {{fileType.fileType}}" ng-repeat="fileType in blastTabResult.achive.dataRegist.fileTypes" ng-click="downloadAchiveFile(fileType)">
+						{{fileType.fileType=='fasta'?'F':(fileType.fileType=='gbk'?'B':(fileType.fileType=='gff'?'G':'O'))}}</span>
+					</td>
+					<td class="text-center">
+						<button type="button" class="btn toggle_panel" ng-class="panel_h_css(blastTabResult.achive.id)" ng-click="activeRow(blastTabResult.achive.id)"></button>
+					</td>
+				</tr>
+				<tr class="panel-collapse" ng-class="panel_collapse_css(blastTabResult.achive.id)">
+					<td colspan="6">
+					<table class="table">
+						<thead class="thead-light text-center">
+							<tr class="panel_g">
+								<th>Query ID</th>
+								<th>Subject ID</th>
+								<th>Identity(%)</th>
+								<th>Alignment Length</th>
+								<th>Mismatches</th>
+								<th>Gap Opens</th>
+								<th>Query Start</th>
+								<th>Query End</th>
+								<th>Subject Start</th>
+								<th>Subject End</th>
+								<th>E-value</th>
+								<th>Bit Score</th>
+							</tr>
+						</thead>
+						<tbody >
+							<tr ng-repeat="result in blastTabResult.results">
+								<td>{{result.queryId}}</td>
+								<td><a class="pointer" ng-click="onClickGbkDetail(result, blastTabResult.achive)">{{result.subjectId}}</a></td>
+								<td>{{result.identity}}</td>
+								<td>{{result.length}}</td>
+								<td>{{result.mismatches}}</td>
+								<td>{{result.gapOpenings}}</td>
+								<td>{{result.queryStart}}</td>
+								<td>{{result.queryEnd}}</td>
+								<td>{{result.subjectStart}}</td>
+								<td>{{result.subjectEnd}}</td>
+								<td>{{result.eValue}}</td>
+								<td>{{result.bitScore}}</td>
+							</tr>
+							<tr>
+								<td colspan="13">
+									<pre class="left-align ht-600">{{blastTabResult.pairwise}}</pre>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!-- /Table -->
+</div>
+<div ng-include="'./views/popup/blast-gbk-detail-popup.html'"></div>
+<div ng-include="'./views/popup/processed-data-detail-popup.html'"></div>
+</div>

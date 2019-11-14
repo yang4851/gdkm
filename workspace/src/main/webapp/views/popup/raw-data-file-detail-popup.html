@@ -1,0 +1,29 @@
+
+<div class="modal fade overflow-y" id="raw-data-file-detail-popup">
+    <div class="modal-dialog modal-lg"><!-- size options: modal-sm, defaul(미선택시), modal-lg -->
+        <div class="modal-content">
+            <!-- Modal-header -->
+            <div class="modal-header">
+                <h3 class="modal-title">Details of Raw data file</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <!-- modal-body -->
+            <div class="modal-body">
+				<div ng-show="rawDataFileModel.format=='fastq'">
+					<div ng-include="'./views/integrated-views/raw-data-detail-fastq.html'"></div>
+				</div>
+				<div ng-show="rawDataFileModel.format=='bas.h5'">
+					<div ng-include="'./views/integrated-views/raw-data-detail-h5.html'"></div>
+				</div>
+				<div ng-show="rawDataFileModel.format=='fasta'">
+					<div ng-include="'./views/integrated-views/raw-data-detail-fasta.html'"></div>
+				</div>
+			</div>
+            <!-- /modal-body -->
+            <!-- Modal-footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+   </div>

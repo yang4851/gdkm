@@ -1,0 +1,160 @@
+
+<div class="modal fade overflow-y" id="ngs-processed-data-detail-popup" tabindex="-1" >
+<div class="modal-dialog modal-lg">
+	<div class="modal-content">
+
+		<!-- modal-header -->
+		<div class="modal-header">
+			<h3 class="modal-title">
+				Details of annotation data
+			</h3>
+			<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+		</div>
+		<!-- /modal-header -->
+		
+		<!-- modal-body -->
+		<div class="modal-body">
+			
+		<uib-accordion close-others="false">
+		 
+			<!-- input file list --> 
+			<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[0]">
+				<uib-accordion-heading>SUBMITTER AND SAMPLE INFORMATION</uib-accordion-heading>
+				<div class="panel-collapse collapse in">
+					<div class="accordion-panel">
+						<table class="data_tbl table-word-break">
+							<colgroup>
+								<col style="width: 15%;">
+								<col style="width: 15%;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th colspan="2">Annotation data ID</th>
+									<td>{{selectedFileInfo.dataRegistNo}}</td>
+								</tr>
+								<tr>
+									<th rowspan="5">Submitter information</th>
+									<th>Submitter</th>
+									<td>{{selectedFileInfo.processedData.submitter}}</td>
+								<tr>
+								<tr>
+									<th>Submitter oranization</th>
+									<td>{{selectedFileInfo.processedData.submitOrgan}}</td>
+								</tr>
+								<tr>
+									<th>Project</th>
+									<td>{{selectedFileInfo.processedData.project}}</td>
+								</tr>
+								<tr>
+									<th>Project type</th>
+									<td>{{selectedFileInfo.processedData.projectType}}</td>
+								</tr>
+								<tr>
+									<th colspan="2">Comment</th>
+									<td>{{selectedFileInfo.processedData.submitComment}}</td>
+								</tr>
+								<tr>
+									<th colspan="2">Registration date</th>
+									<td>{{selectedFileInfo.registDate | date: 'yyyy-MM-dd' }}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+			<!-- input file list --> 
+			<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[1]">
+				<uib-accordion-heading>SEQUENCE AND REFERENCE INFORMATION</uib-accordion-heading>
+				<div class="panel-collapse collapse in">
+					<div class="accordion-panel">
+						<table class="data_tbl table-word-break">
+							<colgroup>
+								<col style="width: 15%;">
+								<col style="width: 15%;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th rowspan="5">Sequencing</th>
+									<th>Assembly methods</th>
+									<td>{{selectedFileInfo.processedData.assemblyMethod}}</td>
+								</tr>
+								<tr>
+									<th>Assembly level</th>
+									<td>{{selectedFileInfo.processedData.assemblyLevel.name}}</td>
+								<tr>
+								<tr>
+									<th>Genome type</th>
+									<td>{{selectedFileInfo.processedData.genomeType.name}}</td>
+								</tr>
+								<tr>
+									<th>Genome coverage</th>
+									<td>{{selectedFileInfo.processedData.genomeCoverage}}</td>
+								</tr>
+								<tr>
+									<th colspan="2">Comment</th>
+									<td>{{selectedFileInfo.processedData.seqComment}}</td>
+								</tr>
+								<tr>
+									<th rowspan="3">Reference</th>
+									<th>Reference title</th>
+									<td>{{selectedFileInfo.processedData.refTitle}}</td>							
+								</tr>
+								<tr>
+									<th>Publishing status</th>
+									<td>{{selectedFileInfo.processedData.regPubStatus}}</td>							
+								</tr>
+								<tr>
+									<th>Comment</th>
+									<td>{{selectedFileInfo.processedData.refComment}}</td>							
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+			<!-- input file list --> 
+			<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[2]">
+				<uib-accordion-heading>LINKED RAW DATA INFORMATION</uib-accordion-heading>
+				<div class="panel-collapse collapse in">
+					<div class="accordion-panel">
+						<table class="data_tbl table-word-break">
+							<colgroup>
+								<col style="width: 15%;">
+								<col style="width: 15%;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th colspan="2">Strain</th>
+									<td>{{selectedFileInfo.strain}}</td>
+								</tr>
+								<tr>
+									<th rowspan="3">NCBI Taxonomy</th>
+									<th>Species name</th>
+									<td>{{selectedFileInfo.taxonName.name}}</td>
+								<tr>
+								<tr>
+									<th>Taxonomy ID</th>
+									<td>{{selectedFileInfo.taxonName.taxonId}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</uib-accordion>
+			
+		</div>
+		<!-- /modal-body -->
+
+		<!-- modal-footer -->
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		</div>
+		<!-- /modal-footer -->
+
+	</div>
+</div>
+
+</div>

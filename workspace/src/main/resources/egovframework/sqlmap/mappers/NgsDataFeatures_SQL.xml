@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NgsDataFeatures">
+
+	<sql id="selectSql">
+		SELECT 
+		    F.FEATURES_ID,
+		    F.HEADER_ID,
+		    F.TYPE,
+		    F.GENE,
+		    F.START,
+		    F.END,
+		    F.STRAND,
+		    F.PRODUCT,
+		    F.SEQUENCE,
+		    F.CODON_START,
+		    F.EC_NUMBER,
+		    F.PROTEIN_ID,
+		    F.LOCUS_TAG
+		FROM T_NGS_DATA_FEATURES F, T_ACHIVE_FEATURES_XREF X
+		WHERE F.FEATURES_ID = X.FEATURES_ID
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(featuresId)">
+		AND F.FEATURES_ID = #{featuresId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(headerId)">
+		AND F.HEADER_ID = #{headerId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveId)">
+		AND X.ACHIVE_ID = #{achiveId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(type)">
+		AND UPPER(F.TYPE) = UPPER(#{type})
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(gene)">
+		AND UPPER(F.GENE) LIKE CONCAT('%',UPPER(#{gene}),'%')
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(proteinId)">
+		AND UPPER(F.PROTEIN_ID) LIKE CONCAT('%',UPPER(#{proteinId}),'%')
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(locusTag)">
+		AND UPPER(F.LOCUS_TAG) LIKE CONCAT('%',UPPER(#{type}),'%')
+		</if>
+	</sql>
+	
+	<select id="selectOne" parameterType="int" resultType="ngsDataFeatures">
+		SELECT 
+		    FEATURES_ID,
+		    HEADER_ID,
+		    TYPE,
+		    GENE,
+		    START,
+		    END,
+		    STRAND,
+		    PRODUCT,
+		    SEQUENCE,
+		    CODON_START,
+		    EC_NUMBER,
+		    PROTEIN_ID,
+		    LOCUS_TAG
+		FROM T_NGS_DATA_FEATURES 
+		WHERE FEATURES_ID = #{featuresId}
+	</select>
+	
+	<select id="selectList" resultType="ngsDataFeatures" >
+		<include refid="selectSql" />
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+	  	 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="selectIdList" resultType="int" >
+		SELECT DISTINCT(FEATURES_ID) 
+		  FROM T_NGS_DATA_FEATURES
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(headerId)">
+	  	   AND HEADER_ID = #{headerId}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="selectCount" resultType="int" >
+		SELECT COUNT(*) FROM (<include refid="selectSql" />) T
+	</select>
+	
+	<insert id="insert" parameterType="ngsDataFeatures" useGeneratedKeys="true" keyProperty="featuresId">
+		INSERT INTO T_NGS_DATA_FEATURES (
+		    HEADER_ID,
+		    TYPE,
+		    GENE,
+		    START,
+		    END,
+		    STRAND,
+		    PRODUCT,
+		    SEQUENCE,
+		    CODON_START,
+		    EC_NUMBER,
+		    PROTEIN_ID,
+		    LOCUS_TAG
+		) VALUES (
+			#{headerId}, 
+			#{type}, 
+			#{gene}, 
+			#{start}, 
+			#{end}, 
+			#{strand}, 
+			#{product}, 
+			#{sequence}, 
+			#{codonStart}, 
+			#{ecNumber}, 
+			#{proteinId}, 
+			#{locusTag}		
+		)
+	</insert>
+	
+	<update id="update" parameterType="ngsDataFeatures">
+		UPDATE T_NGS_DATA_FEATURES
+		SET 
+		    HEADER_ID = #{headerId},
+		    TYPE = #{type},
+		    GENE = #{gene},
+		    START = #{start},
+		    END = #{end},
+		    STRAND = #{strand},
+		    PRODUCT = #{product},
+		    SEQUENCE = #{sequence},
+		    CODON_START = #{codonStart},
+		    EC_NUMBER = #{ecNumber},
+		    PROTEIN_ID = #{proteinId},
+		    LOCUS_TAG = #{locusTag}
+		WHERE FEATURES_ID = #{featuresId}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM T_NGS_DATA_FEATURES
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(headerId)">
+    	   AND HEADER_ID = #{headerId}
+    		</if>
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(featuresId)">
+    	   AND FEATURES_ID = #{featuresId}
+    		</if>
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(featureIdList)">
+    	   AND FEATURES_ID IN 
+    			<foreach collection="featureIdList" item="featuresId" open="(" separator="," close=")">
+					#{featuresId}
+				</foreach>
+    		</if>
+    	</trim>
+	</delete>
+
+</mapper>

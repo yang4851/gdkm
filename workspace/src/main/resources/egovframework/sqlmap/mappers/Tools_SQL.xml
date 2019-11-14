@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Tools">
+
+	<!-- 	BlastNgsDataAchive -->
+	<resultMap id="BlastNgsDataAchive" type="ngsDataAchive">
+		<id property="id" column="ACHIVE_ID" /> 
+		<result property="registNo" column="REGIST_NO" /> 
+		<result property="fileName" column="FILE_NAME" /> 
+		<result property="fileType" column="FILE_TYPE" /> 
+		<result property="fileSize" column="FILE_SIZE" /> 
+		<result property="checksum" column="FILE_CHECKSUM" /> 
+		
+		<association property="dataRegist" javaType="ngsDataRegistView" column="{registId=REGIST_ID}" select="Tools.selectRegistByRegistId" />
+	</resultMap>
+	
+	<resultMap id="BlastNgsDataFileType" type="ngsDataAchive">
+		<id property="id" column="ACHIVE_ID" /> 
+		<result property="fileType" column="FILE_TYPE" /> 
+		<result property="fileName" column="FILE_NAME" /> 
+	</resultMap>
+	
+	<!-- 		BlastngsDataRegist -->
+	<resultMap id="BlastNgsDataRegistView" type="ngsDataRegistView">
+		<id property="id" column="REGIST_ID" /> 
+		<result property="registNo" column="REGIST_NO" /> 
+		<result property="dataType" column="DATA_TYPE" /> 
+		<result property="strain" column="STARIN" /> 
+		
+		<association property="processedData" column="{registId=REGIST_ID}" javaType="ngsProcessedData" select="NgsProcessedData.get" />
+		<association property="taxonomy" column="{taxonId=TAXON_ID}" javaType="taxonomy" select="Taxonomy.get" />
+		<association property="fileTypes" javaType="java.util.ArrayList" column="{registId=REGIST_ID}" select="Tools.selectListFileTypeByRegistId" />
+	</resultMap>
+	
+	<resultMap id="AniFile" type="aniFile">
+		<id property="achiveId" column="ACHIVE_ID" /> 
+		<result property="registId" column="REGIST_ID" /> 
+		<result property="achiveRegistNo" column="ACHIVE_REGIST_NO" /> 
+		<result property="dataRegistNo" column="DATA_REGIST_NO" /> 
+		<result property="fileName" column="FILE_NAME" /> 
+		<result property="fileType" column="FILE_TYPE" /> 
+		<result property="fileSize" column="FILE_SIZE" /> 
+		<result property="checksum" column="FILE_CHECKSUM" /> 
+		<result property="dataType" column="DATA_TYPE" /> 
+		<result property="strain" column="STARIN" /> 
+		
+		<association property="taxonomy" column="{taxonId=TAXON_ID}" javaType="taxonomy" select="Taxonomy.get" />
+		<association property="seqQuantityVO" javaType="NgsFileSeqQuantity" column="{achiveId=ACHIVE_ID}" select="Tools.selectSeqQuantityByAchiveId" />
+<!-- 		<association property="processedData" javaType="NgsProcessedData" column="{registId=REGIST_ID}" select="Tools.selectProcessedDataByRegistId" /> -->
+	</resultMap>
+	
+	<!-- 	AniNgsFileSeqQuantity -->
+	<resultMap id="AniNgsFileSeqQuantity" type="ngsFileSeqQuantity">
+		<id property="id" column="QUANTITY_ID" />
+		<result property="achiveId" column="ACHIVE_ID"/>
+		<result property="readCount" column="SEQ_READ_COUNT" />
+		<result property="totalLength" column="SEQ_TOTAL_LENGTH" />
+		<result property="averageLength" column="SEQ_AVERAGE_LENGTH" />
+		<result property="numberOfA" column="A_SEQ_COUNT" />
+		<result property="numberOfT" column="T_SEQ_COUNT" />
+		<result property="numberOfG" column="G_SEQ_COUNT" />
+		<result property="numberOfC" column="C_SEQ_COUNT" />
+		<result property="numberOfN" column="N_SEQ_COUNT" />
+		<result property="n50" column="N50_LENGTH" />
+	</resultMap>
+	
+	
+	<!-- 	Blast 관련 -->
+	<select id="selectListFileTypeByRegistId" resultMap="BlastNgsDataFileType">
+		select
+			FILE_TYPE
+			, ACHIVE_ID
+			, FILE_NAME
+		from
+			T_NGS_DATA_ACHIVE
+		where
+			REGIST_ID = #{registId, jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectRegistByRegistId" resultMap="BlastNgsDataRegistView">
+		select
+			REGIST_ID
+			, REGIST_NO
+			, TAXON_ID
+			, STRAIN
+			, DATA_TYPE
+			, REGIST_DATE
+		from
+			T_NGS_DATA_REGIST
+		where
+			OPEN_YN = 'Y'
+		and
+			REGIST_ID = #{registId}
+	</select>
+	
+	<!-- 	blast 관련 -->
+	<select id="selectAchiveByRegistNo" resultMap="BlastNgsDataAchive">
+		select
+			ACHIVE_ID
+			, REGIST_ID
+			, REGIST_NO
+			, FILE_TYPE
+			, FILE_NAME
+			, FILE_SIZE
+		from
+			T_NGS_DATA_ACHIVE
+		where
+			REGIST_NO = #{registNo}
+	</select>	
+	
+	<!-- 	blast 관련 -->
+	<select id="selectAchiveById" resultMap="BlastNgsDataAchive">
+		select
+			ACHIVE_ID
+			, REGIST_ID
+			, REGIST_NO
+			, FILE_TYPE
+			, FILE_NAME
+			, FILE_SIZE
+		from
+			T_NGS_DATA_ACHIVE
+		where
+			ACHIVE_ID = #{achiveId}
+	</select>	
+	
+	<select id="selectAchiveIdBySequenceName" resultType="AchiveBlastSequence">
+		select
+			ABSEQ_ID
+			, ACHIVE_ID
+			, SEQUENCE_NAME
+		from	
+			T_ACHIVE_BLAST_SEQ
+		where
+			SEQUENCE_NAME LIKE CONCAT(#{sequenceName}, '%') 
+	</select>
+	
+	<!-- 	blast 관련 -->
+	<select id="selectAchiveByIds" resultMap="BlastNgsDataAchive">
+		select
+			ACHIVE_ID
+			, REGIST_ID
+			, REGIST_NO
+			, FILE_TYPE
+			, FILE_NAME
+			, FILE_SIZE
+		from
+			T_NGS_DATA_ACHIVE
+		where
+			ACHIVE_ID in
+			<foreach collection="achives" item="achive" open="(" close=")" separator=",">
+		    	#{achive.achiveId}
+		    </foreach>
+	</select>	
+	
+	<!-- 	blast 관련 -->
+	<select id="selectFeaturesByHeaderIds" resultType="ngsDataFeatures">
+		select
+			FEATURES_ID
+			, HEADER_ID 
+			, TYPE
+			, GENE 
+			, START 
+			, END 
+			, STRAND 
+			, PRODUCT 
+			, SEQUENCE 
+			, CODON_START 
+			, EC_NUMBER 
+			, PROTEIN_ID 
+			, TRANSL_TABLE 
+			, LOCUS_TAG
+		from
+			T_NGS_DATA_FEATURES
+		where
+			HEADER_ID in
+			<foreach collection="headers" item="header" open="(" close=")" separator=",">
+		    	#{header, jdbcType=NUMERIC}
+		    </foreach>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(subjectStart)">
+			and END &gt;= #{subjectStart}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(subjectEnd)">
+			and START &lt;= #{subjectEnd}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+	  	LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="countFeaturesByHeaderIds" resultType="int">
+		select
+			count( FEATURES_ID ) 
+		from
+			T_NGS_DATA_FEATURES
+		where
+			HEADER_ID in
+			<foreach collection="headers" item="header" open="(" close=")" separator=",">
+		    	#{header, jdbcType=NUMERIC}
+		    </foreach>
+	    <if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(subjectStart)">
+			and END &gt;= #{subjectStart}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(subjectEnd)">
+			and START &lt;= #{subjectEnd}
+		</if>
+	</select>
+	
+	<!-- 	blast 관련 -->
+	<select id="selectAchiveHeaderXrefByHeaderId" resultType="achiveHeaderXref">
+		select
+			AHXREF_ID,
+		    ACHIVE_ID,
+		    HEADER_ID
+		from 
+			T_ACHIVE_HEADER_XREF
+		where
+			HEADER_ID in
+			<foreach collection="headers" item="header" open="(" close=")" separator=",">
+		    	#{header.headerId}
+		    </foreach>
+	</select>
+	
+	<!-- 	blast 관련  -->
+	<select id="selectHeaderByLocus" resultType="ngsDataFeaturesHeader">
+		select
+			HEADER_ID
+		from
+			T_NGS_DATA_FEATURES_HEADER
+		where
+			LOCUS = #{locus}
+	</select>
+	
+	<select id="selectAchiveOfFasta" resultMap="AniFile">
+		select
+			ACHIVE.ACHIVE_ID 
+			, ACHIVE.REGIST_ID 
+			, ACHIVE.REGIST_NO as ACHIVE_REGIST_NO
+			, ACHIVE.FILE_TYPE 
+			, ACHIVE.FILE_NAME 
+			, ACHIVE.FILE_SIZE 
+			, ACHIVE.FILE_CHECKSUM
+			, REGIST.REGIST_NO as DATA_REGIST_NO
+			, REGIST.TAXON_ID
+			, REGIST.STRAIN
+			, REGIST.DATA_TYPE
+			, REGIST.REGIST_DATE
+		from
+			T_NGS_DATA_ACHIVE ACHIVE, T_NGS_DATA_REGIST REGIST 
+		where
+			REGIST.REGIST_ID = ACHIVE.REGIST_ID 
+		and
+			ACHIVE.VERIFI_STATUS = 'success'
+		and
+			ACHIVE.REGIST_STATUS = 'validated'
+		and
+			ACHIVE.FILE_TYPE = 'fasta'
+		and
+			REGIST.OPEN_YN = 'Y'
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveRegistNo)" >
+		and
+			ACHIVE.REGIST_NO LIKE CONCAT('%',UPPER(#{achiveRegistNo}),'%')
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(fileName)" >
+		and
+			ACHIVE.FILE_NAME LIKE CONCAT('%',UPPER(#{fileName}),'%')
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(dataRegistNo)" >
+		and
+			REGIST.REGIST_NO LIKE CONCAT('%',UPPER(#{dataRegistNo}),'%')
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(strain)" >
+		and
+			REGIST.STRAIN LIKE CONCAT('%',UPPER(#{strain}),'%')
+		</if>
+		
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+	  	LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="selectSeqQuantityByAchiveId" resultMap="AniNgsFileSeqQuantity">
+		select
+			QUANTITY_ID
+			, ACHIVE_ID 
+			, SEQ_READ_COUNT
+			, SEQ_TOTAL_LENGTH 
+			, SEQ_AVERAGE_LENGTH 
+			, A_SEQ_COUNT 
+			, T_SEQ_COUNT 
+			, G_SEQ_COUNT 
+			, C_SEQ_COUNT 
+			, N_SEQ_COUNT 
+			, N50_LENGTH 
+		from
+			T_NGS_FILE_SEQ_QUANTITY
+		where
+			ACHIVE_ID = #{achiveId}
+	</select>
+	
+	<select id="selectProcessedDataByRegistId" resultType="ngsProcessedData">
+		select
+			REGIST_ID 
+			, SUBMITTER 
+			, SUBMIT_ORGAN 
+			, PROJECT 
+			, PROJECT_TYPE 
+			, SUBMIT_COMMENT 
+			, ASSEMBLY_METHOD 
+			, ASSEMBLY_LEVEL_CD 
+			, GENOME_TYPE_CD 
+			, GENOME_COVERAGE 
+			, SEQ_COMMENT 
+			, REF_TITLE 
+			, REF_PUB_STATUS 
+			, REF_COMMENT	
+		from
+			T_NGS_PROCESSED_DATA
+		where
+			REGIST_ID = #{registId}
+	</select>
+	
+	<select id="countAchiveOfFasta" resultType="int">
+		select
+			count( ACHIVE.ACHIVE_ID ) 
+		from
+			T_NGS_DATA_ACHIVE ACHIVE, T_NGS_DATA_REGIST REGIST 
+		where
+			REGIST.REGIST_ID = ACHIVE.REGIST_ID 
+		and
+			ACHIVE.VERIFI_STATUS = 'success'
+		and
+			ACHIVE.REGIST_STATUS = 'validated'
+		and
+			ACHIVE.FILE_TYPE = 'fasta'
+		and
+			REGIST.OPEN_YN = 'Y'
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveRegistNo)" >
+		and
+			ACHIVE.REGIST_NO LIKE CONCAT('%',UPPER(#{achiveRegistNo}),'%')
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(fileName)" >
+		and
+			ACHIVE.FILE_NAME LIKE CONCAT('%',UPPER(#{fileName}),'%')
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(dataRegistNo)" >
+		and
+			REGIST.REGIST_NO LIKE CONCAT('%',UPPER(#{dataRegistNo}),'%')
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(strain)" >
+		and
+			REGIST.STRAIN LIKE CONCAT('%',UPPER(#{strain}),'%')
+		</if>
+		
+	</select>
+</mapper>

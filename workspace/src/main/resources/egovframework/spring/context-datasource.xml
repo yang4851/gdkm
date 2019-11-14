@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+						http://www.springframework.org/schema/jdbc  http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd">
+
+ <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <!-- 로컬서버 -->    
+        <property name="url" value="jdbc:mysql://localhost:3306/gdkm?useUnicode=true&amp;characterEncoding=utf8"/>
+        <property name="username" value="gdkm"/>
+        <property name="password" value="gdkm1234"/>
+        
+        <!-- 개발서버 -->    
+        <!-- 
+        <property name="url" value="jdbc:mysql://192.168.0.45:3306/gdkm?useUnicode=true&amp;characterEncoding=utf8"/>
+        <property name="username" value="wikim"/>
+        <property name="password" value="wikim1234"/>
+        -->
+        
+        <!-- 운영서버 -->
+        <!--  
+        <property name="url" value="jdbc:mysql://10.65.102.68:3306/gdkm?useUnicode=true&amp;characterEncoding=utf8"/>
+        <property name="username" value="gdkm"/>
+        <property name="password" value="gdkm1234"/>
+        -->
+        
+        <property name="validationQuery" value="SELECT 1"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+    </bean>  
+</beans>
+
+<!-- 
+10.65.102.68
+root
+test8520!
+ -->

@@ -1,0 +1,30 @@
+<!-- <h2 class="title_con">NGS data tree</h2> -->
+<div class="row toolbar" style="padding-bottom: 10px;">
+	<div class="col-xs-12 form-inline text-right">
+		<button type="button" class="btn btn_dark" 
+			ng-disabled="!isTreeNodeSelected()"
+			ng-click="taxonTreeDetailPopup()">
+			<i class="far fa-file-alt"></i>
+			Detail
+		</button>
+	</div>
+</div>
+<div class="tree_wrap">
+	<div class="treebar">
+		<h3 class="sr-only">서브메뉴</h3>
+		<div>
+			<div layout="row" layout-sm="column" layout-align="space-around" ng-show="progressBar">
+				<md-progress-linear md-mode="indeterminate"></md-progress-linear>
+			</div>
+			<div class="tree-heading">
+				<div ng-if="taxon.showTree"
+					ivh-treeview="taxon.data"
+					ivh-treeview-use-checkboxes="true"
+					ivh-treeview-default-selected-state="false"
+					ivh-treeview-disable-checkbox-selection-propagation="true"
+					ivh-treeview-on-cb-change="onChangeNodeSelection(ivhNode, ivhIsSelected, ivhTree)"
+					ivh-treeview-on-toggle="onChangeNodeCollapse(ivhNode, ivhIsExpanded, ivhTree)"></div>
+			</div>
+		</div>
+	</div>
+</div>

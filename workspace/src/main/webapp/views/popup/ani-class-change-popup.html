@@ -1,0 +1,110 @@
+<div class="modal fade overflow-y" id="ani-class-change-popup" tabindex="-1" >
+<div class="modal-dialog modal-lg">
+
+	<div class="modal-content">
+		<!-- modal-header -->
+		<div class="modal-header">
+			<h3 class="modal-title">
+				ANI class 
+			</h3>
+			<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+		</div>
+		<!-- /modal-header -->
+		
+		<div class="modal-body">
+			<h2 class="title_con">Registrated fasta file list</h2>
+			<div class="row toolbar ng-scope" style="padding-bottom: 10px;">
+				<div class="col-xs-3">
+					<p class="form-control-static">
+						All <strong class="num">{{ pageHandler.getTotal() | number }}</strong>
+					</p>
+				</div>
+				<div class="col-xs-9 form-inline text-right">
+					<div class="form-group">
+						<select class="form-control picker"
+							ng-options="code.id as code.name for code in rowSizeCodeList"
+							ng-model="pageHandler.numberOfRows" ng-change="reload()"></select>
+					</div>
+				</div>
+			</div>
+			
+			<table class="list_tbl panel_g">
+				<thead class="thead-light text-center">
+					<tr>
+						<th>Annotation data ID</th>
+						<th>Annotation data file name</th>
+						<th>Label</th>
+						<th>Class</th>
+					</tr>
+				</thead>
+				<tbody ng-show="selectedFile.length!=0" class="text-center" ng-repeat="selectedFile in selectedFiles">
+					<tr class="panel_h">
+						<td>{{selectedFile.dataRegistNo}}</td>
+						<td>{{selectedFile.fileName}}</td>
+						<td>{{selectedFile.aniLabel}}</td>
+						<td>{{selectedFile.aniClass}}</td>
+					</tr>
+				</tbody>
+				<tbody ng-show="_changeFiles.length==0">
+					<tr class="panel_h" >
+						<td colspan="4" class="text-center"> <i>No data</i></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<h2 class="title_con">Selected Files</h2>
+			<div class="row toolbar ng-scope" style="padding-bottom: 10px;">
+				<div class="col-xs-3">
+					<p class="form-control-static">
+						All <strong class="num">{{ pageHandler.getTotal() | number }}</strong>
+					</p>
+				</div>
+			</div>
+			
+			<table class="list_tbl panel_g">
+				<thead class="thead-light text-center">
+					<tr>
+						<th>Annotation data ID</th>
+						<th>Annotation data file name</th>
+						<th>Label</th>
+						<th>Class</th>
+					</tr>
+				</thead>
+				<tbody ng-show="_changeFiles.length!=0" class="text-center" ng-repeat="_changeFile in _changeFiles">
+					<tr class="panel_h">
+						<td>{{_changeFile.dataRegistNo}}</td>
+						<td>{{_changeFile.fileName}}</td>
+						<td>{{_changeFile.aniLabel}}</td>
+						<td>{{_changeFile.aniClass}}</td>
+					</tr>
+				</tbody>
+				<tbody ng-show="_changeFiles.length==0">
+					<tr class="panel_h" >
+						<td colspan="4" class="text-center"> <i>No data</i></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<h2 class="title_con">Class name</h2>
+			<div class="col-md-4 padding-bottom-10">
+				<label for="" class="label-lg required">Class name</label>
+			</div>
+			<input type="text" ng-model="modal.changeName"/>
+		</div>
+		
+<!-- 		<div class="modal-footer"> -->
+<!-- 			<button type="button" class="btn btn-primary" contenteditable="true">Save -->
+<!-- 				changes</button> -->
+<!-- 			<button type="button" class="btn btn-secondary" data-dismiss="modal" -->
+<!-- 				contenteditable="true">Close</button> -->
+<!-- 		</div> -->
+		<!-- modal-footer -->
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="onclickChangeClassModalSubmit()">Submit</button>
+		</div>
+		<!-- /modal-footer -->
+	</div>
+	<!-- /.modal-content -->
+</div>
+</div>

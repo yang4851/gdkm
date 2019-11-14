@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html ng-app="gdkmApp">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+		<title>GDKM(Genome Database of Kimchi-associated Microbes)</title>
+		 
+		<!-- Global Styles -->
+		<link rel="shortcut icon" href="./favicon.ico">
+		<link rel="stylesheet" type="text/css" href="./vendors/NanumGothic/NanumGothic.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/angular-ivh-treeview-master/dist/ivh-treeview.css">
+	 	<link rel="stylesheet" type="text/css" href="./vendors/angular-ivh-treeview-master/dist/ivh-treeview-theme-basic.css">
+		<link rel="stylesheet" type="text/css" href="./vendors/font-awesome-5/web-fonts-with-css/css/fontawesome-all.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/bootstrap-select/dist/css/bootstrap-select.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/pnotify/dist/pnotify.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/pnotify/dist/pnotify.buttons.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/blueimp-file-upload/css/jquery.fileupload.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/angular-moment-picker/dist/angular-moment-picker.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/iCheck/skins/all.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/parsleyjs/src/parsley.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/mocha/mocha.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/angular-bootstrap-grid-tree/src/treeGrid.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/angular-material/angular-material.min.css" />
+		<link rel="stylesheet" type="text/css" href="./vendors/angular-ui-grid/ui-grid.min.css" />
+		
+		<!-- Custom Style -->
+		<link rel="stylesheet" type="text/css" href="./lib/css/vendors.min.css" />
+		<link rel="stylesheet" type="text/css" href="./lib/jstree/dist/themes/default/style.min.css" />
+		<link rel="stylesheet" type="text/css" href="./css/custom.css" />
+		<link rel="stylesheet" type="text/css" href="./css/home.css" />
+		
+		<script type="text/javascript" src="./vendors/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="./lib/jstree/dist/jstree.min.js"></script>
+		
+		<script type="text/javascript" src="./vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="./vendors/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+		<script type="text/javascript" src="./vendors/bootstrap-waitingfor/build/bootstrap-waitingfor.min.js"></script>
+		<script type="text/javascript" src="./vendors/pnotify/dist/pnotify.js"></script>
+		<script type="text/javascript" src="./vendors/pnotify/dist/pnotify.confirm.js"></script>
+		<script type="text/javascript" src="./vendors/pnotify/dist/pnotify.buttons.js"></script>
+		<script type="text/javascript" src="./vendors/parsleyjs/dist/parsley.min.js"></script>
+		<script type="text/javascript" src="./vendors/mocha/mocha.js"></script>
+		<script type="text/javascript" src="./vendors/moment/min/moment-with-locales.js"></script>
+		
+		<!-- angularjs Plugins-->
+		<script type="text/javascript" src="./vendors/angular/angular.js"></script>
+		<script type="text/javascript" src="./vendors/angular-touch/angular-touch.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-cookies/angular-cookies.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-animate/angular-animate.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-route/angular-route.js"></script>
+		<script type="text/javascript" src="./vendors/angular-aria/angular-aria.js"></script>
+		<script type="text/javascript" src="./vendors/angular-sanitize/angular-sanitize.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-messages/angular-messages.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-material/angular-material.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-resource/angular-resource.js"></script>
+		<script type="text/javascript" src="./vendors/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+		<script type="text/javascript" src="./vendors/angular-moment-picker/dist/angular-moment-picker.js"></script>
+		<script type="text/javascript" src="./vendors/angular-bootstrap-select/build/angular-bootstrap-select.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-google-chart/ng-google-chart.min.js"></script>
+		<script type="text/javascript" src="./vendors/angular-pnotify/src/angular-pnotify.js"></script>
+		
+		<script type="text/javascript" src="./vendors/angular-ui-grid/ui-grid.js"></script>
+		<script type="text/javascript" src="./vendors/angular-ui-grid/ui-grid.auto-resize.js"></script>
+		<script type="text/javascript" src="./vendors/angular-ui-grid/ui-grid.edit.js"></script>
+		<script type="text/javascript" src="./vendors/angular-ui-grid/ui-grid.resize-columns.js"></script>
+		<script type="text/javascript" src="./vendors/angular-ui-grid/ui-grid.pinning.js"></script>
+		<script type="text/javascript" src="./vendors/angular-ui-grid/ui-grid.cellnav.js"></script>
+		
+		<script type="text/javascript" src="./vendors/ng-file-upload/ng-file-upload.js"></script>
+		<script type="text/javascript" src="./vendors/ng-file-upload/ng-file-upload-shim.js"></script>
+		<script type="text/javascript" src="./vendors/checklist-model/checklist-model.js"></script>		
+		<script type="text/javascript" src="./vendors/iCheck/icheck.js"></script>
+		
+		
+		<!-- Page Level Plugins -->
+		
+		<script type="text/javascript" src="./vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+		<script type="text/javascript" src="./vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+		
+		<!-- Google chart -->
+		<script type="text/javascript" src="./js/www.gstatic.com_chart_loader.js"></script>
+		
+		<!-- tree -->
+		<script type="text/javascript" src="./vendors/angular-ivh-treeview-master/dist/ivh-treeview.js"></script>
+	</head>
+	<body ng-controller="indexController" ng-init="init()">
+		<!--========== wrap ==========-->
+		<div ng-cloak class="wrap">
+			<!-- skipToContents -->
+			<a href="#content" id="skip_to_content">
+				<div class="container">
+					<span class="skiplink-text">Skip to content</span>
+				</div>
+			</a>
+			<!-- /skipToContents -->
+		
+			<header>
+				<nav class="navbar_h" ng-show="loginCheck()">
+					<div class="container">
+						<ul class="nav_h" id="shorcut_top">
+								<li class="nav_item"><a class="nav_link" href="#!/user" class="nav_link">admin</a></li>
+								<li class="nav_item"><a class="nav_link" ng-click="logout()" class="nav_link">logout</a></li>
+						</ul>
+					</div>
+				</nav>
+				<div class="w">
+					<div class="container">
+						<a href="#!/home" class="brand"><img src="./images/logo-top.png" alt="GDKM-Genome Database of Kimchi-associated Microbes"></a>
+						<form>
+							<div class="form" id="search_top">
+								<div class="form_g">
+									<label for="searchTopInput01">Species/Strain (Clear/Search All)</label>
+									<input type="text" class="form-control" id="searchTopInput01" placeholder="Species/Strain" ng-model="params.species" ng-enter="onClickSearchBtn()">
+								</div>
+								<div class="form_g">
+									<label for="searchTopInput02">Keyword</label>
+									<input type="text" class="form-control" id="searchTopInput02" placeholder="keyword" ng-model="params.keyword" ng-enter="onClickSearchBtn()"/>
+								</div>
+								<div class="form_g">
+									<label for="searchTopInput03">Return</label>
+									<div class="input-group">
+										<select class="form-control picker" id="searchTopInput03" ng-model="params.match"
+											ng-options="code.id as code.name for code in matchCodeList"></select>
+										<span class="input-group-btn">
+											<button type="submit" class="btn btn-primary" ng-click="onClickSearchBtn()">
+												<i class="fa fa-search"></i><span class="sr-only">Search</span>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- menu -->
+				<nav class="navbar_h">
+					<div class="container">
+						<ul class="nav_h" id="gnb">
+							<li class="nav_item" ng-show="!loginCheck()" >
+								<a data-toggle="modal" data-target="#loginModal" class="nav_link">Registration</a>
+							</li>
+							<li class="nav_item" ng-hide="!loginCheck()">
+								<a href="#!/registration/rawData/" class="nav_link">Registration</a>
+								<ul class="dropdown_menu">
+									<li class="dropdown_item"><a href="#!/registration/rawData" class="dropdown_item_link">Raw data</a></li>
+									<li class="dropdown_item"><a href="#!/registration/annotationData" class="dropdown_item_link">Annotation data</a></li>
+									<li class="dropdown_item"><a href="#!/registration/research" class="dropdown_item_link">Research</a></li>
+								</ul>
+							</li>
+							<li class="nav_item"><a href="#!/integrated-view" class="nav_link">Integrated views</a></li>
+							<li class="nav_item">
+								<a href="#!/tools/blast" class="nav_link">Tools</a>
+								<ul class="dropdown_menu">
+									<li class="dropdown_item"><a href="#!/tools/blast" class="dropdown_item_link">Blast search</a></li>
+									<li class="dropdown_item"><a href="#!/tools/ani" class="dropdown_item_link">ANI calculate</a></li>
+								</ul>
+							</li>
+ 							<li class="nav_item"><a href="#!/research" class="nav_link">Research</a></li>
+							<li class="nav_item"><a href="#!statistics" class="nav_link">Statistics</a></li>
+						</ul>
+					</div>
+				</nav>
+				<!-- /menu -->
+			</header>
+		
+			<main id="content" class="main_container">
+				<div ng-view></div>
+			</main>
+		
+			<footer>
+				<div class="container">
+					<!--Scroll to top-->
+					<div class="scroll-to-top">
+						<button onclick="scrollToTop()">
+							<i class="mdi mdi-arrow-collapse-up mdi-24px"></i>
+							<span class="sr-only">Back to Top</span>
+						</button>
+					</div>
+					<div class="logo_w">
+						<a href="http://www.wikim.re.kr/index.es?sid=a1" target="_blank">
+							<img src="./images/logo-bottom.png" alt="WiKim - World Institute of Kimchi">
+						</a>
+					</div>
+					<div class="txt_w">
+						<p class="txt">
+							World Institute of Kimchi, 86, Kimchi-ro, Nam-gu, Gwangju, 61755, Republic of Korea / TEL. 82.62.610.1700<br>
+							Copyright © 2016 World Institute of Kimchi an Annex of Korea Food Research Institute. All Rights Reserved.
+							Contact info : <i class="fa fa-envelope-o"></i> gdkm@wikim.re.kr
+						</p>
+					</div>
+				</div>
+			</footer>
+			<div ng-include="'./views/login.html'"></div>
+		</div>
+		
+		
+		
+		
+<!--	2018.04.24 parsley가 적용되지 않는 현상에 의해 우선 주석처리함	
+		<script type="text/javascript" src="./lib/js/vendors.min.js"></script> -->
+		<script type="text/javascript" src="./js/custom.js"></script>
+
+		<!-- Page Level Scripts -->
+		
+		<script type="text/javascript" src="./js/app.js"></script>
+		<script type="text/javascript" src="./js/app-common.js"></script>
+		<script type="text/javascript" src="./js/app-object.js"></script>
+		<script type="text/javascript" src="./js/app-select-object.js"></script>
+		<script type="text/javascript" src="./js/app-sample-value.js"></script>
+		<script type="text/javascript" src="./js/app-filter.js"></script>
+		<script type="text/javascript" src="./js/app-route.js"></script>
+		
+		<script type="text/javascript" src="./js/controller/index-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/home-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/user-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/code-group-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/code-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/taxonomy-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/ngs-deposit-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/ngs-deposit-list-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/rawdata-linked-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/processed-search-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/processed-detail-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/integrated-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/integrated-search-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/integrated-list-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/statistics-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/research-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/research-list-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/research-attachment-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/research-attachment-list-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/research-omics-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/research-omics-list-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/research-ngs-list-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/blast-controller.js"></script>
+		<script type="text/javascript" src="./js/controller/ani-controller.js"></script>
+		
+		<script type="text/javascript" src="./js/factory/login-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/user-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/code-group-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/code-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/taxon-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/taxon-tree-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/file-download-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/file-upload-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/ngs-deposit-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/ngs-achive-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/statistics-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/research-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/research-attachment-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/research-omics-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/research-ngs-factory.js"></script>
+		<script type="text/javascript" src="./js/factory/tools-factory.js"></script>
+		
+		<script type="text/javascript" src="./js/excel/excel-factory.js"></script>
+		
+		<script>
+		$(document).ready(function(){
+			$('.carousel').carousel({interval: 5000})
+		});
+		</script>
+	</body>
+</html>

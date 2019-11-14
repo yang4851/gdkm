@@ -1,0 +1,107 @@
+<script>
+	$("#searchUserEditForm").parsley();
+</script>
+
+<div class="modal fade" id="user-edit-popup">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <!-- Modal-header -->
+            <div class="modal-header">
+                <h4 class="modal-title">개인정보</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <!-- Modal-body -->
+            <form class="form-horizontal" id="searchUserEditForm"
+            ng-submit="modelForm.update()"  data-validate="parsley">
+           		<div class="modal-body">
+	            	<table class="data_tbl">
+						<colgroup>
+							<col style="width: 30%;">
+							<col style="width: 70%;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">사용자ID</th>
+								<td>
+									{{ modelForm.model.userId }}
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">이름</th>
+								<td>
+									<input type="text" ng-model="modelForm.model.name"
+									data-parsley-minlength="1"
+									data-parsley-maxlength="5"
+									class="form-control" required/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">E-mail</th>
+								<td>
+									<input type="text" ng-model="modelForm.model.email"
+									data-parsley-type="email" 
+									data-parsley-remote-reverse="false"
+									data-parsley-minlength="1"
+									data-parsley-maxlength="45"
+									placeholder="sample@gmail.com"
+									class="form-control" required/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">소속기관명</th>
+								<td>
+									<input type="text" ng-model="modelForm.model.institute"
+									data-parsley-minlength="1"
+									data-parsley-maxlength="20"
+									class="form-control" required/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">부서</th>
+								<td>
+									<input type="text" ng-model="modelForm.model.department"
+									data-parsley-minlength="1"
+									data-parsley-maxlength="20"
+									class="form-control" required/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">연락처</th>
+								<td>
+									<input type="text" ng-model="modelForm.model.phone"
+									placeholder="000-0000-0000"
+									data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$"
+									class="form-control" required
+									/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">권한</th>
+								<td>
+									<select type="text" class="form-control picker"
+									ng-model="modelForm.model.authority"
+									required>
+										<option value="admin">admin</option>
+										<option value="member">member</option>
+										<!-- <option ng-repeat="x in selectUserAuthority" value="{{x.value}}">
+											{{x.value}}
+										</option> -->
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+	            </div>
+	            <!-- Modal-footer -->
+	            <div class="modal-footer">
+	                <button type="submit" class="btn btn_brand">User Information modify</button>
+	                <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#user-findPassword-popup">Password modify</button>
+	                <button type="button" class="btn btn-default" ng-click="resetUserForm(modelForm.model.userId)">Initialization</button>
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div ng-include="'./views/user/user-findPassword-popup.html'"></div>

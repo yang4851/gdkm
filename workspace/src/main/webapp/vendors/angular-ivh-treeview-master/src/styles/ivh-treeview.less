@@ -1,0 +1,50 @@
+
+/**
+ * Treeview styles
+ *
+ * @private
+ * @package ivh.treeview
+ * @copyright 2014 iVantage Health Analytics, Inc.
+ */
+
+ul.ivh-treeview {
+  //-- Hide Collapsed Nodes
+  //-----------------------
+  li.ivh-treeview-node-collapsed {
+    ul.ivh-treeview {
+      display: none;
+    }
+  }
+
+  //-- Twisties 
+  //-----------
+  .ivh-treeview-twistie {
+    &-leaf, &-collapsed {
+      display: none;
+    }
+  }
+
+  .ivh-treeview-node-collapsed {
+    .ivh-treeview-twistie {
+      &-collapsed {
+        display: inline;
+      }
+      &-expanded {
+        display: none;
+      }
+    }
+  }
+
+  // Leaves should never have the expanded or collapsed marker, only the leaf
+  // marker
+  li.ivh-treeview-node-leaf {
+    .ivh-treeview-twistie {
+      &-leaf {
+        display: inline;
+      }
+      &-expanded, &-collapsed {
+        display: none;
+      }
+    }
+  }
+}

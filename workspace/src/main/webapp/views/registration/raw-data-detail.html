@@ -1,0 +1,276 @@
+<div class="panel_options">
+   	<button class="btn btn_dark toggle_panels" ng-class="toggle_panels_css()" ng-click="toggleAccordions()"></button>
+</div>
+
+<uib-accordion close-others="false">
+
+	<!-- Experiment information --> 
+	<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[0]">
+		<uib-accordion-heading>Experiment information</uib-accordion-heading>
+		<div class="panel-collapse collapse in">
+			<div class="accordion-panel table-word-break">
+				<table class="data_tbl">
+					<colgroup>
+						<col style="width: 15%;">
+						<col style="width: 15%;">
+					</colgroup>
+					<tbody>
+						<tr>
+							<th colspan="2">Raw data ID</th>
+							<td colspan="2">{{model.registNo}}</td>
+						</tr>
+						<tr>
+							<th colspan="2">Experiment type</th>
+							<td colspan="2">{{model.rawData.exprType.name}}</td>
+						</tr>
+						<tr>
+							<th colspan="2">Taxonomy</th>
+							<td colspan="2">{{model.rawData.domain.name}}</td>
+						</tr>
+						<tr>
+							<th rowspan="2">Experiment condition</th>
+							<th>Culture condition</th>
+							<td colspan="2">{{model.rawData.cultureCondition}}</td>
+						</tr>
+						<tr>
+							<th>Treatment</th>
+							<td colspan="2">{{model.rawData.treatment}}</td>
+						</tr>
+						<tr>
+							<th colspan="2">Replicate</th>
+							<td colspan="2">{{model.rawData.replicate.name}}</td>
+						</tr>
+						<tr>
+							<th rowspan="7">Sample</th>
+							<th>Sample name</th>
+							<td colspan="2">{{model.rawData.sampleName}}</td>
+						</tr>
+						<tr>
+							<th>Strain</th>
+							<td colspan="2">{{model.strain}}</td>
+						</tr>
+						<tr>
+							<th>Organism type</th>
+							<td colspan="2">{{model.rawData.organismType}}</td>
+						</tr>
+						<tr>
+							<th>Bio sample type</th>
+							<td colspan="2">{{model.rawData.sampleType}}</td>
+						</tr>
+						<tr>
+							<th>Geographic location</th>
+							<td colspan="2">{{model.rawData.geographLocation}}</td>
+						</tr>
+						<tr>
+							<th>Source</th>
+							<td colspan="2">{{model.rawData.sampleSource.name}}</td>
+						</tr>
+						<tr>
+							<th>Comment</th>
+							<td colspan="2">{{model.rawData.sampleComment}}</td>
+						</tr>
+						<tr>
+							<th rowspan="{{hierarchyList.length + 3}}">NCBI <br/> Taxonomy</th>
+							<th>Species name</th>
+							<td colspan="2">{{model.taxonomy.name}}</td>
+						</tr>
+						<tr>
+							<th>Taxonomy ID</th>
+							<td colspan="2">{{model.taxonomy.ncbiTaxonId}}</td>
+						</tr>
+						<tr>
+							<th rowspan="{{hierarchyList.length + 1}}">Taxonomy</th>
+							<th>Rank</th>
+							<th>Name</th>
+						</tr>
+						<tr ng-repeat="taxon in hierarchyList">
+							<td>{{ taxon.rank | taxonRank }}</td>
+							<td>{{ taxon.name }}</td>
+						</tr>
+						<tr>
+							<th colspan="2">Registration date</th>
+							<td colspan="2">{{model.registDate | date:'yyyy-MM-dd'}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+		
+	<!-- Sequencing and Library information -->
+	<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[1]">
+		<uib-accordion-heading>Sequencing and Library information</uib-accordion-heading>
+		<div class="panel-collapse collapse in">
+			<div class="accordion-body">
+				<table class="data_tbl table-word-break">
+					<colgroup>
+						<col style="width:15%;">
+						<col style="width:15%;">
+					</colgroup>
+					<tbody>
+						<tr>
+							<th colspan="2">Sequencing platform</th>
+							<td>{{model.rawData.platform.name}}</td>
+						</tr>
+						<tr>
+							<th rowspan="4">NGS library</th>
+							<th>Construction</th>
+							<td>{{model.rawData.construction}}</td>
+						</tr>
+						<tr>
+							<th>Selection</th>
+							<td>{{model.rawData.selection}}</td>
+						</tr>
+						<tr>
+							<th>Instrument model</th>
+							<td>{{model.rawData.sequencer}}</td>
+						</tr>
+						<tr>
+							<th>Strategy</th>
+							<td>{{model.rawData.strategy}}</td>
+						</tr>
+						<tr>
+							<th rowspan="7">Library of sequence raw data</th>
+							<th>Read length</th>
+							<td>{{model.rawData.readLength}}</td>
+						</tr>
+						<tr>
+							<th>Insert size</th>
+							<td>{{model.rawData.insertSize}}</td>
+						</tr>
+						<tr>
+							<th>Read</th>
+							<td>{{model.rawData.readType.name}}</td>
+						</tr>
+						<tr>
+							<th>Adapter sequence</th>
+							<td>{{model.rawData.adapterSeq}}</td>
+						</tr>
+						<tr>
+							<th>Quality score version</th>
+							<td>{{model.rawData.qualityScoreVersion}}</td>
+						</tr>
+						<tr>
+							<th>Base calling program</th>
+							<td>{{model.rawData.baseCallingProgram}}</td>
+						</tr>
+						<tr>
+							<th>Comment</th>
+							<td>{{model.rawData.libraryComment}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+		
+	<!-- Raw data file information -->
+	<div uib-accordion-group class="panel panel_basic" is-open="display.accordions[2]" ng-hide="isHideAchiveList()">
+		<uib-accordion-heading>Raw data file information</uib-accordion-heading>
+	   	<div class="panel-collapse collapse in">
+			<div class="accordion-panel table-word-break">
+				<table class="data_tbl">
+					<colgroup>
+						<col style="width:7%;">
+						<col style="width:30%;">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>No.</th>
+							<th>Raw data file name</th>
+							<th>MD5 checksum</th>
+							<th>File size</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in achiveHandler.getItems()">
+							<td>{{ item.no = $index+1 }}</td>
+							<td>
+								<i class="fa fa-exclamation-triangle" title="{{ item.verifiError }}" data-toggle="tooltip"
+									ng-hide="item.verifiStatus != 'failed'" >
+									{{ item.fileName }}
+								</i>
+								<span ng-hide="item.verifiStatus == 'failed'">{{ item.fileName }}</span>
+							</td>
+							<td>{{ item.checksum }}</td>
+							<td>{{ item.fileSize | bytes }}</td>
+							<td class="text-center">
+								<button class="btn btn_secondary" ng-click="downloadAchiveFile(item)" uib-tooltip="File Download">
+									<i class="fa fa-download"></i>
+								</button>
+								<button class="btn btn-default" ng-click="openFastQcReport(item)" ng-show="isFastqc(item)" uib-tooltip="QC report">
+									<i class="fa fa-link" ></i>
+								</button>
+								<button class="btn btn-default" ng-click="showReport(item, params.section)" ng-show="isReviewSection(item)" uib-tooltip="Sequence Quantity">
+									<i class="far fa-chart-bar" ></i>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<br>
+			
+			<div id="showReportDiv" class="accordion-panel table-word-break" ng-show="isVisible">
+				    <div class="title_box">
+						<h2 class="title_con">Quality control(QC) report</h2>
+				    </div>
+					<table class="data_tbl" >
+					<colgroup>
+						<col style="width: 8%;">
+						<col style="width: 8%;">
+						<col style="width: 15%;">
+					</colgroup>
+					<tbody>
+							<tr>
+								<th>No.</th>
+								<td >{{ fileItem.no }}</td>
+								<th>file name</th>
+								<td >{{ fileItem.fileName }}</td>
+							</tr>
+							<tr>
+							<th scope="row" rowspan="9" colspan="2">Sequence information</th>
+								<th>Sequence read count</th>
+								<td>{{ quantity.readCount | number }}</td>
+							</tr>
+							<tr>
+								<th>Sequence total size (bp)</th>
+								<td>{{ quantity.totalLength | number }}</td>
+							</tr>
+							<tr>
+								<th>Sequence average length (bp)</th>
+								<td>{{ quantity.averageLength | number }}</td>
+							</tr>
+							<tr>
+								<th>GC contents (%)</th>
+								<td>{{ calcGcContents(quantity) | number:2 }} %</td>
+							</tr>
+							<tr>
+								<th>'A' sequence count</th>
+								<td>{{ quantity.numberOfA | number }}</td>
+							</tr>
+							<tr>
+								<th>'T' sequence count</th>
+								<td>{{ quantity.numberOfT | number }}</td>
+							</tr>
+							<tr>
+								<th>'G' sequence count</th>
+								<td>{{ quantity.numberOfG | number }}</td>
+							</tr>
+							<tr>
+								<th>'C' sequence count</th>
+								<td>{{ quantity.numberOfC | number }}</td>
+							</tr>
+							<tr>
+								<th>'N' sequence count</th>
+								<td>{{ quantity.numberOfN | number }}</td>
+							</tr>
+					</tbody>
+				</table>
+		    </div>
+		   
+	  	</div>
+	</div>
+	
+</uib-accordion>

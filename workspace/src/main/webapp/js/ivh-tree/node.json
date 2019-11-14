@@ -1,0 +1,9 @@
+{
+label: 'Loading...',  //Name of the node
+id: 0,                //The id of the record
+type: 'DEL',    //Use for determine whether to load data from server or delete the node
+                //'DEL' - Delete the node if empty
+                //'C1' - Load child
+                //'S' - Child node
+children: [] 
+}

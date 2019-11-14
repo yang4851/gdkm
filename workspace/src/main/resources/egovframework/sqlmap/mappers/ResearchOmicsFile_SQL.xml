@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ResearchOmicsFile">
+
+	<resultMap id="ResearchOmicsFile" type="researchOmicsFile">
+		<result property="id" column="OMICS_FILE_ID"/>
+		<result property="registNo" column="REGIST_NO"/>
+		<result property="name" column="FILE_NAME"/>
+		<result property="size" column="FILE_SIZE"/>
+		<result property="type" column="FILE_TYPE"/>
+		<result property="description" column="DESCRIPTION"/>
+		<result property="registDate" column="REGIST_DATE" />
+		
+		<association property="research" column="{researchId=RESEARCH_ID}" javaType="research" select="Research.getTiny" />
+		<association property="category" column="{code=CATEGORY}" javaType="code" select="Code.getBasic" />
+		<association property="registUser" column="{userId=REGIST_USER}" javaType="user" select="User.getBasicUser" />
+	</resultMap>
+		       
+	<resultMap id="BasicResearchOmicsFile" type="researchOmicsFile">
+		<result property="id" column="OMICS_FILE_ID"/>
+		<result property="registNo" column="REGIST_NO"/>
+		<result property="name" column="FILE_NAME"/>
+		<result property="size" column="FILE_SIZE"/>
+		<result property="type" column="FILE_TYPE"/>
+		
+		<association property="category" column="{code=CATEGORY}" javaType="code" select="Code.getBasic" />
+	</resultMap>
+	
+	<sql id="searchByKeyword">
+		<trim prefix="AND (" prefixOverrides="OR|AND" suffix=")">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(keyword)">
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'registNo')"> 
+		   OR UPPER(REGIST_NO) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'fileName')">
+		   OR UPPER(FILE_NAME) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isSearchField(fields, 'description')">
+		   OR UPPER(DESCRIPTION) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+				<if test="@com.insilicogen.gdkm.MybatisHelper@isEmpty(fields)">
+		   OR UPPER(REGIST_NO) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+		   OR UPPER(FILE_NAME) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+		   OR UPPER(DESCRIPTION) LIKE CONCAT('%',UPPER(#{keyword}),'%')
+				</if>
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="whereSQL">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(keyword)">
+				<include refid="searchByKeyword" />
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(id)">
+	  	   AND OMICS_FILE_ID = #{id}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(omicsFileId)">
+	  	   AND OMICS_FILE_ID = #{omicsFileId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(research)">
+	  	   AND RESEARCH_ID = #{research.id}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(researchId)">
+	  	   AND RESEARCH_ID = #{researchId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(category)">
+	  	   AND CATEGORY = #{category.code}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(categoryCd)">
+	  	   AND CATEGORY = #{categoryCd}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(fileType)">
+	  	   AND UPPER(FILE_TYPE) = UPPER(#{fileType})
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registFrom)">	
+	  	   AND REGIST_DATE &gt;= DATE_FORMAT(CONCAT(#{registFrom}, ' 00:00:00'), '%Y-%m-%d %T')
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registTo)">
+	  	   AND REGIST_DATE &lt;= DATE_FORMAT(CONCAT(#{registTo}, ' 23:59:59'), '%Y-%m-%d %T')
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registUser)">
+	  	   AND AES_DECRYPT(UNHEX(REGIST_USER),'raison') = #{registUser.userId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registUserId)">
+	  	   AND AES_DECRYPT(UNHEX(REGIST_USER),'raison') = #{registUserId}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="select">
+		SELECT OMICS_FILE_ID,
+		       REGIST_NO,
+		       RESEARCH_ID,
+		       CATEGORY,
+		       FILE_NAME,
+		       FILE_SIZE,
+		       FILE_TYPE,
+		       DESCRIPTION,
+		       AES_DECRYPT(UNHEX(REGIST_USER),'raison') AS REGIST_USER,
+		       REGIST_DATE
+		  FROM T_RESEARCH_OMICS_FILE
+    	<include refid="whereSQL" />
+	</sql>
+	
+	<sql id="selectBasic">
+		SELECT OMICS_FILE_ID,
+		       REGIST_NO,
+		       CATEGORY,
+		       FILE_NAME,
+		       FILE_SIZE,
+		       FILE_TYPE
+		  FROM T_RESEARCH_OMICS_FILE
+    	<include refid="whereSQL" />
+	</sql>
+	
+	<insert id="insert" parameterType="researchOmicsFile">
+		<selectKey resultType="int" keyProperty="id" order="BEFORE">
+		SELECT (CASE WHEN 0 &lt; #{id}
+		             THEN IFNULL(#{id}, IFNULL(MAX(OMICS_FILE_ID), 0) + 1)
+		             ELSE IFNULL(MAX(OMICS_FILE_ID), 0) + 1
+		             END) AS id
+		 FROM T_RESEARCH_OMICS_FILE
+   		</selectKey>
+   		
+		INSERT INTO T_RESEARCH_OMICS_FILE(
+			OMICS_FILE_ID,
+			REGIST_NO,
+			RESEARCH_ID,
+			CATEGORY,
+			FILE_NAME,
+			FILE_SIZE,
+			FILE_TYPE,
+			DESCRIPTION,
+			REGIST_USER,
+			REGIST_DATE
+		) VALUES (
+			#{id},
+			(SELECT CONCAT(#{research.registNo}, '-O', LPAD(CAST(CAST(IFNULL(MAX(SUBSTR(SUB.REGIST_NO, -3, 3)), 0) AS UNSIGNED)+1 AS CHAR), 3, '0')) AS registNo
+			   FROM T_RESEARCH_OMICS_FILE SUB
+			  WHERE SUB.RESEARCH_ID=#{research.id}),
+			#{research.id},
+			#{category.code},
+			#{name},
+			#{size},
+			#{type},
+			#{description},
+			HEX(AES_ENCRYPT(#{registUser.userId},'raison')),
+			NOW()
+		)
+	</insert>
+	
+	<select id="get" resultMap="ResearchOmicsFile">
+		<include refid="select" />
+		 LIMIT 0, 1
+	</select>
+	
+	<select id="getBasic" resultMap="BasicResearchOmicsFile">
+		<include refid="selectBasic" />
+		 LIMIT 0, 1
+	</select>
+	
+	<select id="select" resultMap="ResearchOmicsFile">
+		<include refid="select" />
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+		 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="selectBasic" resultMap="BasicResearchOmicsFile">
+		<include refid="selectBasic" />
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+		 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(*) 
+		  FROM T_RESEARCH_OMICS_FILE
+		<include refid="whereSQL" />
+	</select>
+	
+	<update id="update" parameterType="researchOmicsFile">
+		UPDATE T_RESEARCH_OMICS_FILE 
+		   SET CATEGORY      = #{category.code},
+		       FILE_NAME     = #{name},
+		       FILE_TYPE     = #{type},
+		       FILE_SIZE     = #{size},
+		       DESCRIPTION   = #{description}
+		 WHERE OMICS_FILE_ID = #{id}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM T_RESEARCH_OMICS_FILE <include refid="whereSQL" />
+	</delete>
+
+</mapper>

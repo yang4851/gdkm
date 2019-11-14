@@ -1,0 +1,162 @@
+
+<div class="modal fade overflow-y" id="fasta-file-list-popup" tabindex="-1" >
+<div class="modal-dialog modal-lg">
+	<div class="modal-content">
+
+		<!-- modal-header -->
+		<div class="modal-header">
+			<h3 class="modal-title">
+				Registrated fasta file list
+			</h3>
+			<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+		</div>
+		<!-- /modal-header -->
+		
+		<!-- modal-body -->
+		<div class="modal-body">
+			<div class="search_form_tbl">
+			<div class="form-horizontal col_tbl">
+				<div class="form-group">
+					<label class="col-xs-3 control-label">Keyword</label>
+					<div class="col-xs-9">
+						<select name="methodSelect" id="" class="form-control" ng-model="search.id">
+							<option ng-repeat="keyword in keywords" ng-value="keyword.id">{{keyword.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group" aria-hidden="false">
+					<div class="col-xs-offset-3">
+						<input type="text" class="form-control" ng-model="search.content" ng-enter="search()" aria-invalid="false" data-dpmaxz-eid="17" data-dpmaxz-pid="61.06.03.t">
+					</div>
+				</div>
+			</div>
+			<div class="col_tbl">
+				<button type="submit" class="btn btn_brand" style="margin-top: 58px;" ng-click="search()">Search</button>
+			</div>
+			</div>
+			
+			<h2 class="title_con">Registrated fasta file list</h2>
+			<div class="row toolbar ng-scope" style="padding-bottom: 10px;">
+				<div class="col-xs-3">
+					<p class="form-control-static">
+						All <strong class="num">{{ pageHandler.getTotal() | number }}</strong> 
+					</p>
+				</div>
+				<div class="col-xs-9 form-inline text-right">
+					<div class="form-group">
+						<select class="form-control picker"
+							ng-options="code.id as code.name for code in rowSizeCodeList"
+							ng-model="pageHandler.numberOfRows" ng-change="reload()"></select>
+					</div>
+				</div>
+			</div>
+			
+			<div class="table-responsive" style="max-height: 450px; overflow-y: auto;">
+				<table class="list_tbl panel_g">
+					<thead class="thead-light text-center">
+						<tr>
+							<th class="th_check sorting_disabled" style="width: 39.5px;">
+								<input class="form-check-input" type="checkbox" ng-model="modal.checkAll" ng-change="handleAutoModalSelectClick(files)">
+							</th>
+							<th>Annotation data ID</th>
+							<th>Strain</th>
+							<th>Annotation data file ID</th>
+							<th>Annotation data file name</th>
+							<th style="width: 30px">
+								<button type="button" class="btn toggle_panel position-initial"
+									ng-class="toggle_panel_css_features()" ng-click="toggleActiveFilesRows(files)" />
+							</th>
+						</tr>
+					</thead>
+					<tbody class="text-center" ng-repeat="file in files">
+						<tr class="panel_h" ng-class="panel_h_css_files(file.achiveId)">
+							<td class="text-center">
+								<input class="form-check-input" type="checkbox" ng-model="file.__checked" ng-change="changeModalCheckBox(files)">
+							</td>
+							<td>{{file.dataRegistNo}}</td>
+							<td>{{file.strain}}</td>
+							<td>{{file.achiveRegistNo}}</td>
+							<td>{{file.fileName}}</td>
+							<td class="text-center">
+								<button type="button" class="btn toggle_panel position-initial" ng-class="panel_h_css_files(file.achiveId)" ng-click="activeFilesRows(file.achiveId)"></button>
+							</td>
+						</tr>
+						<tr class="panel-collapse" ng-class="panel_collapse_css_files(file.achiveId)">
+							<td colspan="6">
+							<table class="table">
+								<tr>
+									<th>Sequence read count</th>
+									<td>{{file.seqQuantityVO.readCount}}</td>
+								</tr>
+								<tr>
+									<th>Sequence total size (bp)</th>
+									<td>{{file.seqQuantityVO.totalLength}}</td>
+								</tr>
+								<tr>
+									<th>Sequence average length (bp)</th>
+									<td>{{file.seqQuantityVO.averageLength}}</td>
+								</tr>
+								<tr>
+									<th>GC contents (%)</th>
+									<td>{{ calcGcContents(file.seqQuantityVO) | number:2 }} %</td>
+								</tr>
+								<tr>
+									<th>'A' sequence count</th>
+									<td>{{file.seqQuantityVO.numberOfA}}</td>
+								</tr>
+								<tr>
+									<th>'T' sequence count</th>
+									<td>{{file.seqQuantityVO.numberOfT}}</td>
+								</tr>
+								<tr>
+									<th>'G' sequence count</th>
+									<td>{{file.seqQuantityVO.numberOfG}}</td>
+								</tr>
+								<tr>
+									<th>'C' sequence count</th>
+									<td>{{file.seqQuantityVO.numberOfC}}</td>
+								</tr>
+								<tr>
+									<th>'N' sequence count</th>
+									<td>{{file.seqQuantityVO.numberOfN}}</td>
+								</tr>
+							</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<!-- pagination -->
+				<nav class="text-center">
+					<ul class="pagination">
+						<li ng-hide="pageHandler.isPrevDisabled()">
+							<a aria-label="Previous" ng-click="pageHandler.prev()">
+								<i class="fa fa-chevron-left" aria-hidden="true"></i>
+							</a>
+						</li>
+						<li ng-repeat="page in pageHandler.getPages()"
+							ng-class="(pageHandler.getCurrentPage() == page) ? 'active' : 'pointer'">
+							<a ng-click="pageHandler.setCurrentPage(page, true)">{{ page }}</a>
+						</li>
+						
+						<li ng-hide="pageHandler.isNextDisabled()">
+							<a aria-label="Next" ng-click="pageHandler.next()">
+								<i class="fa fa-chevron-right" aria-hidden="true"></i>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<!-- /modal-body -->
+	
+			<!-- modal-footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="onclickModalSubmit()">Submit</button>
+			</div>
+			<!-- /modal-footer -->
+
+		</div>
+	</div>
+</div>
+</div>

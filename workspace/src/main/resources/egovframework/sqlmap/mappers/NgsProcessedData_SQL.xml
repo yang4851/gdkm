@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NgsProcessedData">
+
+	<resultMap id="NgsProcessedData" type="ngsProcessedData">
+		<result property="registId" column="REGIST_ID"/>
+		<result property="submitter" column="SUBMITTER"/>
+		<result property="submitOrgan" column="SUBMIT_ORGAN"/>
+		<result property="project" column="PROJECT"/>
+		<result property="projectType" column="PROJECT_TYPE"/>
+		<result property="submitComment" column="SUBMIT_COMMENT"/>
+		<result property="assemblyMethod" column="ASSEMBLY_METHOD"/>				
+		<result property="genomeCoverage" column="GENOME_COVERAGE"/>
+		<result property="seqComment" column="SEQ_COMMENT"/>
+		<result property="refTitle" column="REF_TITLE"/>
+		<result property="refPubStatus" column="REF_PUB_STATUS"/>
+		<result property="refComment" column="REF_COMMENT"/>
+		
+		<association property="assemblyLevel" column="{code=ASSEMBLY_LEVEL_CD}" select="Code.getBasic" javaType="code" />
+		<association property="genomeType" column="{code=GENOME_TYPE_CD}" select="Code.getBasic" javaType="code" />
+	</resultMap>
+	
+	<sql id="select">
+		SELECT REGIST_ID,
+		       SUBMITTER,
+		       SUBMIT_ORGAN,
+		       PROJECT,
+		       PROJECT_TYPE,
+		       SUBMIT_COMMENT,
+		       ASSEMBLY_METHOD,
+		       ASSEMBLY_LEVEL_CD,
+		       GENOME_TYPE_CD,
+		       GENOME_COVERAGE,
+		       SEQ_COMMENT,
+		       REF_TITLE,
+		       REF_PUB_STATUS,
+		       REF_COMMENT
+		  FROM T_NGS_PROCESSED_DATA
+    	<trim prefix="WHERE" prefixOverrides="AND|OR">
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isDataRegist(dataRegist)">
+    	   AND REGIST_ID = #{dataRegist.id}
+    		</if>
+    		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registId)">
+    	   AND REGIST_ID = #{registId}
+    		</if>
+    	</trim>
+	</sql>
+	
+	<insert id="insert" parameterType="ngsProcessedData">
+		INSERT INTO T_NGS_PROCESSED_DATA(
+			REGIST_ID,
+			SUBMITTER,
+			SUBMIT_ORGAN,
+			PROJECT,
+			PROJECT_TYPE,
+			SUBMIT_COMMENT,
+			ASSEMBLY_METHOD,
+			ASSEMBLY_LEVEL_CD,
+			GENOME_TYPE_CD,
+			GENOME_COVERAGE,
+			SEQ_COMMENT,
+			REF_TITLE,
+			REF_PUB_STATUS,
+			REF_COMMENT
+		) VALUES (
+			#{registId},
+			#{submitter},
+			#{submitOrgan},
+			#{project},
+			#{projectType},
+			#{submitComment},
+			#{assemblyMethod},
+			#{assemblyLevel.code},
+			#{genomeType.code},
+			#{genomeCoverage},
+			#{seqComment},
+			#{refTitle},
+			#{refPubStatus},
+			#{refComment}
+		)
+	</insert>
+	
+	<select id="get" resultMap="NgsProcessedData">
+		<include refid="select" />
+		 LIMIT 0, 1
+	</select>
+	
+	<select id="select" resultMap="NgsProcessedData">
+		<include refid="select" />
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+	  	 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(*) FROM (<include refid="select" />)
+	</select>
+	
+	<update id="update" parameterType="ngsProcessedData">
+		UPDATE T_NGS_PROCESSED_DATA 
+		   SET REGIST_ID             =   #{registId},
+		       SUBMITTER             =   #{submitter},
+		       SUBMIT_ORGAN          =   #{submitOrgan},
+		       PROJECT               =   #{project},
+		       PROJECT_TYPE          =   #{projectType},
+		       SUBMIT_COMMENT        =   #{submitComment},
+		       ASSEMBLY_METHOD       =   #{assemblyMethod},
+		       ASSEMBLY_LEVEL_CD     =   #{assemblyLevel.code},
+		       GENOME_TYPE_CD        =   #{genomeType.code},
+		       GENOME_COVERAGE       =   #{genomeCoverage},
+		       SEQ_COMMENT           =   #{seqComment},
+		       REF_TITLE             =   #{refTitle},
+		       REF_PUB_STATUS        =   #{refPubStatus},
+		       REF_COMMENT           =   #{refComment}   
+		 WHERE REGIST_ID = #{registId}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM T_NGS_PROCESSED_DATA
+		 <trim prefix="WHERE" prefixOverrides="AND|OR">
+			REGIST_ID = #{id}
+		</trim>
+	</delete>
+
+</mapper>

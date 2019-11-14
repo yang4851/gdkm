@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CodeGroup">
+
+	<resultMap id="BasicCodeGroup" type="codeGroup">
+		<result column="CODE_GROUP" property="codeGroup"></result>
+		<result column="NAME" property="name"></result>
+		<result column="USE_YN" property="useYn"></result>
+		<result column="REGIST_DATE" property="registDate"></result>
+	</resultMap>
+	
+	<sql id="select">
+		SELECT 
+			CODE_GROUP
+			,NAME
+			,USE_YN
+			,REGIST_DATE
+		FROM T_COM_CODE_GROUP
+	</sql>
+	
+	<insert id="insert" parameterType="codeGroup">
+		INSERT INTO T_COM_CODE_GROUP(
+			CODE_GROUP
+			,NAME
+			,USE_YN
+			,REGIST_DATE
+		)VALUES(
+			#{codeGroup}
+			,#{name}
+			,#{useYn}
+			,NOW()
+		)
+	</insert>
+	
+	<select id="get" resultType="codeGroup">
+		<include refid="select"/>
+		WHERE CODE_GROUP = #{codeGroup}
+	</select>
+
+	<select id="select" resultMap="BasicCodeGroup">
+		<include refid="select"/>
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(codeGroup)">
+				AND CODE_GROUP LIKE CONCAT('%',CONCAT(#{codeGroup},'%'))
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(name)">
+				AND NAME LIKE CONCAT('%',CONCAT(#{name},'%'))				
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(useYn)">
+				AND USE_YN = #{useYn}			
+			</if>
+		</trim>
+		ORDER BY REGIST_DATE DESC
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+			LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="selectBasic" resultMap="BasicCodeGroup">
+		<include refid="select"/>
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(codeGroup)">
+				AND CODE_GROUP LIKE CONCAT('%',CONCAT(#{codeGroup},'%'))
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(name)">
+				AND NAME LIKE CONCAT('%',CONCAT(#{name},'%'))				
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(useYn)">
+				AND USE_YN = #{useYn}			
+			</if>
+		</trim>
+		ORDER BY REGIST_DATE DESC
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+			LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(*)
+		FROM T_COM_CODE_GROUP
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(codeGroup)">
+				AND CODE_GROUP LIKE CONCAT('%',CONCAT(#{codeGroup},'%'))
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(name)">
+				AND NAME LIKE CONCAT('%', CONCAT(#{name},'%'))
+			</if>	
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(useYn)">
+				AND USE_YN = #{useYn}
+			</if>
+		</trim>	
+		ORDER BY REGIST_DATE DESC
+	</select>
+	
+	<update id="update" parameterType="codeGroup">
+		UPDATE T_COM_CODE_GROUP SET
+			NAME = #{name}
+			,USE_YN = #{useYn}
+		WHERE CODE_GROUP = #{codeGroup}
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		DELETE FROM T_COM_CODE_GROUP
+		WHERE CODE_GROUP IN
+		<foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+</mapper>

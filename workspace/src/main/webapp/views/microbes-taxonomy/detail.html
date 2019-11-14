@@ -1,0 +1,42 @@
+<div ng-controller="taxonomyController as taxon" ng-init="init()">
+	<div class="search_form_tbl" style="margin-bottom: 40px;">
+		<div class="col_tbl">
+			<div class="form-horizontal">
+				<div class="form-group">
+					<div class="col-xs-12 icheck_custom">
+						<label for="exact_marches" class="radio-inline"> 
+							<input class="minimal" type="radio" name="marches"
+								ng-model="taxon.options.field" value="name">Species name
+						</label> 
+						<label for="similar_matches" class="radio-inline"> 
+							<input class="minimal" type="radio" name="marches"
+								ng-model="taxon.options.field" value="ncbiTaxonId">NCBI taxonomy ID
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-12">
+						<input type="text" class="form-control" ng-model="taxon.options.keyword">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col_tbl">
+			<button type="submit" class="btn btn_brand" ng-click="search()">Search</button>
+		</div>
+	</div>
+	<div>
+		<div layout="row" layout-sm="column" layout-align="space-around" ng-show="progressBar">
+			<md-progress-linear md-mode="indeterminate"></md-progress-linear>
+		</div>
+		<div class="tree-heading">
+			<div ng-if="taxon.showTree"
+				ivh-treeview="taxon.data"
+				ivh-treeview-use-checkboxes="true"
+				ivh-treeview-default-selected-state="false"
+				ivh-treeview-disable-checkbox-selection-propagation="true"
+				ivh-treeview-on-cb-change="onChangeNodeSelection(ivhNode, ivhIsSelected, ivhTree)"
+				ivh-treeview-on-toggle="onChangeNodeCollapse(ivhNode, ivhIsExpanded, ivhTree)"></div>
+		</div>
+	</div>
+</div>

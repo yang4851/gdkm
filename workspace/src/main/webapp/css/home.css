@@ -1,0 +1,108 @@
+@charset "UTF-8";
+/** Mixins By tykim 2017.12 */
+/* 한 줄 자르기 */
+/* 여러 줄 자르기 스타일 (multiline) */
+/* ex: @include rotate(45deg); */
+/* ex: @include translate3d(0,0,0); */
+/* ex: @include border-radius(3px); */
+/** font-family **/
+/* base colors */
+/* Font size */
+.index_title { font-size: 20px; padding: 10px 0; border-bottom: 2px solid #ffad00; font-weight: 700; margin-bottom: 20px; }
+
+.form_box { position: absolute; top: 10px; right: 0; }
+
+.form_box [class^="col-"] { padding-right: 0; padding-left: 10px; }
+
+.form_box .btn { width: 100%; padding: 6px; }
+
+.form_box i span { padding-left: 5px; }
+
+label { font-size: 16px; text-align: left !important; font-weight: 500; padding-bottom: 5px; }
+
+.home-table > caption + thead > tr:first-child > th, .home-table > caption + thead > tr:first-child > td, .home-table > colgroup + thead > tr:first-child > th, .home-table > colgroup + thead > tr:first-child > td, .home-table > thead:first-child > tr:first-child > th, .home-table > thead:first-child > tr:first-child > td { border-top: 1px solid #acacac; }
+
+.home-table th, .home-table td { font-size: 15px; border: 1px solid #acacac; }
+
+.home-table th { text-align: center; background: #ebebeb; }
+
+.home-table tbody td { text-align: right; }
+
+.home-table caption { position: absolute; left: -9999px; font-size: 0; height: 0; width: 0; overflow: hidden; }
+
+.row.statistics { text-align: right; padding-bottom: 10px; }
+
+.row.statistics div p:first-child { text-align: left; }
+
+.row.statistics div p + p { font-size: 20px; }
+
+.row.statistics div:first-child, .row.statistics div:nth-child(2) { padding-right: 5px; }
+
+.row.statistics div:nth-child(3) { padding-left: 5px; }
+
+.row.statistics div:nth-child(2) { padding: 0 5px; }
+
+.row.statistics div:first-child p + p { color: #555555; font-weight: 800; padding: 2px 10px; border: 2px solid #448ccb; }
+
+.row.statistics div:nth-child(2) p + p { color: #555555; font-weight: 800; padding: 2px 10px; border: 2px solid #00a99d; }
+
+.row.statistics div:nth-child(3) p + p { color: #555555; font-weight: 800; padding: 2px 10px; border: 2px solid #8dc63f; }
+
+.form_custom { padding-bottom: 60px; }
+
+.form_custom > div:first-child { padding-right: 25px; }
+
+.form_custom > div:first-child .form-group { margin-bottom: 25px; }
+
+.form_custom > div:first-child .control-label { padding-left: 5px; }
+
+.form_custom > div:first-child .btn_dark { padding: 12px 25px; }
+
+.form_custom > div:first-child .form-group:last-child { padding-top: 5px; margin-bottom: 0; }
+
+.form_custom > div:last-child { padding-left: 25px; }
+
+/**  Bootstrap carousel **/
+.carousel-inner { width: 92%; margin: 0 auto; }
+
+.carousel-inner .item { height: 300px; }
+
+.carousel-control { text-shadow: none; }
+
+.carousel-control:hover .fa-chevron-left, .carousel-control:hover .fa-chevron-right, .carousel-control:focus .fa-chevron-left, .carousel-control:focus .fa-chevron-right { color: #ffad00; }
+
+.carousel-control.left, .carousel-control.right { width: 4%; background-image: none; }
+
+.carousel-control .fa-chevron-left, .carousel-control .fa-chevron-right { position: absolute; top: 47%; z-index: 5; display: inline-block; color: #000; }
+
+.carousel-control .fa-chevron-left { left: 0; }
+
+.carousel-control .fa-chevron-right { right: 0; }
+
+/**  /Bootstrap carousel **/
+
+/*# sourceMappingURL=maps/home.css.map */
+p.parsley-success {
+    color: #468847;
+    background-color: #DFF0D8;
+    border: 1px solid #D6E9C6
+}
+p.parsley-error {
+    color: #B94A48;
+    background-color: #F2DEDE;
+    border: 1px solid #EED3D7
+}
+ul.parsley-errors-list {
+    list-style: none;
+    color: #E74C3C;
+    padding-left: 0
+}
+input.parsley-error,
+textarea.parsley-error,
+select.parsley-error {
+    background: #FAEDEC;
+    border: 1px solid #E85445
+}
+.btn-group .parsley-errors-list {
+    display: none
+}

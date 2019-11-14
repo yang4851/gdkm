@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+
+	<typeAliases>
+		<typeAlias alias="user" type="com.insilicogen.gdkm.model.User"/>
+		<typeAlias alias="code" type="com.insilicogen.gdkm.model.Code"/>
+		<typeAlias alias="codeGroup" type="com.insilicogen.gdkm.model.CodeGroup"/>
+		<typeAlias alias="taxonomy" type="com.insilicogen.gdkm.model.Taxonomy"/>
+		<typeAlias alias="ngsDataRegist" type="com.insilicogen.gdkm.model.NgsDataRegist"/>
+		<typeAlias alias="ngsRawData" type="com.insilicogen.gdkm.model.NgsRawData"/>
+		<typeAlias alias="ngsProcessedData" type="com.insilicogen.gdkm.model.NgsProcessedData"/>
+		<typeAlias alias="ngsDataLink" type="com.insilicogen.gdkm.model.NgsDataLink"/>
+		<typeAlias alias="ngsDataAchive" type="com.insilicogen.gdkm.model.NgsDataAchive"/>
+		<typeAlias alias="ngsDataAchiveLog" type="com.insilicogen.gdkm.model.NgsDataAchiveLog"/>
+		<typeAlias alias="ngsFileSeqQuantity" type="com.insilicogen.gdkm.model.NgsFileSeqQuantity"/>
+		<typeAlias alias="ngsFileQcResult" type="com.insilicogen.gdkm.model.NgsFileQcResult"/>
+		<typeAlias alias="ngsFileQcSummary" type="com.insilicogen.gdkm.model.NgsFileQcSummary"/>
+		<typeAlias alias="ngsFileAnnotation" type="com.insilicogen.gdkm.model.NgsFileAnnotation"/>
+		<typeAlias alias="attachment" type="com.insilicogen.gdkm.model.Attachment"/>
+		<typeAlias alias="statistics" type="com.insilicogen.gdkm.model.NgsDataStatistics"/>
+		<typeAlias alias="ngsDataFeatures" type="com.insilicogen.gdkm.model.NgsDataFeatures"/>
+		<typeAlias alias="ngsDataFeaturesHeader" type="com.insilicogen.gdkm.model.NgsDataFeaturesHeader"/>
+		<typeAlias alias="ngsDataFeaturesXref" type="com.insilicogen.gdkm.model.NgsDataFeaturesXref"/>
+		<typeAlias alias="achiveFeaturesXref" type="com.insilicogen.gdkm.model.AchiveFeaturesXref"/>
+		<typeAlias alias="achiveHeaderXref" type="com.insilicogen.gdkm.model.AchiveHeaderXref"/>
+		<typeAlias alias="research" type="com.insilicogen.gdkm.model.Research"/>
+		<typeAlias alias="researchAttachment" type="com.insilicogen.gdkm.model.ResearchAttachment"/>
+		<typeAlias alias="researchOmicsFile" type="com.insilicogen.gdkm.model.ResearchOmicsFile"/>
+		<typeAlias alias="ngsDataRegistView" type="com.insilicogen.gdkm.model.NgsDataRegistView"/>
+		<typeAlias alias="aniFile" type="com.insilicogen.gdkm.model.AniFile"/>
+		<typeAlias alias="AchiveBlastSequence" type="com.insilicogen.gdkm.model.AchiveBlastSequence"/>
+		 
+		<typeAlias alias="string" type="java.lang.String"/>
+		<typeAlias alias="int" type="java.lang.Integer"/>
+		<typeAlias alias="long" type="java.lang.Long"/>
+		<typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="egovframework/sqlmap/mappers/User_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/Code_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/CodeGroup_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/Taxonomy_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/NgsDataRegist_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/NgsRawData_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/NgsProcessedData_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/NgsDataLink_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/NgsDataAchive_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/NgsDataAchiveLog_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/NgsDataStatistics_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/NgsFileSeqQuantity_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/NgsFileQcResult_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/NgsFileQcSummary_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/NgsFileAnnotation_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/Attachment_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/NgsDataFeatures_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/NgsDataFeaturesHeader_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/NgsDataFeaturesXref_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/AchiveFeaturesXref_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/AchiveHeaderXref_SQL.xml" />
+		
+		<!-- 성과물(논문) 관리 SqlMap -->
+		<mapper resource="egovframework/sqlmap/mappers/ResearchData_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/ResearchAttachment_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/ResearchOmicsFile_SQL.xml" />
+		<mapper resource="egovframework/sqlmap/mappers/ResearchNgsDataRegist_SQL.xml" />
+		
+		<mapper resource="egovframework/sqlmap/mappers/Tools_SQL.xml" />
+		
+	</mappers>
+</configuration>

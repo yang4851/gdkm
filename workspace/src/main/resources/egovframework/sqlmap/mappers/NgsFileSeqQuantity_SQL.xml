@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NgsFileSeqQuantity">
+
+	<resultMap id="NgsFileSeqQuantity" type="ngsFileSeqQuantity">
+		<result property="id" column="QUANTITY_ID" />
+		<result property="readCount" column="SEQ_READ_COUNT" />
+		<result property="totalLength" column="SEQ_TOTAL_LENGTH" />
+		<result property="averageLength" column="SEQ_AVERAGE_LENGTH" />
+		<result property="numberOfA" column="A_SEQ_COUNT" />
+		<result property="numberOfT" column="T_SEQ_COUNT" />
+		<result property="numberOfG" column="G_SEQ_COUNT" />
+		<result property="numberOfC" column="C_SEQ_COUNT" />
+		<result property="numberOfN" column="N_SEQ_COUNT" />
+		<result property="n50" column="N50_LENGTH" />
+		<result property="registDate" column="REGIST_DATE" />
+		
+		<association property="achive" column="{achiveId=ACHIVE_ID}" javaType="ngsDataAchive" select="NgsDataAchive.getTiny" />
+		<association property="registUser" column="{userId=REGIST_USER}" javaType="user" select="User.getBasicUser" />
+	</resultMap>
+	
+	<sql id="select">
+		SELECT Q.QUANTITY_ID,
+		       Q.ACHIVE_ID,
+		       Q.SEQ_READ_COUNT,
+		       Q.SEQ_TOTAL_LENGTH,
+		       Q.SEQ_AVERAGE_LENGTH,
+		       Q.A_SEQ_COUNT,
+		       Q.T_SEQ_COUNT,
+		       Q.G_SEQ_COUNT,
+		       Q.C_SEQ_COUNT,
+		       Q.N_SEQ_COUNT,
+		       Q.N50_LENGTH,
+		       AES_DECRYPT(UNHEX(Q.REGIST_USER),'raison') AS REGIST_USER,
+		       Q.REGIST_DATE
+	  	  FROM T_NGS_FILE_SEQ_QUANTITY Q, T_NGS_DATA_ACHIVE A
+		 WHERE Q.ACHIVE_ID = A.ACHIVE_ID
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveId)">
+	  	   AND Q.ACHIVE_ID = #{achiveId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isDataAchive(achive)">
+	  	   AND Q.ACHIVE_ID = #{achive.id}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registId)">
+	  	   AND A.REGIST_ID = #{registId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(quantityId)">
+	  	   AND Q.QUANTITY_ID = #{quantityId}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(id)">
+	  	   AND Q.QUANTITY_ID = #{id}
+		</if>
+		<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(ids)">
+	  	   AND Q.QUANTITY_ID IN 
+			<foreach collection="ids" item="quantityId" open="(" separator="," close=")">
+				#{quantityId}
+			</foreach>
+		</if>
+	</sql>
+	
+	<insert id="insert" parameterType="ngsFileSeqQuantity">
+		<selectKey resultType="int" keyProperty="id" order="BEFORE">
+		SELECT (CASE WHEN 0 &lt; #{id}
+		             THEN IFNULL(#{id}, IFNULL(MAX(QUANTITY_ID), 0) + 1)
+		             ELSE IFNULL(MAX(QUANTITY_ID), 0) + 1
+		             END) AS id
+		 FROM T_NGS_FILE_SEQ_QUANTITY
+   		</selectKey>
+   		 
+		INSERT INTO T_NGS_FILE_SEQ_QUANTITY(
+			QUANTITY_ID,
+			ACHIVE_ID,
+			SEQ_READ_COUNT,
+			SEQ_TOTAL_LENGTH,
+			SEQ_AVERAGE_LENGTH,
+			A_SEQ_COUNT,
+			T_SEQ_COUNT,
+			G_SEQ_COUNT,
+			C_SEQ_COUNT,
+			N_SEQ_COUNT,
+			N50_LENGTH,
+			REGIST_USER,
+			REGIST_DATE
+		) VALUES (
+			#{id},
+			#{achive.id},
+			#{readCount},
+			#{totalLength},
+			#{averageLength},
+			#{numberOfA},
+			#{numberOfT},
+			#{numberOfG},
+			#{numberOfC},
+			#{numberOfN},
+			#{n50},
+			HEX(AES_ENCRYPT(#{registUser.userId},'raison')),
+			NOW()
+		)
+	</insert>
+	
+	<select id="get" resultMap="NgsFileSeqQuantity">
+		<include refid="select" />
+	  	 LIMIT 0, 1
+	</select>
+	
+	<select id="select" resultMap="NgsFileSeqQuantity">
+		<include refid="select" />
+		<if test="@com.insilicogen.gdkm.MybatisHelper@hasPaging(firstIndex, rowSize)">
+	  	 LIMIT #{firstIndex}, #{rowSize}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(*) FROM (<include refid="select" />) T
+	</select>
+	
+	<update id="update" parameterType="ngsFileSeqQuantity">
+		UPDATE T_NGS_FILE_SEQ_QUANTITY 
+		   SET SEQ_READ_COUNT     = #{readCount},
+		       SEQ_TOTAL_LENGTH   = #{totalLength},
+		       SEQ_AVERAGE_LENGTH = #{averageLength},
+		       A_SEQ_COUNT        = #{numberOfA},
+		       T_SEQ_COUNT        = #{numberOfT},
+		       G_SEQ_COUNT        = #{numberOfG},
+		       C_SEQ_COUNT        = #{numberOfC},
+		       N_SEQ_COUNT        = #{numberOfN},
+		       N50_LENGTH         = #{n50}
+		 WHERE QUANTITY_ID           = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM T_NGS_FILE_SEQ_QUANTITY
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(achiveId)">
+	  	   AND ACHIVE_ID = #{achiveId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(registId)">
+	  	   AND ACHIVE_ID IN (SELECT DISTINCT(ACHIVE_ID) FROM T_NGS_DATA_ACHIVE WHERE REGIST_ID=#{registId})
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(quantityId)">
+	  	   AND QUANTITY_ID = #{quantityId}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(id)">
+	  	   AND QUANTITY_ID = #{id}
+			</if>
+			<if test="@com.insilicogen.gdkm.MybatisHelper@isNotEmpty(ids)">
+	  	   AND QUANTITY_ID IN 
+				<foreach collection="ids" item="quantityId" open="(" separator="," close=")">
+					#{quantityId}
+				</foreach>
+			</if>
+		</trim>
+	</delete>
+</mapper>
